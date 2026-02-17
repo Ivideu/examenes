@@ -3,166 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Quiz de Inglés - Unidades 1-7</title>
+    <title>English Mastery - Unidades 1-7</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #6c5ce7; --secondary: #a29bfe; --success: #00b894; --error: #d63031; --bg: #f0f2f5; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--bg); display: flex; justify-content: center; padding: 20px; }
-        .quiz-container { background: white; width: 100%; max-width: 700px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
-        h1 { color: var(--primary); margin-bottom: 10px; }
-        .progress-bar { height: 10px; background: #eee; border-radius: 5px; margin-bottom: 20px; overflow: hidden; }
-        #progress-fill { height: 100%; background: var(--primary); width: 0%; transition: 0.5s; }
-        .question-box { font-size: 1.4rem; font-weight: 600; margin: 20px 0; color: #2d3436; }
-        .category-tag { background: var(--secondary); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; }
-        input { width: 90%; padding: 15px; border: 2px solid #dfe6e9; border-radius: 12px; font-size: 1.1rem; text-align: center; margin-bottom: 15px; }
+        :root { --primary: #4834d4; --accent: #eb4d4b; --bg: #f9f9f9; --text: #2d3436; }
+        body { font-family: 'Quicksand', sans-serif; background: var(--bg); color: var(--text); padding: 20px; display: flex; justify-content: center; }
+        .quiz-card { background: white; width: 100%; max-width: 800px; padding: 40px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .progress-container { height: 12px; background: #dfe6e9; border-radius: 10px; margin: 20px 0; }
+        #bar { height: 100%; background: linear-gradient(90deg, #686de0, #4834d4); border-radius: 10px; width: 0%; transition: 0.5s; }
+        .type-badge { display: inline-block; padding: 5px 15px; background: #686de0; color: white; border-radius: 15px; font-size: 0.8rem; margin-bottom: 10px; }
+        .question-box { font-size: 1.6rem; font-weight: 700; margin-bottom: 25px; color: #130f40; }
+        
+        /* Estilos para inputs */
+        input { width: 100%; padding: 15px; border: 3px solid #f0f0f0; border-radius: 15px; font-size: 1.1rem; box-sizing: border-box; transition: 0.3s; }
         input:focus { border-color: var(--primary); outline: none; }
-        .btn { background: var(--primary); color: white; border: none; padding: 15px 30px; border-radius: 12px; cursor: pointer; font-size: 1rem; font-weight: bold; transition: 0.3s; }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4); }
-        .feedback { font-size: 1.1rem; font-weight: bold; margin-top: 10px; min-height: 1.5em; }
-        .stats { display: flex; justify-content: space-around; margin-top: 20px; font-weight: bold; }
-        .medal { font-size: 3rem; margin: 20px; display: block; }
+        
+        /* Estilos para opciones múltiples */
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .option-btn { padding: 15px; border: 2px solid #686de0; background: white; border-radius: 15px; cursor: pointer; font-weight: 600; transition: 0.2s; }
+        .option-btn:hover { background: #686de0; color: white; }
+
+        .btn-check { background: var(--primary); color: white; border: none; width: 100%; padding: 18px; border-radius: 15px; font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-top: 20px; }
+        .feedback { margin-top: 20px; font-weight: 700; min-height: 1.2em; border-radius: 10px; padding: 10px; display: none; }
+        .correct { background: #badc58; color: #2d3436; }
+        .wrong { background: #ff7979; color: white; }
     </style>
 </head>
 <body>
 
-<div class="quiz-container">
-    <div class="category-tag" id="category">Cargando...</div>
-    <h1 id="title">English Master Quiz</h1>
-    <div class="progress-bar"><div id="progress-fill"></div></div>
+<div class="quiz-card">
+    <div class="header">
+        <div id="stats">Aciertos: 0</div>
+        <div id="timer">Lección 1-7</div>
+    </div>
+    <div class="progress-container"><div id="bar"></div></div>
     
-    <div id="game-area">
-        <div class="question-box" id="question">¿Listo para empezar?</div>
-        <input type="text" id="answer-input" placeholder="Escribe aquí..." autocomplete="off">
-        <div class="feedback" id="feedback"></div>
-        <button class="btn" id="submit-btn" onclick="checkAnswer()">Comprobar</button>
-    </div>
-
-    <div class="stats">
-        <span>Aciertos: <span id="hits" style="color: var(--success)">0</span></span>
-        <span>Racha: <span id="streak" style="color: #fdcb6e">0</span></span>
-    </div>
+    <div id="quiz-content">
+        </div>
+    
+    <div id="feedback-msg" class="feedback"></div>
 </div>
 
 <script>
-    // Gran base de datos extraída de tus archivos [cite: 1, 4, 106, 72]
-    const database = [
-        // Verbos Irregulares (Pasado Simple) [cite: 1, 4]
-        { q: "Beat (Pasado)", a: "beat", cat: "Verbos Irregulares" },
-        { q: "Become (Pasado)", a: "became", cat: "Verbos Irregulares" },
-        { q: "Bite (Pasado)", a: "bit", cat: "Verbos Irregulares" },
-        { q: "Bleed (Pasado)", a: "bled", cat: "Verbos Irregulares" },
-        { q: "Blow (Pasado)", a: "blew", cat: "Verbos Irregulares" },
-        { q: "Bring (Pasado)", a: "brought", cat: "Verbos Irregulares" },
-        { q: "Build (Pasado)", a: "built", cat: "Verbos Irregulares" },
-        { q: "Choose (Pasado)", a: "chose", cat: "Verbos Irregulares" },
-        { q: "Drive (Pasado)", a: "drove", cat: "Verbos Irregulares" },
-        { q: "Fly (Pasado)", a: "flew", cat: "Verbos Irregulares" },
-        { q: "Forget (Pasado)", a: "forgot", cat: "Verbos Irregulares" },
-        { q: "Freeze (Pasado)", a: "froze", cat: "Verbos Irregulares" },
-        { q: "Hide (Pasado)", a: "hid", cat: "Verbos Irregulares" },
-        { q: "Ride (Pasado)", a: "rode", cat: "Verbos Irregulares" },
-        { q: "Steal (Pasado)", a: "stole", cat: "Verbos Irregulares" },
-        { q: "Swim (Pasado)", a: "swam", cat: "Verbos Irregulares" },
+// Datos enriquecidos
+const data = {
+    verbs: [
+        { inf: "break", pas: "broke", part: "broken", esp: "romper" },
+        { inf: "bring", pas: "brought", part: "brought", esp: "traer" },
+        { inf: "buy", pas: "bought", part: "bought", esp: "comprar" },
+        { inf: "choose", pas: "chose", part: "chosen", esp: "escoger" },
+        { inf: "eat", pas: "ate", part: "eaten", esp: "comer" },
+        { inf: "fly", pas: "flew", part: "flown", esp: "volar" },
+        { inf: "forget", pas: "forgot", part: "forgotten", esp: "olvidar" },
+        { inf: "freeze", pas: "froze", part: "frozen", esp: "congelar" },
+        { inf: "give", pas: "gave", part: "given", esp: "dar" },
+        { inf: "steal", pas: "stole", part: "stolen", esp: "robar" }
+    ],
+    vocab: [
+        { eng: "neighbourhood", esp: "barrio" },
+        { eng: "petrol station", esp: "gasolinera" },
+        { eng: "conquer", esp: "conquistar" },
+        { eng: "jewellery", esp: "joyas" },
+        { eng: "carpet", esp: "alfombra" },
+        { eng: "cupboard", esp: "armario" },
+        { eng: "waterfall", esp: "cascada" },
+        { eng: "desert", esp: "desierto" },
+        { eng: "scuba diving", esp: "buceo" },
+        { eng: "boring", esp: "aburrido" }
+    ]
+};
 
-        // Vocabulario Unidad 1-3
-        { q: "Judía/Frijol", a: "bean", cat: "Unit 1: Food" },
-        { q: "Salchicha", a: "sausage", cat: "Unit 1: Food" },
-        { q: "Peligroso", a: "dangerous", cat: "Unit 1: Adjectives" },
-        { q: "Tiburón", a: "shark", cat: "Unit 2: Animals" },
-        { q: "Aterrizar (v)", a: "land", cat: "Unit 3" },
-        { q: "Cero/Ninguno", a: "none", cat: "Unit 3" },
+let score = 0;
+let currentStep = 0;
+const totalQuestions = 15;
+let currentQuestion = {};
 
-        // Vocabulario Unidad 4-6
-        { q: "Músico", a: "musician", cat: "Unit 4: Jobs" },
-        { q: "Gasolinera", a: "petrol station", cat: "Unit 4: Places" },
-        { q: "Tobogán", a: "slide", cat: "Unit 4: Fun" },
-        { q: "Conquistar", a: "conquer", cat: "Unit 5" },
-        { q: "Joyas", a: "jewellery", cat: "Unit 5" },
-        { q: "Alfombra", a: "carpet", cat: "Unit 6" },
-        { q: "Armario", a: "cupboard", cat: "Unit 6" },
-        { q: "Cojín", a: "cushion", cat: "Unit 6" },
-
-        // Vocabulario Unidad 7
-        { q: "Arrecife", a: "reef", cat: "Unit 7: Nature" },
-        { q: "Bañador", a: "swimsuit", cat: "Unit 7: Summer" },
-        { q: "Aburrido (Persona)", a: "bored", cat: "Unit 7: Feelings" },
-        { q: "Aburrido (Cosa/Situación)", a: "boring", cat: "Unit 7: Feelings" },
-        { q: "Cascada", a: "waterfall", cat: "Unit 7: Nature" }
-    ];
-
-    let currentIdx = 0;
-    let hits = 0;
-    let streak = 0;
-    let shuffledQuiz = [];
-
-    function initGame() {
-        shuffledQuiz = database.sort(() => Math.random() - 0.5).slice(0, 20);
-        showQuestion();
+function nextQuestion() {
+    if(currentStep >= totalQuestions) {
+        showFinalScore();
+        return;
     }
-
-    function showQuestion() {
-        if (currentIdx >= shuffledQuiz.length) {
-            finishGame();
-            return;
+    
+    currentStep++;
+    document.getElementById('bar').style.width = (currentStep/totalQuestions)*100 + "%";
+    document.getElementById('feedback-msg').style.display = 'none';
+    
+    const type = Math.floor(Math.random() * 4); // 4 tipos de preguntas
+    const content = document.getElementById('quiz-content');
+    
+    if (type === 0) { // Escribir verbo completo
+        currentQuestion = data.verbs[Math.floor(Math.random()*data.verbs.length)];
+        content.innerHTML = `
+            <div class="type-badge">Verbos Irregulares (Escribir)</div>
+            <div class="question-box">Traduce y completa las formas de: "${currentQuestion.esp}"</div>
+            <input type="text" id="v1" placeholder="Infinitivo (ej: go)">
+            <input type="text" id="v2" placeholder="Pasado (ej: went)" style="margin-top:10px">
+            <input type="text" id="v3" placeholder="Participio (ej: gone)" style="margin-top:10px">
+            <button class="btn-check" onclick="checkVerbs()">Enviar Respuesta</button>
+        `;
+    } else if (type === 1) { // Vocabulario ESP -> ENG
+        currentQuestion = data.vocab[Math.floor(Math.random()*data.vocab.length)];
+        content.innerHTML = `
+            <div class="type-badge">Vocabulario (Traducción)</div>
+            <div class="question-box">¿Cómo se dice "${currentQuestion.esp}" en inglés?</div>
+            <input type="text" id="ans" placeholder="Tu respuesta...">
+            <button class="btn-check" onclick="checkVocabEng()">Comprobar</button>
+        `;
+    } else if (type === 2) { // Elección múltiple
+        currentQuestion = data.vocab[Math.floor(Math.random()*data.vocab.length)];
+        let options = [currentQuestion.esp];
+        while(options.length < 4) {
+            let r = data.vocab[Math.floor(Math.random()*data.vocab.length)].esp;
+            if(!options.includes(r)) options.push(r);
         }
-        const item = shuffledQuiz[currentIdx];
-        document.getElementById('category').innerText = item.cat;
-        document.getElementById('question').innerText = item.q;
-        document.getElementById('answer-input').value = '';
-        document.getElementById('feedback').innerText = '';
-        document.getElementById('progress-fill').style.width = `${(currentIdx / shuffledQuiz.length) * 100}%`;
-    }
+        options.sort(() => Math.random() - 0.5);
 
-    function checkAnswer() {
-        const input = document.getElementById('answer-input').value.trim().toLowerCase();
-        const correct = shuffledQuiz[currentIdx].a.toLowerCase();
-        const feedback = document.getElementById('feedback');
-
-        if (input === correct) {
-            hits++;
-            streak++;
-            feedback.innerText = "✨ ¡Increíble! +1";
-            feedback.style.color = "var(--success)";
-            document.getElementById('hits').innerText = hits;
-            document.getElementById('streak').innerText = streak;
-            
-            setTimeout(() => {
-                currentIdx++;
-                showQuestion();
-            }, 1000);
-        } else {
-            streak = 0;
-            document.getElementById('streak').innerText = streak;
-            feedback.innerText = `Casi... era: ${correct}`;
-            feedback.style.color = "var(--error)";
-            // No avanza hasta que lo escriba bien (opcional, para que aprenda)
-            setTimeout(() => {
-                currentIdx++;
-                showQuestion();
-            }, 2000);
-        }
-    }
-
-    function finishGame() {
-        const area = document.getElementById('game-area');
-        let medal = "🥉";
-        if (hits > 15) medal = "🥇";
-        else if (hits > 10) medal = "🥈";
-
-        area.innerHTML = `
-            <span class="medal">${medal}</span>
-            <h2>¡Examen terminado!</h2>
-            <p>Has acertado ${hits} de ${shuffledQuiz.length} palabras.</p>
-            <button class="btn" onclick="location.reload()">Reintentar</button>
+        content.innerHTML = `
+            <div class="type-badge">Opción Múltiple</div>
+            <div class="question-box">¿Qué significa "${currentQuestion.eng}"?</div>
+            <div class="options-grid">
+                ${options.map(o => `<button class="option-btn" onclick="checkMultiple('${o}', '${currentQuestion.esp}')">${o}</button>`).join('')}
+            </div>
+        `;
+    } else { // Vocabulario ENG -> ESP
+        currentQuestion = data.vocab[Math.floor(Math.random()*data.vocab.length)];
+        content.innerHTML = `
+            <div class="type-badge">Traduce al Español</div>
+            <div class="question-box">¿Qué significa "${currentQuestion.eng}"?</div>
+            <input type="text" id="ans" placeholder="Traducción en español...">
+            <button class="btn-check" onclick="checkVocabEsp()">Comprobar</button>
         `;
     }
+}
 
-    // Permitir "Enter" para enviar
-    document.getElementById('answer-input').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') checkAnswer();
-    });
+// Lógica de comprobación
+function showFeedback(isCorrect, msg) {
+    const f = document.getElementById('feedback-msg');
+    f.style.display = 'block';
+    f.innerText = isCorrect ? "✅ ¡Correcto! " + msg : "❌ " + msg;
+    f.className = "feedback " + (isCorrect ? "correct" : "wrong");
+    if(isCorrect) {
+        score++;
+        document.getElementById('stats').innerText = `Aciertos: ${score}`;
+    }
+    setTimeout(nextQuestion, 2000);
+}
 
-    initGame();
+function checkVerbs() {
+    const i = document.getElementById('v1').value.trim().toLowerCase();
+    const p = document.getElementById('v2').value.trim().toLowerCase();
+    const pa = document.getElementById('v3').value.trim().toLowerCase();
+    const isOk = (i === currentQuestion.inf && p === currentQuestion.pas && pa === currentQuestion.part);
+    showFeedback(isOk, `Era: ${currentQuestion.inf} - ${currentQuestion.pas} - ${currentQuestion.part}`);
+}
+
+function checkVocabEng() {
+    const a = document.getElementById('ans').value.trim().toLowerCase();
+    showFeedback(a === currentQuestion.eng.toLowerCase(), `La palabra es: ${currentQuestion.eng}`);
+}
+
+function checkVocabEsp() {
+    const a = document.getElementById('ans').value.trim().toLowerCase();
+    showFeedback(a === currentQuestion.esp.toLowerCase(), `Significa: ${currentQuestion.esp}`);
+}
+
+function checkMultiple(selected, correct) {
+    showFeedback(selected === correct, `La respuesta era: ${correct}`);
+}
+
+function showFinalScore() {
+    document.getElementById('quiz-content').innerHTML = `
+        <div style="text-align:center">
+            <h1>🏆 ¡Fin del Examen!</h1>
+            <p style="font-size:1.5rem">Has conseguido <strong>${score}</strong> puntos de ${totalQuestions}.</p>
+            <button class="btn-check" onclick="location.reload()">¡Jugar otra vez!</button>
+        </div>
+    `;
+}
+
+nextQuestion();
 </script>
-
 </body>
 </html>

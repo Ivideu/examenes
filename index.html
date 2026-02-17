@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Quiz de Inglés - Unidades 1-7</title>
+    <style>
+        :root { --primary: #6c5ce7; --secondary: #a29bfe; --success: #00b894; --error: #d63031; --bg: #f0f2f5; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg); display: flex; justify-content: center; padding: 20px; }
+        .quiz-container { background: white; width: 100%; max-width: 700px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
+        h1 { color: var(--primary); margin-bottom: 10px; }
+        .progress-bar { height: 10px; background: #eee; border-radius: 5px; margin-bottom: 20px; overflow: hidden; }
+        #progress-fill { height: 100%; background: var(--primary); width: 0%; transition: 0.5s; }
+        .question-box { font-size: 1.4rem; font-weight: 600; margin: 20px 0; color: #2d3436; }
+        .category-tag { background: var(--secondary); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; }
+        input { width: 90%; padding: 15px; border: 2px solid #dfe6e9; border-radius: 12px; font-size: 1.1rem; text-align: center; margin-bottom: 15px; }
+        input:focus { border-color: var(--primary); outline: none; }
+        .btn { background: var(--primary); color: white; border: none; padding: 15px 30px; border-radius: 12px; cursor: pointer; font-size: 1rem; font-weight: bold; transition: 0.3s; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4); }
+        .feedback { font-size: 1.1rem; font-weight: bold; margin-top: 10px; min-height: 1.5em; }
+        .stats { display: flex; justify-content: space-around; margin-top: 20px; font-weight: bold; }
+        .medal { font-size: 3rem; margin: 20px; display: block; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div class="category-tag" id="category">Cargando...</div>
+    <h1 id="title">English Master Quiz</h1>
+    <div class="progress-bar"><div id="progress-fill"></div></div>
+    
+    <div id="game-area">
+        <div class="question-box" id="question">¿Listo para empezar?</div>
+        <input type="text" id="answer-input" placeholder="Escribe aquí..." autocomplete="off">
+        <div class="feedback" id="feedback"></div>
+        <button class="btn" id="submit-btn" onclick="checkAnswer()">Comprobar</button>
+    </div>
+
+    <div class="stats">
+        <span>Aciertos: <span id="hits" style="color: var(--success)">0</span></span>
+        <span>Racha: <span id="streak" style="color: #fdcb6e">0</span></span>
+    </div>
+</div>
+
+<script>
+    // Gran base de datos extraída de tus archivos [cite: 1, 4, 106, 72]
+    const database = [
+        // Verbos Irregulares (Pasado Simple) [cite: 1, 4]
+        { q: "Beat (Pasado)", a: "beat", cat: "Verbos Irregulares" },
+        { q: "Become (Pasado)", a: "became", cat: "Verbos Irregulares" },
+        { q: "Bite (Pasado)", a: "bit", cat: "Verbos Irregulares" },
+        { q: "Bleed (Pasado)", a: "bled", cat: "Verbos Irregulares" },
+        { q: "Blow (Pasado)", a: "blew", cat: "Verbos Irregulares" },
+        { q: "Bring (Pasado)", a: "brought", cat: "Verbos Irregulares" },
+        { q: "Build (Pasado)", a: "built", cat: "Verbos Irregulares" },
+        { q: "Choose (Pasado)", a: "chose", cat: "Verbos Irregulares" },
+        { q: "Drive (Pasado)", a: "drove", cat: "Verbos Irregulares" },
+        { q: "Fly (Pasado)", a: "flew", cat: "Verbos Irregulares" },
+        { q: "Forget (Pasado)", a: "forgot", cat: "Verbos Irregulares" },
+        { q: "Freeze (Pasado)", a: "froze", cat: "Verbos Irregulares" },
+        { q: "Hide (Pasado)", a: "hid", cat: "Verbos Irregulares" },
+        { q: "Ride (Pasado)", a: "rode", cat: "Verbos Irregulares" },
+        { q: "Steal (Pasado)", a: "stole", cat: "Verbos Irregulares" },
+        { q: "Swim (Pasado)", a: "swam", cat: "Verbos Irregulares" },
+
+        // Vocabulario Unidad 1-3
+        { q: "Judía/Frijol", a: "bean", cat: "Unit 1: Food" },
+        { q: "Salchicha", a: "sausage", cat: "Unit 1: Food" },
+        { q: "Peligroso", a: "dangerous", cat: "Unit 1: Adjectives" },
+        { q: "Tiburón", a: "shark", cat: "Unit 2: Animals" },
+        { q: "Aterrizar (v)", a: "land", cat: "Unit 3" },
+        { q: "Cero/Ninguno", a: "none", cat: "Unit 3" },
+
+        // Vocabulario Unidad 4-6
+        { q: "Músico", a: "musician", cat: "Unit 4: Jobs" },
+        { q: "Gasolinera", a: "petrol station", cat: "Unit 4: Places" },
+        { q: "Tobogán", a: "slide", cat: "Unit 4: Fun" },
+        { q: "Conquistar", a: "conquer", cat: "Unit 5" },
+        { q: "Joyas", a: "jewellery", cat: "Unit 5" },
+        { q: "Alfombra", a: "carpet", cat: "Unit 6" },
+        { q: "Armario", a: "cupboard", cat: "Unit 6" },
+        { q: "Cojín", a: "cushion", cat: "Unit 6" },
+
+        // Vocabulario Unidad 7
+        { q: "Arrecife", a: "reef", cat: "Unit 7: Nature" },
+        { q: "Bañador", a: "swimsuit", cat: "Unit 7: Summer" },
+        { q: "Aburrido (Persona)", a: "bored", cat: "Unit 7: Feelings" },
+        { q: "Aburrido (Cosa/Situación)", a: "boring", cat: "Unit 7: Feelings" },
+        { q: "Cascada", a: "waterfall", cat: "Unit 7: Nature" }
+    ];
+
+    let currentIdx = 0;
+    let hits = 0;
+    let streak = 0;
+    let shuffledQuiz = [];
+
+    function initGame() {
+        shuffledQuiz = database.sort(() => Math.random() - 0.5).slice(0, 20);
+        showQuestion();
+    }
+
+    function showQuestion() {
+        if (currentIdx >= shuffledQuiz.length) {
+            finishGame();
+            return;
+        }
+        const item = shuffledQuiz[currentIdx];
+        document.getElementById('category').innerText = item.cat;
+        document.getElementById('question').innerText = item.q;
+        document.getElementById('answer-input').value = '';
+        document.getElementById('feedback').innerText = '';
+        document.getElementById('progress-fill').style.width = `${(currentIdx / shuffledQuiz.length) * 100}%`;
+    }
+
+    function checkAnswer() {
+        const input = document.getElementById('answer-input').value.trim().toLowerCase();
+        const correct = shuffledQuiz[currentIdx].a.toLowerCase();
+        const feedback = document.getElementById('feedback');
+
+        if (input === correct) {
+            hits++;
+            streak++;
+            feedback.innerText = "✨ ¡Increíble! +1";
+            feedback.style.color = "var(--success)";
+            document.getElementById('hits').innerText = hits;
+            document.getElementById('streak').innerText = streak;
+            
+            setTimeout(() => {
+                currentIdx++;
+                showQuestion();
+            }, 1000);
+        } else {
+            streak = 0;
+            document.getElementById('streak').innerText = streak;
+            feedback.innerText = `Casi... era: ${correct}`;
+            feedback.style.color = "var(--error)";
+            // No avanza hasta que lo escriba bien (opcional, para que aprenda)
+            setTimeout(() => {
+                currentIdx++;
+                showQuestion();
+            }, 2000);
+        }
+    }
+
+    function finishGame() {
+        const area = document.getElementById('game-area');
+        let medal = "🥉";
+        if (hits > 15) medal = "🥇";
+        else if (hits > 10) medal = "🥈";
+
+        area.innerHTML = `
+            <span class="medal">${medal}</span>
+            <h2>¡Examen terminado!</h2>
+            <p>Has acertado ${hits} de ${shuffledQuiz.length} palabras.</p>
+            <button class="btn" onclick="location.reload()">Reintentar</button>
+        `;
+    }
+
+    // Permitir "Enter" para enviar
+    document.getElementById('answer-input').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') checkAnswer();
+    });
+
+    initGame();
+</script>
+
+</body>
+</html>

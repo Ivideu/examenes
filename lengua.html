@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RETO LINGÜÍSTICO - 1º ESO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #00cec9;
+            --accent: #fdcb6e;
+            --success: #00b894;
+            --error: #d63031;
+            --bg-light: #dfe6e9;
+            --card-white: #ffffff;
+            --text-dark: #2d3436;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        #game-container {
+            width: 95%;
+            max-width: 800px;
+            background: var(--card-white);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-top: 8px solid var(--primary);
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .progress-container {
+            height: 12px;
+            background: #eee;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        #progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            transition: width 0.4s ease;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            color: #2d3436;
+        }
+
+        .options-grid { display: grid; gap: 12px; }
+        
+        .btn {
+            background: #fff; 
+            border: 2px solid #b2bec3;
+            padding: 16px; 
+            border-radius: 12px; 
+            cursor: pointer;
+            font-size: 1.1rem; 
+            font-weight: 700; 
+            text-align: left;
+            font-family: 'Nunito', sans-serif;
+            transition: all 0.2s;
+            color: var(--text-dark);
+        }
+
+        .btn:hover:not(:disabled) { 
+            border-color: var(--secondary); 
+            background: #e0f7fa; 
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 206, 201, 0.2);
+        }
+        
+        .tf-grid { display: flex; gap: 15px; }
+        .btn-tf { flex: 1; text-align: center; font-size: 1.2rem; }
+
+        #feedback-area {
+            display: none; margin-top: 25px; padding: 20px;
+            border-radius: 12px; text-align: center; font-size: 1.1rem;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .correct-box { background: #e8f8f5; color: var(--success); border: 2px solid var(--success); }
+        .wrong-box { background: #fdedec; color: var(--error); border: 2px solid var(--error); }
+
+        .btn-next {
+            margin-top: 15px; background: var(--primary); color: white;
+            border: none; padding: 12px 30px; border-radius: 8px;
+            cursor: pointer; font-family: 'Montserrat'; font-weight: bold;
+            font-size: 1.1rem; text-transform: uppercase;
+        }
+
+        .btn-next:hover { background: #5a4bcf; }
+
+        #score-screen { text-align: center; display: none; }
+        .final-score { font-size: 5rem; color: var(--primary); font-family: 'Montserrat'; font-weight: 800; margin: 10px 0; }
+        .stat-box { display: flex; justify-content: space-around; margin: 30px 0; font-size: 1.3rem; font-weight: 800; background: #f1f2f6; padding: 20px; border-radius: 15px; }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <div id="quiz-ui">
+        <h1>RETO DE LENGUA - 1º ESO</h1>
+        <div class="stats-bar">
+            <span id="q-count">PREGUNTA: 1 / 20</span>
+            <span id="score-count">PUNTOS: 0</span>
+        </div>
+        <div class="progress-container"><div id="progress-fill"></div></div>
+        
+        <div id="question-area"></div>
+        
+        <div id="feedback-area">
+            <p id="feedback-text"></p>
+            <button class="btn-next" onclick="nextQuestion()">Siguiente Pregunta ➔</button>
+        </div>
+    </div>
+
+    <div id="score-screen">
+        <h1>¡EXAMEN COMPLETADO!</h1>
+        <div class="final-score" id="total-pts">0</div>
+        <p style="font-size: 1.2rem; color: #636e72;">Puntuación sobre 10</p>
+        <div class="stat-box">
+            <div style="color: var(--success)">Aciertos: <br><span id="c-count" style="font-size: 2rem;">0</span></div>
+            <div style="color: var(--error)">Errores: <br><span id="w-count" style="font-size: 2rem;">0</span></div>
+        </div>
+        <p id="rank-text" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 30px;"></p>
+        <button class="btn btn-next" style="width:100%;" onclick="location.reload()">🔄 GENERAR NUEVO EXAMEN ALEATORIO</button>
+    </div>
+</div>
+
+<script>
+    // BANCO COMPLETO DE PREGUNTAS (Abarca Unidades 1 a 8)
+    const allQuestions = [
+        // UNIDAD 1 & 2: Comunicación, Lenguas, Palabras
+        { type: 'choice', q: "En la comunicación, ¿cómo se llama el medio físico por el que circula el mensaje?", opts: ["Emisor", "Código", "Canal", "Receptor"], ans: 2, info: "El canal es el medio físico (el aire, un papel, internet...) por el que viaja el mensaje." },
+        { type: 'choice', q: "¿Qué situación se da cuando conviven dos lenguas pero una tiene mayor prestigio social o uso institucional?", opts: ["Bilingüismo", "Diglosia", "Dialecto", "Monolingüismo"], ans: 1, info: "La diglosia es el desequilibrio en el uso y prestigio entre dos lenguas que conviven." },
+        { type: 'tf', q: "Un dialecto es un sistema lingüístico derivado de otro, sin una fuerte diferenciación frente a los de su mismo origen.", ans: true, info: "Correcto: El dialecto es una variedad de una lengua en un territorio determinado." },
+        { type: 'choice', q: "Las palabras formadas por la unión de dos o más raíces (ej: sacapuntas) son palabras...", opts: ["Simples", "Derivadas", "Compuestas", "Parasintéticas"], ans: 2, info: "Las palabras compuestas unen dos o más palabras simples (saca + puntas)." },
+        
+        // UNIDAD 3: Sustantivo y Clases de Palabras
+        { type: 'choice', q: "¿Qué clase de palabra designa personas, animales, cosas, ideas o sentimientos?", opts: ["Adjetivo", "Verbo", "Sustantivo", "Adverbio"], ans: 2, info: "El sustantivo o nombre es la palabra que sirve para nombrar la realidad." },
+        { type: 'tf', q: "La familia léxica está formada por todas las palabras que comparten la misma raíz.", ans: true, info: "Correcto: Por ejemplo, flor, florero, floristería, aflorar (raíz: flor)." },
+        { type: 'choice', q: "Un sustantivo abstracto es aquel que...", opts: ["Se puede percibir por los sentidos", "Nombra grupos de cosas en singular", "Nombra ideas o sentimientos", "Deriva de un verbo"], ans: 2, info: "Ejemplos de sustantivos abstractos: alegría, paz, justicia." },
+
+        // UNIDAD 4 & 5: El Verbo (Extraído de los PDF aportados)
+        { type: 'choice', q: "Según los apuntes, el verbo funciona siempre en la oración como...", opts: ["Complemento directo", "Núcleo del sujeto", "Núcleo del predicado", "Atributo"], ans: 2, info: "El verbo expresa acciones, estados o situaciones y es siempre el NÚCLEO del predicado." },
+        { type: 'choice', q: "Los verbos se componen de...", opts: ["Raíz y prefijos", "Raíz y afijos flexivos", "Lexema y morfema derivativo", "Prefijos y sufijos"], ans: 1, info: "La raíz no cambia y los afijos flexivos aportan información de persona, número, tiempo, modo y aspecto." },
+        { type: 'choice', q: "¿Qué modo verbal expresa un hecho real (ej: 'Nosotros visitaremos el museo')?", opts: ["Indicativo", "Subjuntivo", "Imperativo", "Gerundio"], ans: 0, info: "El Indicativo expresa hechos reales. El Subjuntivo dudas o deseos, y el Imperativo órdenes." },
+        { type: 'choice', q: "Si la acción del verbo está terminada (ej: 'Marta estudió tres días'), decimos que tiene aspecto...", opts: ["Imperfecto", "Perfecto", "Simple", "Compuesto"], ans: 1, info: "El aspecto Perfecto indica que la acción ya ha concluido." },
+        { type: 'choice', q: "Las formas NO personales del verbo son...", opts: ["Presente, pasado y futuro", "Indicativo, subjuntivo e imperativo", "Infinitivo, gerundio y participio", "Primera, segunda y tercera conjugación"], ans: 2, info: "No expresan persona, ni modo, ni tiempo. Ej: cantar, cantando, cantado." },
+        { type: 'choice', q: "En la conjugación verbal, los tiempos compuestos se forman con...", opts: ["El participio del verbo principal", "Verbo auxiliar haber + participio", "Verbo ser + participio", "Raíz + afijo"], ans: 1, info: "Ejemplo: 'Había desaparecido' (Haber + participio del verbo desaparecer)." },
+        { type: 'tf', q: "Los verbos irregulares son aquellos que NO presentan cambios ni en la raíz ni en las desinencias.", ans: false, info: "Falso: Los verbos irregulares SÍ presentan cambios en la raíz, en los afijos o en ambos." },
+        { type: 'choice', q: "El tiempo 'Había cantado' corresponde al...", opts: ["Pretérito perfecto compuesto", "Pretérito anterior", "Pretérito pluscuamperfecto", "Futuro compuesto"], ans: 2, info: "Es el Pretérito Pluscuamperfecto del Modo Indicativo." },
+
+        // UNIDAD 6: El Adjetivo
+        { type: 'choice', q: "El adjetivo calificativo siempre concuerda con el sustantivo al que acompaña en...", opts: ["Persona y número", "Género y tiempo", "Género y número", "Modo y aspecto"], ans: 2, info: "Ejemplo: Gato blanco (masculino, singular) / Gatas blancas (femenino, plural)." },
+        { type: 'choice', q: "¿En qué grado está el adjetivo en la frase 'Es el más rápido del equipo'?", opts: ["Positivo", "Comparativo de superioridad", "Superlativo relativo", "Superlativo absoluto"], ans: 2, info: "El superlativo relativo destaca una cualidad en su grado máximo pero dentro de un grupo ('del equipo')." },
+
+        // UNIDAD 7: Determinantes y Pronombres (Extraído de los PDF aportados)
+        { type: 'choice', q: "Según los apuntes, ¿cuál es la principal función del Determinante?", opts: ["Sustituir al sustantivo", "Acompañar al sustantivo y concretar su significado", "Indicar una acción", "Unir oraciones"], ans: 1, info: "El determinante acompaña al sustantivo y concreta su significado. Ej: 'Esta botella'." },
+        { type: 'choice', q: "Los determinantes demostrativos que indican 'lejanía' son:", opts: ["este, esta, estos, estas", "ese, esa, esos, esas", "aquel, aquella, aquellos, aquellas", "mío, tuyo, suyo"], ans: 2, info: "Aquel, aquella, aquellos y aquellas especifican una distancia de lejanía." },
+        { type: 'choice', q: "¿Qué clase de palabra sustituye y representa por lo general a un sustantivo sin nombrarlo?", opts: ["El Adjetivo", "El Pronombre", "El Determinante", "La Preposición"], ans: 1, info: "El Pronombre cumple en la oración las mismas funciones que el sustantivo al que sustituye." },
+        { type: 'choice', q: "En la oración 'La profesora de inglés es muy buena. ESTA es la mejor', la palabra 'ESTA' funciona como...", opts: ["Determinante demostrativo", "Pronombre demostrativo", "Adjetivo calificativo", "Pronombre personal"], ans: 1, info: "Es un pronombre porque no acompaña a ningún sustantivo, sino que lo sustituye (a la profesora)." },
+        { type: 'choice', q: "Los pronombres personales 'yo, tú, él, nosotros...' son formas...", opts: ["Átonas", "Tónicas", "Demostrativas", "Relativas"], ans: 1, info: "Son pronombres personales tónicos. Me, te, se, nos, os... son átonos." },
+        { type: 'tf', q: "La sinonimia se produce cuando dos palabras tienen significados opuestos o contrarios.", ans: false, info: "Falso. La sinonimia es cuando tienen significados iguales o muy parecidos. Los opuestos son los Antónimos." },
+
+        // UNIDAD 8: Palabras Invariables y Semántica
+        { type: 'choice', q: "¿Cuáles son las palabras invariables (no tienen género ni número)?", opts: ["Sustantivos y adjetivos", "Verbos y pronombres", "Adverbios, preposiciones y conjunciones", "Determinantes y sustantivos"], ans: 2, info: "Los adverbios, preposiciones, conjunciones e interjecciones nunca cambian de forma." },
+        { type: 'choice', q: "El significado objetivo, universal y de diccionario de una palabra se llama...", opts: ["Connotación", "Denotación", "Polisemia", "Sinonimia"], ans: 1, info: "La denotación es el significado real y objetivo. La connotación son los valores subjetivos que le damos." },
+        { type: 'tf', q: "La noticia periodística es un texto literario que busca transmitir emociones personales del autor.", ans: false, info: "Falso: La noticia es un texto periodístico informativo que busca la objetividad, no la ficción literaria." }
+    ];
+
+    // CONFIGURACIÓN DEL EXAMEN
+    const QUESTIONS_PER_GAME = 20; // Se cargarán 20 preguntas aleatorias de todo el banco
+    let selectedQuestions = [];
+    let currentQ = 0;
+    let score = 0;
+    let correctCount = 0;
+    let wrongCount = 0;
+
+    // Mezclar el array y coger las primeras N preguntas
+    function initGame() {
+        // Algoritmo de Fisher-Yates para mezclar arrays
+        let shuffled = [...allQuestions];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        selectedQuestions = shuffled.slice(0, QUESTIONS_PER_GAME);
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const qData = selectedQuestions[currentQ];
+        const area = document.getElementById('question-area');
+        const feedback = document.getElementById('feedback-area');
+        
+        feedback.style.display = 'none';
+        document.getElementById('q-count').innerText = `PREGUNTA: ${currentQ + 1} / ${QUESTIONS_PER_GAME}`;
+        document.getElementById('progress-fill').style.width = `${(currentQ / QUESTIONS_PER_GAME) * 100}%`;
+        area.innerHTML = '';
+
+        if (qData.type === 'choice') {
+            area.innerHTML = `<div class="question-text">${qData.q}</div><div class="options-grid" id="opts"></div>`;
+            qData.opts.forEach((o, i) => {
+                const b = document.createElement('button');
+                b.className = 'btn';
+                b.innerHTML = o;
+                b.onclick = () => checkAnswer(i === qData.ans, b);
+                area.querySelector('#opts').appendChild(b);
+            });
+        } else if (qData.type === 'tf') {
+            area.innerHTML = `<div class="question-text">${qData.q}</div><div class="tf-grid">
+                <button class="btn btn-tf" onclick="checkAnswer(true === ${qData.ans}, this)">VERDADERO</button>
+                <button class="btn btn-tf" onclick="checkAnswer(false === ${qData.ans}, this)">FALSO</button>
+            </div>`;
+        }
+    }
+
+    function checkAnswer(isCorrect, clickedBtn) {
+        const qData = selectedQuestions[currentQ];
+        const fArea = document.getElementById('feedback-area');
+        const fText = document.getElementById('feedback-text');
+        
+        // Deshabilitar todos los botones para que no responda dos veces
+        const btns = document.querySelectorAll('.btn');
+        btns.forEach(b => {
+            b.disabled = true;
+            b.style.cursor = 'not-allowed';
+            b.style.opacity = '0.7';
+        });
+
+        if (isCorrect) {
+            clickedBtn.style.background = '#e8f8f5';
+            clickedBtn.style.borderColor = 'var(--success)';
+            
+            // Valor de cada pregunta para que el total sea 10 (10 / numero de preguntas)
+            score += (10 / QUESTIONS_PER_GAME); 
+            correctCount++;
+            fArea.className = 'correct-box';
+            fText.innerHTML = `<b>¡CORRECTO! 🎯</b><br><br>${qData.info}`;
+        } else {
+            clickedBtn.style.background = '#fdedec';
+            clickedBtn.style.borderColor = 'var(--error)';
+            
+            wrongCount++;
+            fArea.className = 'wrong-box';
+            fText.innerHTML = `<b>INCORRECTO ❌</b><br><br>${qData.info}`;
+        }
+        
+        fArea.style.display = 'block';
+        document.getElementById('score-count').innerText = `PUNTOS: ${score.toFixed(1)}`;
+    }
+
+    function nextQuestion() {
+        currentQ++;
+        if (currentQ < QUESTIONS_PER_GAME) {
+            renderQuestion();
+        } else {
+            showFinal();
+        }
+    }
+
+    function showFinal() {
+        document.getElementById('quiz-ui').style.display = 'none';
+        document.getElementById('score-screen').style.display = 'block';
+        
+        // Redondear la nota final
+        let finalMark = score.toFixed(1);
+        if(finalMark > 10) finalMark = 10; // Seguridad
+
+        document.getElementById('total-pts').innerText = finalMark;
+        document.getElementById('c-count').innerText = correctCount;
+        document.getElementById('w-count').innerText = wrongCount;
+        
+        let rankText = document.getElementById('rank-text');
+        if (finalMark >= 9) {
+            rankText.innerText = "¡SOBRESALIENTE! Eres un genio de la gramática y literatura.";
+            rankText.style.color = "var(--success)";
+        } else if (finalMark >= 5) {
+            rankText.innerText = "¡APROBADO! Tienes una buena base, pero puedes seguir mejorando.";
+            rankText.style.color = "#fdcb6e"; // Amarillo oscuro
+        } else {
+            rankText.innerText = "INSUFICIENTE. ¡Toca repasar los apuntes y volver a intentarlo!";
+            rankText.style.color = "var(--error)";
+        }
+    }
+
+    // Iniciar el juego al cargar la página
+    initGame();
+</script>
+
+</body>
+</html>

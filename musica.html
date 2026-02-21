@@ -7,16 +7,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon-blue: #00d4ff;
-            --neon-pink: #ff00ab;
-            --neon-green: #39ff14;
-            --dark-bg: #050505;
-            --card-bg: #121212;
+            --primary: #4a90e2;    /* Azul vibrante claro */
+            --accent: #ff4081;     /* Rosa vibrante */
+            --success: #4caf50;    /* Verde suave */
+            --bg-light: #f5f7fa;   /* Fondo general grisáceo muy claro */
+            --card-white: #ffffff; /* Blanco puro para tarjetas */
+            --text-dark: #2c3e50;  /* Texto oscuro para contraste */
         }
 
         body {
-            background-color: var(--dark-bg);
-            color: white;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
             font-family: 'Rajdhani', sans-serif;
             margin: 0;
             display: flex;
@@ -28,20 +29,21 @@
         #game-container {
             width: 95%;
             max-width: 700px;
-            background: var(--card-bg);
-            border: 3px solid var(--neon-blue);
-            box-shadow: 0 0 25px var(--neon-blue);
-            border-radius: 15px;
-            padding: 30px;
+            background: var(--card-white);
+            border-radius: 20px;
+            padding: 40px;
             position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Sombra suave */
+            border: 1px solid #e1e8ed;
         }
 
         h1 {
             font-family: 'Orbitron', sans-serif;
             text-align: center;
-            color: var(--neon-blue);
-            text-shadow: 0 0 10px var(--neon-blue);
+            color: var(--primary);
             font-size: 1.8rem;
+            margin-top: 0;
+            letter-spacing: 2px;
         }
 
         .stats-bar {
@@ -49,76 +51,113 @@
             justify-content: space-between;
             margin-bottom: 20px;
             font-weight: bold;
-            color: var(--neon-pink);
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .progress-container {
-            height: 10px;
-            background: #222;
-            border-radius: 5px;
-            margin-bottom: 25px;
+            height: 12px;
+            background: #eee;
+            border-radius: 10px;
+            margin-bottom: 30px;
             overflow: hidden;
         }
 
         #progress-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+            background: linear-gradient(90deg, var(--primary), var(--accent));
             transition: 0.4s ease;
         }
 
         .question-text {
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            line-height: 1.2;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            line-height: 1.3;
+            font-weight: 700;
+            color: #1a1a1a;
         }
 
         /* Tipos de Botones */
-        .options-grid { display: grid; gap: 10px; }
+        .options-grid { display: grid; gap: 12px; }
         
         .btn {
-            background: #1a1a1a;
-            border: 1px solid white;
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
+            background: #fff;
+            border: 2px solid #e1e8ed;
+            color: var(--text-dark);
+            padding: 18px;
+            border-radius: 12px;
             cursor: pointer;
             font-size: 1.1rem;
-            transition: 0.2s;
+            transition: all 0.2s;
             text-align: left;
+            font-weight: 600;
         }
 
         .btn:hover {
-            background: var(--neon-blue);
-            color: black;
-            font-weight: bold;
+            border-color: var(--primary);
+            background: #f0f7ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.15);
         }
 
         /* Verdadero / Falso */
         .tf-grid { display: flex; gap: 15px; }
-        .btn-tf { flex: 1; text-align: center; font-size: 1.5rem; }
+        .btn-tf { flex: 1; text-align: center; font-size: 1.3rem; }
 
         /* Matching */
         .match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .match-col { display: flex; flex-direction: column; gap: 10px; }
+        .match-col { display: flex; flex-direction: column; gap: 12px; }
         .match-item {
-            background: #222;
-            padding: 10px;
-            border: 1px dashed var(--neon-blue);
-            border-radius: 5px;
+            background: #fff;
+            padding: 15px;
+            border: 2px dashed var(--primary);
+            border-radius: 10px;
             cursor: pointer;
             font-size: 1rem;
-            min-height: 40px;
+            font-weight: bold;
+            min-height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            transition: 0.2s;
         }
-        .match-item.selected { background: var(--neon-pink); border-style: solid; }
-        .match-item.locked { opacity: 0.3; cursor: default; border: 1px solid gray; }
+        .match-item.selected { 
+            background: var(--accent); 
+            color: white; 
+            border-style: solid;
+            border-color: var(--accent);
+        }
+        .match-item.locked { 
+            background: #f1f1f1; 
+            cursor: default; 
+            border: 2px solid #ccc; 
+            color: #999;
+        }
 
         #score-screen { text-align: center; display: none; }
-        .final-score { font-size: 4rem; color: var(--neon-green); font-family: 'Orbitron'; }
+        .final-score { 
+            font-size: 5rem; 
+            color: var(--success); 
+            font-family: 'Orbitron'; 
+            margin: 20px 0;
+        }
+
+        #rank-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .btn-restart {
+            background: var(--primary);
+            color: white;
+            width: 100%;
+            text-align: center;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -127,7 +166,7 @@
     <div id="quiz-ui">
         <div class="stats-bar">
             <span id="q-count">PREGUNTA: 1 / 50</span>
-            <span id="score-count">SCORE: 0</span>
+            <span id="score-count">PUNTOS: 0</span>
         </div>
         <div class="progress-container"><div id="progress-fill"></div></div>
         
@@ -136,22 +175,20 @@
     </div>
 
     <div id="score-screen">
-        <h1>¡LEVEL COMPLETE!</h1>
+        <h1>¡DESAFÍO COMPLETADO!</h1>
         <div class="final-score" id="total-pts">0</div>
         <p id="rank-text"></p>
-        <button class="btn" style="text-align: center; width: 100%;" onclick="location.reload()">REINICIAR DESAFÍO</button>
+        <button class="btn btn-restart" onclick="location.reload()">REINTENTAR EXAMEN</button>
     </div>
 </div>
 
 <script>
-    // --- BANCO DE PREGUNTAS (Basado en el PDF) ---
-    // [cite: 5, 6, 7, 12, 14, 30, 31, 32, 34, 36, 37, 71, 73, 74, 76, 78, 80, 81, 82, 109, 111, 112, 115, 118, 119, 122, 126, 128, 130, 132]
+    // --- BANCO DE PREGUNTAS ---
     const questions = [
-        // Elección Múltiple (1-17 aprox)
         { type: 'choice', q: "¿Cuál es el material que vibra en la voz?", opts: ["Los pulmones", "Las cuerdas vocales", "La boca", "El diafragma"], ans: 1 },
         { type: 'choice', q: "¿Qué aparato abastece el aire necesario?", opts: ["Aparato Resonador", "Aparato Fonador", "Aparato Respiratorio", "Aparato Auditivo"], ans: 2 },
         { type: 'choice', q: "La respiración más idónea para el canto es:", opts: ["Superior", "Abdominal", "Clavicular", "Completa"], ans: 3 },
-        { type: 'choice', q: "¿Cuántas cuerdas vocales tenemos en total?", opts: ["2", "4", "6", "8"], ans: 1 }, // 2 falsas, 2 verdaderas 
+        { type: 'choice', q: "¿Cuántas cuerdas vocales tenemos en total?", opts: ["2", "4", "6", "8"], ans: 1 }, 
         { type: 'choice', q: "¿Dónde se sitúan las cuerdas vocales?", opts: ["Tráquea", "Faringe", "Laringe", "Esófago"], ans: 2 },
         { type: 'choice', q: "¿Qué función tiene el aparato resonador?", opts: ["Producir aire", "Vibrar", "Amplificar y dar timbre", "Cerrar la glotis"], ans: 2 },
         { type: 'choice', q: "¿Cuál es la voz más aguda de mujer?", opts: ["Mezzosoprano", "Contralto", "Soprano", "Tenor"], ans: 2 },
@@ -166,26 +203,24 @@
         { type: 'choice', q: "¿Qué órgano ayuda a controlar la espiración?", opts: ["Corazón", "Diafragma", "Hígado", "Páncreas"], ans: 1 },
         { type: 'choice', q: "El coro de voces mixtas está formado por:", opts: ["Solo hombres", "Solo niños", "Hombres y mujeres", "Solo sopranos"], ans: 2 },
 
-        // Verdadero / Falso (18-34 aprox)
-        { type: 'tf', q: "Las cuerdas vocales se abren cuando cantamos.", ans: false }, // Se cierran y vibran 
+        { type: 'tf', q: "Las cuerdas vocales se abren cuando cantamos.", ans: false }, 
         { type: 'tf', q: "El aparato resonador incluye la cavidad bucal y nasal.", ans: true },
-        { type: 'tf', q: "La voz se clasifica primero por la tesitura.", ans: false }, // Primero por sexo [cite: 66]
+        { type: 'tf', q: "La voz se clasifica primero por la tesitura.", ans: false }, 
         { type: 'tf', q: "Un cuarteto suele tener Soprano, Contralto, Tenor y Bajo.", ans: true },
         { type: 'tf', q: "La respiración superior llena de aire la parte inferior de los pulmones.", ans: false },
         { type: 'tf', q: "El sonido de las cuerdas vocales sale débil de la laringe.", ans: true },
-        { type: 'tf', q: "La laringe es parte del aparato respiratorio.", ans: false }, // Es del fonador [cite: 32]
+        { type: 'tf', q: "La laringe es parte del aparato respiratorio.", ans: false }, 
         { type: 'tf', q: "El contratenor es una voz femenina muy grave.", ans: false },
         { type: 'tf', q: "El orfeón es la agrupación coral más numerosa.", ans: true },
         { type: 'tf', q: "Las cuerdas vocales son membranas que chocan entre sí.", ans: true },
         { type: 'tf', q: "Al inspirar, el aire pasa por la tráquea.", ans: true },
         { type: 'tf', q: "La tesitura es el registro de notas que puede cantar una voz.", ans: true },
-        { type: 'tf', q: "Un coro de cámara tiene entre 60 y 100 personas.", ans: false }, // 10 a 30 [cite: 118]
+        { type: 'tf', q: "Un coro de cámara tiene entre 60 y 100 personas.", ans: false }, 
         { type: 'tf', q: "El barítono es la voz intermedia de hombre.", ans: true },
         { type: 'tf', q: "La voz humana se considera un instrumento musical.", ans: true },
         { type: 'tf', q: "Las voces blancas son las voces de hombres graves.", ans: false },
         { type: 'tf', q: "El velo del paladar ayuda a amplificar el sonido.", ans: true },
 
-        // Emparejamiento (35-50 - Estos se generan por grupos de 3 para que quepan)
         { type: 'match', pairs: [ {l: "Soprano", r: "Aguda Mujer"}, {l: "Bajo", r: "Grave Hombre"}, {l: "Contralto", r: "Grave Mujer"} ] },
         { type: 'match', pairs: [ {l: "Dúo", r: "2 Voces"}, {l: "Trío", r: "3 Voces"}, {l: "Cuarteto", r: "4 Voces"} ] },
         { type: 'match', pairs: [ {l: "Nariz", r: "Respiratorio"}, {l: "Laringe", r: "Fonador"}, {l: "Boca", r: "Resonador"} ] },
@@ -193,12 +228,10 @@
         { type: 'match', pairs: [ {l: "Inspirar", r: "Entra aire"}, {l: "Espirar", r: "Sale aire"}, {l: "Vibrar", r: "Suena"} ] },
         { type: 'match', pairs: [ {l: "Escolanía", r: "Niños"}, {l: "Coral", r: "30-70 voces"}, {l: "Cámara", r: "10-30 voces"} ] },
         { type: 'match', pairs: [ {l: "Cuerdas", r: "Vibran"}, {l: "Pulmones", r: "Aire"}, {l: "Cráneo", r: "Resonancia"} ] }
-        // Se pueden añadir más hasta llegar a 50 lógica interna...
     ];
 
-    // Llenamos el resto para llegar a 50 con variaciones
     while(questions.length < 50) {
-        questions.push({ type: 'tf', q: "Pregunta de refuerzo: ¿El diafragma es un músculo? (PDF)", ans: true });
+        questions.push({ type: 'tf', q: "Pregunta de refuerzo: ¿El diafragma es el músculo principal de la respiración?", ans: true });
     }
 
     let currentQ = 0;
@@ -229,8 +262,6 @@
             area.innerHTML = `<div class="question-text">Empareja los conceptos correctamente:</div><div class="match-container">
                 <div class="match-col" id="col-l"></div><div class="match-col" id="col-r"></div>
             </div>`;
-            
-            // Mezclar derecha
             let lefts = [...qData.pairs];
             let rights = [...qData.pairs].sort(() => Math.random() - 0.5);
 
@@ -274,14 +305,14 @@
                 setTimeout(() => {
                     selL.el.classList.remove('selected'); selR.el.classList.remove('selected');
                     selL = null; selR = null;
-                }, 300);
+                }, 400);
             }
         }
     }
 
     function checkAns(isCorrect) {
-        if (isCorrect) score += 0.2; // 0.2 * 50 = 10 puntos total
-        document.getElementById('score-count').innerText = `SCORE: ${score.toFixed(1)}`;
+        if (isCorrect) score += 0.2;
+        document.getElementById('score-count').innerText = `PUNTOS: ${score.toFixed(1)}`;
         currentQ++;
         if (currentQ < 50) renderQuestion();
         else showFinal();
@@ -291,7 +322,7 @@
         document.getElementById('quiz-ui').style.display = 'none';
         document.getElementById('score-screen').style.display = 'block';
         document.getElementById('total-pts').innerText = score.toFixed(1);
-        let msg = score >= 5 ? "¡ERES UN MAESTRO DE LA VOZ!" : "NECESITAS MÁS REPASO, PADAWAN.";
+        let msg = score >= 5 ? "¡ENHORABUENA! ERES UN EXPERTO VOCAL." : "SIGUE ESTUDIANDO PARA MEJORAR TU REGISTRO.";
         document.getElementById('rank-text').innerText = msg;
     }
 

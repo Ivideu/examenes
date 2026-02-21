@@ -3,354 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RETO LINGÜÍSTICO AVANZADO - 1º ESO</title>
+    <title>RETO LINGÜÍSTICO 50 - 1º ESO</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #4a69bd;
-            --secondary: #60a3bc;
-            --accent: #f6b93b;
-            --success: #78e08f;
-            --error: #e55039;
-            --bg-light: #f1f2f6;
-            --card-white: #ffffff;
-            --text-dark: #2f3542;
+            --primary: #2f3640;
+            --secondary: #8c7ae6;
+            --accent: #e1b12c;
+            --success: #44bd32;
+            --error: #c23616;
+            --bg: #f5f6fa;
         }
 
         body {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
+            background: var(--bg);
             font-family: 'Nunito', sans-serif;
             margin: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
         }
 
         #game-container {
-            width: 95%;
+            width: 100%;
             max-width: 850px;
-            background: var(--card-white);
-            border-radius: 20px;
-            padding: 35px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            border-top: 8px solid var(--primary);
-            margin: 20px 0;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-top: 10px solid var(--secondary);
         }
 
-        h1 {
-            font-family: 'Montserrat', sans-serif;
-            text-align: center;
-            color: var(--primary);
-            font-size: 1.8rem;
-            margin-top: 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .stats-bar {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            font-weight: 800;
-            color: var(--primary);
-            font-size: 1.1rem;
-        }
-
-        .progress-container {
-            height: 12px;
-            background: #eee;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            overflow: hidden;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        #progress-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--secondary), var(--primary));
-            transition: width 0.4s ease;
-        }
-
-        .question-text {
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            font-weight: 800;
-            color: #2f3542;
-            line-height: 1.4;
-        }
-
-        .options-grid { display: grid; gap: 12px; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .stats { display: flex; justify-content: space-between; font-weight: 800; color: var(--secondary); margin-bottom: 10px; }
         
+        .progress-bar { height: 12px; background: #dcdde1; border-radius: 6px; overflow: hidden; margin-bottom: 30px; }
+        #fill { height: 100%; width: 0%; background: var(--secondary); transition: 0.3s; }
+
+        .question-box { font-size: 1.3rem; font-weight: 800; margin-bottom: 25px; color: var(--primary); }
+        .razonamiento-tag { background: var(--accent); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; vertical-align: middle; margin-right: 10px; }
+
+        .options { display: grid; gap: 12px; }
         .btn {
-            background: #fff; 
-            border: 2px solid #ced6e0;
-            padding: 16px; 
-            border-radius: 12px; 
-            cursor: pointer;
-            font-size: 1.1rem; 
-            font-weight: 700; 
-            text-align: left;
-            font-family: 'Nunito', sans-serif;
-            transition: all 0.2s;
-            color: var(--text-dark);
+            background: white; border: 2px solid #dcdde1; padding: 15px;
+            border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: 600;
+            transition: 0.2s; text-align: left;
+        }
+        .btn:hover:not(:disabled) { border-color: var(--secondary); background: #f1f2f6; }
+
+        #feedback {
+            display: none; margin-top: 25px; padding: 20px; border-radius: 10px;
+            text-align: center; animation: slideIn 0.4s ease;
+        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } }
+        .correct { background: #dff9fb; color: var(--success); border: 2px solid var(--success); }
+        .wrong { background: #fab1a0; color: var(--error); border: 2px solid var(--error); }
+
+        .next-btn {
+            margin-top: 15px; background: var(--secondary); color: white;
+            border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer;
+            font-weight: 800; font-family: 'Montserrat';
         }
 
-        .btn:hover:not(:disabled) { 
-            border-color: var(--secondary); 
-            background: #f8fbff; 
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(96, 163, 188, 0.2);
-        }
-        
-        .tf-grid { display: flex; gap: 15px; }
-        .btn-tf { flex: 1; text-align: center; font-size: 1.2rem; }
-
-        #feedback-area {
-            display: none; margin-top: 25px; padding: 20px;
-            border-radius: 12px; text-align: center; font-size: 1.1rem;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .correct-box { background: #f0fbf4; color: #2ecc71; border: 2px solid #2ecc71; }
-        .wrong-box { background: #fdf2f0; color: #e74c3c; border: 2px solid #e74c3c; }
-
-        .btn-next {
-            margin-top: 15px; background: var(--primary); color: white;
-            border: none; padding: 12px 30px; border-radius: 8px;
-            cursor: pointer; font-family: 'Montserrat'; font-weight: bold;
-            font-size: 1.1rem; text-transform: uppercase;
-        }
-
-        .btn-next:hover { background: #3c55a5; }
-
-        #score-screen { text-align: center; display: none; }
-        .final-score { font-size: 5rem; color: var(--primary); font-family: 'Montserrat'; font-weight: 800; margin: 10px 0; }
-        .stat-box { display: flex; justify-content: space-around; margin: 30px 0; font-size: 1.3rem; font-weight: 800; background: #f1f2f6; padding: 20px; border-radius: 15px; }
+        #results { display: none; text-align: center; }
+        .score-big { font-size: 5rem; color: var(--secondary); font-weight: 800; }
     </style>
 </head>
 <body>
 
 <div id="game-container">
-    <div id="quiz-ui">
-        <h1>RETO DE LENGUA - 1º ESO</h1>
-        <div class="stats-bar">
-            <span id="q-count">PREGUNTA: 1 / 20</span>
-            <span id="score-count">PUNTOS: 0</span>
+    <div id="quiz">
+        <div class="header">
+            <h1>EXAMEN FINAL DE LENGUA</h1>
+            <div class="stats">
+                <span id="q-txt">Pregunta: 1 / 50</span>
+                <span id="s-txt">Nota: 0.0</span>
+            </div>
+            <div class="progress-bar"><div id="fill"></div></div>
         </div>
-        <div class="progress-container"><div id="progress-fill"></div></div>
-        
+
         <div id="question-area"></div>
-        
-        <div id="feedback-area">
-            <p id="feedback-text"></p>
-            <button class="btn-next" onclick="nextQuestion()">Siguiente Pregunta ➔</button>
+
+        <div id="feedback">
+            <p id="f-text"></p>
+            <button class="next-btn" onclick="next()">CONTINUAR ➔</button>
         </div>
     </div>
 
-    <div id="score-screen">
-        <h1>¡EXAMEN COMPLETADO!</h1>
-        <div class="final-score" id="total-pts">0</div>
-        <p style="font-size: 1.2rem; color: #747d8c;">Puntuación sobre 10</p>
-        <div class="stat-box">
-            <div style="color: var(--success)">Aciertos: <br><span id="c-count" style="font-size: 2rem;">0</span></div>
-            <div style="color: var(--error)">Errores: <br><span id="w-count" style="font-size: 2rem;">0</span></div>
-        </div>
-        <p id="rank-text" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 30px;"></p>
-        <button class="btn btn-next" style="width:100%;" onclick="location.reload()">🔄 GENERAR NUEVO EXAMEN ALEATORIO</button>
+    <div id="results">
+        <h2>RESULTADO FINAL</h2>
+        <div class="score-big" id="final-mark">0</div>
+        <p id="rank-msg"></p>
+        <button class="next-btn" onclick="location.reload()">REPETIR EXAMEN</button>
     </div>
 </div>
 
 <script>
-    // BANCO DE 50 PREGUNTAS (Incluye preguntas de razonamiento)
-    const allQuestions = [
-        // UNIDAD 1 & 2
-        { type: 'choice', q: "En la comunicación, ¿cómo se llama el medio físico por el que circula el mensaje?", opts: ["Emisor", "Código", "Canal", "Receptor"], ans: 2, info: "El canal es el medio físico (el aire, un papel, internet...) por el que viaja el mensaje." },
-        { type: 'choice', q: "¿Qué situación se da cuando conviven dos lenguas pero una tiene mayor prestigio social o uso institucional?", opts: ["Bilingüismo", "Diglosia", "Dialecto", "Monolingüismo"], ans: 1, info: "La diglosia es el desequilibrio en el uso y prestigio entre dos lenguas que conviven." },
-        { type: 'tf', q: "Un dialecto es un sistema lingüístico derivado de otro, sin una fuerte diferenciación frente a los de su mismo origen.", ans: true, info: "Correcto: El dialecto es una variedad de una lengua en un territorio determinado." },
-        { type: 'choice', q: "Las palabras formadas por la unión de dos o más raíces (ej: sacapuntas) son palabras...", opts: ["Simples", "Derivadas", "Compuestas", "Parasintéticas"], ans: 2, info: "Las palabras compuestas unen dos o más palabras simples (saca + puntas)." },
-        { type: 'choice', q: "[RAZONAMIENTO] Sabiendo que los adverbios terminados en '-mente' conservan la tilde del adjetivo original, ¿cómo se escribe correctamente?", opts: ["Facilmente", "Fácilmente", "Facilménté", "Fàcilmente"], ans: 1, info: "Fácil lleva tilde por ser llana terminada en 'l'. Al añadir '-mente', la conserva: Fácilmente." },
-        { type: 'choice', q: "[RAZONAMIENTO] Si estás leyendo las noticias en una página web, ¿cuál es el canal?", opts: ["El periodista", "El idioma español", "La pantalla del ordenador / Internet", "La noticia en sí"], ans: 2, info: "El canal es el soporte físico. Internet o la pantalla son el canal." },
-        { type: 'tf', q: "La palabra 'Murciélago' tiene un triptongo.", ans: false, info: "Falso. Tiene un diptongo 'ié'. Para que sea triptongo deben ser tres vocales en la misma sílaba (cerrada+abierta+cerrada)." },
-        { type: 'choice', q: "[RAZONAMIENTO] Analiza la palabra 'Submarino'. Está formada por...", opts: ["Lexema + sufijo", "Prefijo + lexema + sufijo", "Dos lexemas", "Lexema sin morfemas"], ans: 1, info: "Sub (prefijo) + mar (lexema/raíz) + ino (sufijo)." },
-        
-        // UNIDAD 3
-        { type: 'choice', q: "¿Qué clase de palabra designa personas, animales, cosas, ideas o sentimientos?", opts: ["Adjetivo", "Verbo", "Sustantivo", "Adverbio"], ans: 2, info: "El sustantivo o nombre es la palabra que sirve para nombrar la realidad." },
-        { type: 'tf', q: "La familia léxica está formada por todas las palabras que comparten la misma raíz.", ans: true, info: "Correcto: Por ejemplo, flor, florero, floristería, aflorar (raíz: flor)." },
-        { type: 'choice', q: "Un sustantivo abstracto es aquel que...", opts: ["Se puede percibir por los sentidos", "Nombra grupos de cosas en singular", "Nombra ideas o sentimientos", "Deriva de un verbo"], ans: 2, info: "Ejemplos de sustantivos abstractos: alegría, paz, justicia." },
-        { type: 'choice', q: "[RAZONAMIENTO] Identifica el intruso en esta familia léxica: Panadero, Panadería, Empanada, Pantalón.", opts: ["Panadero", "Panadería", "Empanada", "Pantalón"], ans: 3, info: "Pantalón no comparte la raíz léxica 'pan-' relacionada con el alimento." },
-        { type: 'choice', q: "[RAZONAMIENTO] Decimos 'el agua clara' y no 'la agua clara'. ¿Significa esto que 'agua' es un sustantivo masculino?", opts: ["Sí, todos los sustantivos con 'el' son masculinos.", "No, es femenino. Usa 'el' para evitar cacofonía (choque de la 'a' tónica).", "Es neutro.", "Es masculino en singular y femenino en plural."], ans: 1, info: "Es femenino (por eso decimos clara y no claro). Usa 'el' porque empieza por 'a' tónica." },
-        { type: 'tf', q: "'Rebaño' es un sustantivo colectivo porque está en plural.", ans: false, info: "Falso. Es colectivo porque, estando en SINGULAR, nombra a un conjunto de ovejas." },
-        { type: 'choice', q: "Los sustantivos 'Madrid', 'Ebro' y 'Everest' son...", opts: ["Comunes", "Propios", "Abstractos", "Colectivos"], ans: 1, info: "Son sustantivos propios porque identifican a un ser o lugar concreto diferenciándolo de los demás." },
+    const bank = [
+        // 1-10: COMUNICACIÓN Y LENGUAJE
+        { q: "En la comunicación, ¿qué elemento es el sistema de signos utilizado (ej: el idioma)?", opts: ["Canal", "Código", "Mensaje", "Referente"], ans: 1, info: "El código es el conjunto de signos y reglas (como el español o el morse)." },
+        { q: "Diferencia entre lengua oral y escrita:", opts: ["La oral es planificada, la escrita espontánea", "La oral es efímera (vuela), la escrita es duradera", "No hay diferencias", "La oral solo usa palabras"], ans: 1, info: "La lengua oral suele ser espontánea y fugaz, mientras que la escrita permanece en el tiempo." },
+        { q: "[RAZONAMIENTO] Si ves una señal de STOP, ¿qué tipo de comunicación es?", opts: ["Verbal", "No verbal (Icónica)", "Auditiva", "Gestual"], ans: 1, info: "Es no verbal porque utiliza una imagen/símbolo para transmitir el mensaje." },
+        { q: "¿Qué es la diglosia?", opts: ["Hablar dos lenguas igual de bien", "Convivencia de dos lenguas donde una tiene menos prestigio", "Aprender una lengua extranjera", "Hablar solo un dialecto"], ans: 1, info: "La diglosia implica una situación de desigualdad social entre dos lenguas." },
+        { q: "Un dialecto es:", opts: ["Una lengua mal hablada", "Una variedad geográfica de una lengua", "Un idioma sin gramática", "Una lengua antigua"], ans: 1, info: "Es una variedad física/territorial (como el andaluz respecto al castellano)." },
+        { q: "[RAZONAMIENTO] ¿Cuál es el canal en una conversación por WhatsApp?", opts: ["El teléfono y la red", "El lenguaje escrito", "El receptor", "Los emojis"], ans: 0, info: "El canal es el soporte físico que permite que el mensaje llegue." },
+        { q: "Las palabras simples están formadas por:", opts: ["Dos raíces", "Una sola raíz (y prefijos)", "Una sola raíz (y morfemas flexivos)", "Varios sufijos"], ans: 2, info: "Ejemplo: 'Pan' o 'Gatos' (Raíz + flexivo de plural)." },
+        { q: "La palabra 'Sacacorchos' es:", opts: ["Simple", "Derivada", "Compuesta", "Parasintética"], ans: 2, info: "Compuesta: une Saca + Corchos." },
+        { q: "[RAZONAMIENTO] Identifica la palabra derivada:", opts: ["Balón", "Librería", "Coche", "Abrelatas"], ans: 1, info: "Librería viene de Libro + sufijo -ería." },
+        { q: "¿Qué es un signo lingüístico?", opts: ["Un dibujo", "La unión de un significante y un significado", "Una letra suelta", "Un gesto con la mano"], ans: 1, info: "Concepto de Saussure: la palabra escrita/hablada asociada a una idea." },
 
-        // UNIDAD 4 & 5 (Verbos)
-        { type: 'choice', q: "El verbo funciona siempre en la oración como...", opts: ["Complemento directo", "Núcleo del sujeto", "Núcleo del predicado", "Atributo"], ans: 2, info: "El verbo expresa acciones, estados o situaciones y es siempre el NÚCLEO del predicado." },
-        { type: 'choice', q: "Los verbos se componen de...", opts: ["Raíz y prefijos", "Raíz y afijos flexivos", "Lexema y morfema derivativo", "Prefijos y sufijos"], ans: 1, info: "La raíz no cambia y los afijos flexivos aportan información de persona, número, tiempo, modo y aspecto." },
-        { type: 'choice', q: "¿Qué modo verbal expresa un hecho real (ej: 'Nosotros visitaremos el museo')?", opts: ["Indicativo", "Subjuntivo", "Imperativo", "Gerundio"], ans: 0, info: "El Indicativo expresa hechos reales. El Subjuntivo dudas o deseos, y el Imperativo órdenes." },
-        { type: 'choice', q: "Si la acción del verbo está terminada (ej: 'Marta estudió tres días'), decimos que tiene aspecto...", opts: ["Imperfecto", "Perfecto", "Simple", "Compuesto"], ans: 1, info: "El aspecto Perfecto indica que la acción ya ha concluido." },
-        { type: 'choice', q: "Las formas NO personales del verbo son...", opts: ["Presente, pasado y futuro", "Indicativo, subjuntivo e imperativo", "Infinitivo, gerundio y participio", "Primera, segunda y tercera conjugación"], ans: 2, info: "No expresan persona, ni modo, ni tiempo. Ej: cantar, cantando, cantado." },
-        { type: 'choice', q: "En la conjugación verbal, los tiempos compuestos se forman con...", opts: ["El participio del verbo principal", "Verbo auxiliar haber + participio", "Verbo ser + participio", "Raíz + afijo"], ans: 1, info: "Ejemplo: 'Había desaparecido' (Haber + participio del verbo desaparecer)." },
-        { type: 'choice', q: "[RAZONAMIENTO] Deduce el tiempo y modo de 'Hubiéramos cantado'.", opts: ["Condicional compuesto de Indicativo", "Pretérito pluscuamperfecto de Subjuntivo", "Futuro compuesto de Subjuntivo", "Pretérito perfecto de Indicativo"], ans: 1, info: "Es Subjuntivo ('Ojalá hubiéramos cantado') y compuesto (pasado anterior a otro pasado)." },
-        { type: 'choice', q: "[RAZONAMIENTO] Transforma a voz pasiva: 'El perro mordió la pelota'.", opts: ["La pelota muerde al perro.", "La pelota fue mordida por el perro.", "El perro había mordido la pelota.", "La pelota es mordida por el perro."], ans: 1, info: "El CD ('la pelota') pasa a Sujeto Paciente y el verbo se pone en voz pasiva (fue mordida) en el mismo tiempo (pasado)." },
-        { type: 'choice', q: "[RAZONAMIENTO] Un verbo defectivo es aquel que...", opts: ["Tiene faltas de ortografía", "No se puede conjugar en todos sus tiempos o personas", "Solo se usa en plural", "No tiene infinitivo"], ans: 1, info: "Ejemplo: 'Llover' es defectivo porque normalmente solo se conjuga en 3ª persona del singular (llueve), no decimos 'yo lluevo'." },
-        { type: 'tf', q: "El participio es la única forma no personal que sí puede indicar género y número (ej: cantado, cantada, cantados).", ans: true, info: "Correcto. El infinitivo y el gerundio son invariables, pero el participio puede flexionar." },
-        { type: 'choice', q: "Identifica el Pretérito Anterior del verbo Cantar:", opts: ["Hube cantado", "Había cantado", "Habré cantado", "Habría cantado"], ans: 0, info: "El Pretérito Anterior se forma con el pretérito perfecto simple de haber (hube, hubiste, hubo...) + participio." },
-        { type: 'choice', q: "¿Qué tiempo verbal es 'Cantaréis'?", opts: ["Condicional simple", "Futuro compuesto", "Futuro simple", "Presente de subjuntivo"], ans: 2, info: "Es Futuro simple de Indicativo (2ª persona del plural)." },
+        // 11-20: SUSTANTIVOS Y ADJETIVOS
+        { q: "Sustantivo que nombra a un conjunto de seres en singular (ej: jauría):", opts: ["Propio", "Abstracto", "Colectivo", "Contable"], ans: 2, info: "Los colectivos designan grupos (ejército, enjambre)." },
+        { q: "Género del sustantivo 'Pianista':", opts: ["Masculino", "Femenino", "Común en cuanto al género", "Epiceno"], ans: 2, info: "Se dice 'el pianista' o 'la pianista', la palabra no cambia." },
+        { q: "[RAZONAMIENTO] ¿Cuál es un sustantivo abstracto?", opts: ["Aire", "Piedra", "Justicia", "Agua"], ans: 2, info: "La justicia no se puede tocar ni ver físicamente; es una idea." },
+        { q: "El grado superlativo de 'bueno' es:", opts: ["Buenísimo", "Óptimo", "El mejor", "Todas son correctas"], ans: 3, info: "Tanto el sintético, el absoluto como el irregular son válidos." },
+        { q: "[RAZONAMIENTO] En 'La blanca nieve', el adjetivo es:", opts: ["Especificativo", "Explicativo (Epíteto)", "Numeral", "Relativo"], ans: 1, info: "Es un epíteto porque resalta una cualidad intrínseca." },
+        { q: "El grado comparativo de superioridad de 'grande' es:", opts: ["Más grande", "Mayor", "A y B son correctas", "Grandísimo"], ans: 2, info: "Podemos decir 'más grande' o el irregular 'mayor'." },
+        { q: "¿Qué es una familia léxica?", opts: ["Palabras que significan lo mismo", "Palabras con la misma raíz", "Palabras del mismo tema", "Sinónimos"], ans: 1, info: "Ej: Flor, florero, florista comparten la raíz 'flor'." },
+        { q: "Indica el sustantivo epiceno (necesita añadir 'macho/hembra'):", opts: ["Gato", "Perro", "Tortuga", "Actor"], ans: 2, info: "Se dice 'la tortuga macho' o 'la tortuga hembra'." },
+        { q: "[RAZONAMIENTO] ¿Qué grado tiene: 'Este examen es facilísimo'?", opts: ["Positivo", "Comparativo", "Superlativo absoluto", "Superlativo relativo"], ans: 2, info: "El sufijo -ísimo indica grado máximo sin comparar con otros." },
+        { q: "Sustantivo propio de lugar:", opts: ["Río", "Montaña", "Tajo", "Ciudad"], ans: 2, info: "Tajo es el nombre concreto de un río." },
 
-        // UNIDAD 6 (Adjetivos)
-        { type: 'choice', q: "El adjetivo calificativo siempre concuerda con el sustantivo al que acompaña en...", opts: ["Persona y número", "Género y tiempo", "Género y número", "Modo y aspecto"], ans: 2, info: "Ejemplo: Gato blanco (masculino, singular) / Gatas blancas (femenino, plural)." },
-        { type: 'choice', q: "¿En qué grado está el adjetivo en la frase 'Es el más rápido del equipo'?", opts: ["Positivo", "Comparativo de superioridad", "Superlativo relativo", "Superlativo absoluto"], ans: 2, info: "El superlativo relativo destaca una cualidad en su grado máximo pero dentro de un grupo ('del equipo')." },
-        { type: 'choice', q: "El grado comparativo de igualdad se forma con la estructura...", opts: ["Más ... que", "Menos ... que", "Tan ... como", "Muy ..."], ans: 2, info: "Ejemplo: 'Juan es tan alto como María'." },
-        { type: 'choice', q: "[RAZONAMIENTO] ¿Cuál es el superlativo culto e irregular de 'Pobre'?", opts: ["Pobrísimo", "Paupérrimo", "Muy pobre", "El más pobre"], ans: 1, info: "Algunos adjetivos conservan su raíz latina para el superlativo absoluto: pobre -> paupérrimo; libre -> libérrimo." },
-        { type: 'choice', q: "[RAZONAMIENTO] Compara el significado: 'Un hombre pobre' y 'Un pobre hombre'.", opts: ["Significan exactamente lo mismo.", "El primero no tiene dinero, el segundo da lástima.", "El primero da lástima, el segundo no tiene dinero.", "El adjetivo está mal colocado en la segunda."], ans: 1, info: "La posición del adjetivo calificativo puede cambiar completamente su significado." },
+        // 21-35: EL VERBO (Uso de PDFs)
+        { q: "El verbo funciona siempre como:", opts: ["Sujeto", "Núcleo del Predicado", "Adyacente", "Determinante"], ans: 1, info: "Según tus apuntes, es el núcleo de la acción." },
+        { q: "¿Qué indica el modo Subjuntivo?", opts: ["Hecho real", "Orden", "Deseo, duda o posibilidad", "Pregunta"], ans: 2, info: "Ej: 'Ojalá llueva'." },
+        { q: "[RAZONAMIENTO] Tiempo de: 'Haya cantado'", opts: ["Pretérito Perfecto Compuesto Subjuntivo", "Presente Indicativo", "Pretérito Pluscuamperfecto", "Futuro"], ans: 0, info: "Es un tiempo compuesto del modo subjuntivo." },
+        { q: "Forma no personal: 'Cantando'", opts: ["Infinitivo", "Gerundio", "Participio", "Presente"], ans: 1, info: "Terminación en -ando/-iendo." },
+        { q: "Los verbos de la 2ª conjugación terminan en:", opts: ["-ar", "-er", "-ir", "-or"], ans: 1, info: "Ej: Comer, beber, temer." },
+        { q: "El aspecto 'Perfecto' significa:", opts: ["Que la acción es muy buena", "Que la acción ha terminado", "Que la acción es presente", "Que la acción no ha terminado"], ans: 1, info: "Perfecto = terminado." },
+        { q: "[RAZONAMIENTO] Indica el verbo defectivo (solo se usa en 3ª pers.):", opts: ["Cantar", "Llover", "Ir", "Ser"], ans: 1, info: "No decimos 'Yo lluevo'." },
+        { q: "Voz pasiva de 'Juan lee un libro':", opts: ["Un libro es leído por Juan", "Juan ha leído un libro", "El libro lee a Juan", "Juan leyó el libro"], ans: 0, info: "Sujeto paciente + verbo SER + participio." },
+        { q: "¿Qué tiempo es 'Cantara o cantase'?", opts: ["Pretérito Imperfecto Subjuntivo", "Condicional", "Futuro", "Presente"], ans: 0, info: "Forma simple del pasado de subjuntivo." },
+        { q: "El verbo 'Haber' en los tiempos compuestos es un verbo:", opts: ["Principal", "Auxiliar", "Defectivo", "Irregular"], ans: 1, info: "Ayuda a formar el tiempo compuesto." },
+        { q: "Tercera persona del plural del Pretérito Perfecto Simple (Cantar):", opts: ["Cantaron", "Cantaban", "Habían cantado", "Cantarían"], ans: 0, info: "Acción puntual terminada: Ellos cantaron." },
+        { q: "[RAZONAMIENTO] ¿Cuál es la raíz de 'Cantaréis'?", opts: ["Cantar-", "Cant-", "Cantaré-", "C-"], ans: 1, info: "La raíz se obtiene quitando -ar, -er, -ir al infinitivo." },
+        { q: "Tiempo: 'Había cantado'", opts: ["P. Perfecto", "P. Pluscuamperfecto Indicativo", "P. Anterior", "Futuro"], ans: 1, info: "Pasado de un pasado." },
+        { q: "El imperativo sirve para:", opts: ["Contar historias", "Dar órdenes o ruegos", "Expresar dudas", "Describir"], ans: 1, info: "Ej: '¡Canta tú!'." },
+        { q: "[RAZONAMIENTO] ¿Qué forma es 'Hube cantado'?", opts: ["P. Anterior", "P. Perfecto Simple", "P. Pluscuamperfecto", "Condicional"], ans: 0, info: "Tiempo compuesto casi en desuso." },
 
-        // UNIDAD 7 (Determinantes y Pronombres)
-        { type: 'choice', q: "¿Cuál es la principal función del Determinante?", opts: ["Sustituir al sustantivo", "Acompañar al sustantivo y concretar su significado", "Indicar una acción", "Unir oraciones"], ans: 1, info: "El determinante acompaña al sustantivo. Ej: 'Esta botella'." },
-        { type: 'choice', q: "Los determinantes demostrativos que indican 'lejanía' son:", opts: ["este, esta, estos, estas", "ese, esa, esos, esas", "aquel, aquella, aquellos, aquellas", "mío, tuyo, suyo"], ans: 2, info: "Aquel, aquella, aquellos y aquellas especifican una distancia de lejanía." },
-        { type: 'choice', q: "¿Qué clase de palabra sustituye y representa por lo general a un sustantivo sin nombrarlo?", opts: ["El Adjetivo", "El Pronombre", "El Determinante", "La Preposición"], ans: 1, info: "El Pronombre cumple en la oración las mismas funciones que el sustantivo al que sustituye." },
-        { type: 'choice', q: "[RAZONAMIENTO] En 'La profesora es buena. ÉSTA es la mejor', la palabra 'ÉSTA' funciona como...", opts: ["Determinante demostrativo", "Pronombre demostrativo", "Adjetivo calificativo", "Pronombre personal"], ans: 1, info: "Es un pronombre porque no acompaña a ningún sustantivo, sino que lo sustituye (a la profesora)." },
-        { type: 'choice', q: "Los pronombres personales 'yo, tú, él, nosotros...' son formas...", opts: ["Átonas", "Tónicas", "Demostrativas", "Relativas"], ans: 1, info: "Son pronombres personales tónicos. Me, te, se, nos, os... son átonos." },
-        { type: 'tf', q: "La sinonimia se produce cuando dos palabras tienen significados opuestos o contrarios.", ans: false, info: "Falso. La sinonimia es cuando tienen significados iguales o parecidos. Los opuestos son los Antónimos." },
-        { type: 'choice', q: "[RAZONAMIENTO] Lee esta oración: 'Mi perro me trajo la pelota a mí'. Identifica las palabras subrayadas (Mi / me / mí).", opts: ["Todos son pronombres.", "Todos son determinantes.", "Det. posesivo / Pron. átono / Pron. tónico.", "Pron. tónico / Det. posesivo / Pron. átono."], ans: 2, info: "Mi (Det. acompaña a perro). Me (Pron. personal átono). Mí (Pron. personal tónico tras preposición)." },
-        { type: 'choice', q: "¿Cuáles son las formas de cortesía de los pronombres personales de segunda persona?", opts: ["Tú / Vosotros", "Él / Ella", "Usted / Ustedes", "Mí / Ti"], ans: 2, info: "Usted y Ustedes, aunque gramaticalmente usan verbos en 3ª persona, son pronombres de 2ª persona de cortesía." },
-        { type: 'choice', q: "El pronombre relativo 'cuyo, cuya' indica...", opts: ["Lugar", "Tiempo", "Posesión", "Pregunta"], ans: 2, info: "Ejemplo: 'La chica cuyo nombre es Alejandra...'. Equivale a 'el nombre de la cual'." },
-        { type: 'choice', q: "[RAZONAMIENTO] En la oración 'Tengo muchos', la palabra 'muchos' es...", opts: ["Determinante indefinido", "Pronombre indefinido", "Adjetivo calificativo", "Adverbio de cantidad"], ans: 1, info: "Es pronombre porque va solo, no acompaña a un sustantivo (si dijera 'Tengo muchos cromos', sería determinante)." },
+        // 36-45: DETERMINANTES Y PRONOMBRES (Uso de PDFs)
+        { q: "En 'Esta casa', la palabra 'Esta' es:", opts: ["Pronombre", "Determinante Demostrativo", "Adjetivo", "Verbo"], ans: 1, info: "Es determinante porque acompaña al sustantivo 'casa'." },
+        { q: "[RAZONAMIENTO] En 'Esta es mi casa', la palabra 'Esta' es:", opts: ["Determinante", "Pronombre Demostrativo", "Adverbio", "Preposición"], ans: 1, info: "Es pronombre porque va sola, sustituye al sustantivo." },
+        { q: "¿Qué indica un determinante posesivo?", opts: ["Distancia", "Cantidad", "Pertenencia (posesión)", "Orden"], ans: 2, info: "Ej: mi, tu, su, nuestro." },
+        { q: "Pronombre personal de 1ª persona plural tónico:", opts: ["Yo", "Mí", "Nosotros", "Me"], ans: 2, info: "Nosotros/as." },
+        { q: "Los determinantes numerales ordinales indican:", opts: ["Cantidad (uno, dos)", "Orden (primero, segundo)", "Duda", "Posesión"], ans: 1, info: "Viene de 'orden'." },
+        { q: "[RAZONAMIENTO] En 'Tengo muchos cromos', 'muchos' es:", opts: ["Determinante indefinido", "Pronombre", "Adverbio", "Sustantivo"], ans: 0, info: "Acompaña a 'cromos'." },
+        { q: "Los pronombres relativos (que, cual, quien):", opts: ["Hacen preguntas", "Se refieren a un nombre ya dicho", "Indican orden", "Expresan sorpresa"], ans: 1, info: "Se refieren al antecedente." },
+        { q: "Determinante demostrativo de lejanía:", opts: ["Este", "Ese", "Aquel", "Cerca"], ans: 2, info: "Aquel/Aquella indica que está lejos." },
+        { q: "Los pronombres 'me, te, se, nos, os, les' son:", opts: ["Tónicos", "Átonos", "Demostrativos", "Posesivos"], ans: 1, info: "No pueden ir solos, necesitan al verbo." },
+        { q: "[RAZONAMIENTO] ¿Cuál es un pronombre interrogativo?", opts: ["Ese", "Nuestro", "Quién", "Varios"], ans: 2, info: "¿Quién viene?." },
 
-        // UNIDAD 8 (Invariables, Semántica y Textos)
-        { type: 'choice', q: "¿Cuáles son las palabras invariables (no tienen género ni número)?", opts: ["Sustantivos y adjetivos", "Verbos y pronombres", "Adverbios, preposiciones y conjunciones", "Determinantes y sustantivos"], ans: 2, info: "Los adverbios, preposiciones, conjunciones e interjecciones nunca cambian de forma." },
-        { type: 'choice', q: "El significado objetivo, universal y de diccionario de una palabra se llama...", opts: ["Connotación", "Denotación", "Polisemia", "Sinonimia"], ans: 1, info: "La denotación es el significado real y objetivo. La connotación son los valores subjetivos que le damos." },
-        { type: 'tf', q: "La noticia periodística es un texto literario que busca transmitir emociones personales del autor.", ans: false, info: "Falso: La noticia es un texto periodístico informativo que busca la objetividad, no la ficción literaria." },
-        { type: 'choice', q: "[RAZONAMIENTO] ¿Cuál es el significado CONNOTATIVO de 'zorro' en la frase: 'Ese vendedor es un zorro'?", opts: ["Mamífero carnívoro de la familia de los cánidos.", "Persona astuta y engañosa.", "Persona muy rápida.", "Animal que vive en el bosque."], ans: 1, info: "La connotación es el significado secundario o figurado que se le asocia culturalmente (astucia)." },
-        { type: 'choice', q: "¿Qué clase de palabra es 'ayer'?", opts: ["Preposición", "Conjunción", "Adverbio de tiempo", "Sustantivo"], ans: 2, info: "Los adverbios expresan circunstancias de tiempo, modo, lugar, cantidad..." },
-        { type: 'tf', q: "Las preposiciones forman una lista cerrada (a, ante, bajo, cabe, con...)", ans: true, info: "Correcto. Son elementos de enlace fijos e invariables." },
-        { type: 'choice', q: "[RAZONAMIENTO] Identifica la conjunción en: 'Estudié mucho, pero no aprobé'.", opts: ["Estudié", "Mucho", "Pero", "No"], ans: 2, info: "'Pero' es una conjunción adversativa que une dos proposiciones contraponiendo sus ideas." },
-        { type: 'choice', q: "Las palabras '¡Ay!', '¡Hola!' o '¡Uf!' se clasifican como...", opts: ["Adverbios", "Conjunciones", "Interjecciones", "Verbos"], ans: 2, info: "Las interjecciones expresan sentimientos o impresiones repentinas y equivalen a una oración entera." },
-        
-        // MIX EXTRAS (Refuerzo de verbos y sintaxis básica)
-        { type: 'choice', q: "[RAZONAMIENTO] ¿En qué se diferencia el Pretérito Imperfecto (cantaba) del Pretérito Perfecto Simple (canté)?", opts: ["El imperfecto es presente y el perfecto es pasado.", "El imperfecto indica una acción no terminada en el pasado, y el perfecto una acción ya finalizada.", "No hay ninguna diferencia.", "El imperfecto es subjuntivo y el perfecto indicativo."], ans: 1, info: "Es la diferencia de aspecto: 'Ayer leía' (imperfecto, no sabemos si terminó) vs 'Ayer leí' (perfecto, acción acabada)." },
-        { type: 'choice', q: "¿Qué tiempo verbal es 'Hubiere cantado'?", opts: ["Condicional", "Futuro Compuesto de Subjuntivo", "Pretérito imperfecto", "Presente"], ans: 1, info: "Es el Futuro Compuesto del Modo Subjuntivo." }
+        // 46-50: ADVERBIOS, PREPOSICIONES Y TEXTOS
+        { q: "El adverbio es una palabra:", opts: ["Variable", "Invariable", "Que siempre es sujeto", "Un tipo de verbo"], ans: 1, info: "No tiene género ni número." },
+        { q: "La denotación es el significado:", opts: ["Subjetivo", "Objetivo (del diccionario)", "Emocional", "Oculto"], ans: 1, info: "Lo que significa para todo el mundo igual." },
+        { q: "[RAZONAMIENTO] Significado connotativo de 'Ser un lince':", opts: ["Ser un animal salvaje", "Ser muy astuto/listo", "Tener mucho pelo", "Vivir en el bosque"], ans: 1, info: "Es el valor figurado que le damos." },
+        { q: "La noticia pertenece al género:", opts: ["Literario", "Periodístico informativo", "De opinión", "Teatral"], ans: 1, info: "Busca informar de hechos reales." },
+        { q: "Las preposiciones (a, ante, bajo...) sirven para:", opts: ["Sustituir nombres", "Unir palabras estableciendo relación", "Expresar sentimientos", "Indicar acciones"], ans: 1, info: "Son nexos o enlaces." }
     ];
 
-    // CONFIGURACIÓN DEL EXAMEN
-    const QUESTIONS_PER_GAME = 20; // Puedes cambiar esto a 25 o 30 si quieres exámenes más largos
-    let selectedQuestions = [];
-    let currentQ = 0;
+    let current = 0;
     let score = 0;
-    let correctCount = 0;
-    let wrongCount = 0;
+    const totalQ = bank.length;
 
-    function initGame() {
-        // Algoritmo para mezclar el array completo de 50 preguntas
-        let shuffled = [...allQuestions];
-        for (let i = shuffled.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
-        // Seleccionamos solo el número de preguntas indicado
-        selectedQuestions = shuffled.slice(0, QUESTIONS_PER_GAME);
-        renderQuestion();
-    }
-
-    function renderQuestion() {
-        const qData = selectedQuestions[currentQ];
+    function render() {
+        const data = bank[current];
         const area = document.getElementById('question-area');
-        const feedback = document.getElementById('feedback-area');
-        
-        feedback.style.display = 'none';
-        document.getElementById('q-count').innerText = `PREGUNTA: ${currentQ + 1} / ${QUESTIONS_PER_GAME}`;
-        document.getElementById('progress-fill').style.width = `${(currentQ / QUESTIONS_PER_GAME) * 100}%`;
-        area.innerHTML = '';
+        document.getElementById('q-txt').innerText = `Pregunta: ${current + 1} / ${totalQ}`;
+        document.getElementById('fill').style.width = `${(current / totalQ) * 100}%`;
+        document.getElementById('feedback').style.display = 'none';
 
-        if (qData.type === 'choice') {
-            area.innerHTML = `<div class="question-text">${qData.q}</div><div class="options-grid" id="opts"></div>`;
-            qData.opts.forEach((o, i) => {
-                const b = document.createElement('button');
-                b.className = 'btn';
-                b.innerHTML = o;
-                b.onclick = () => checkAnswer(i === qData.ans, b);
-                area.querySelector('#opts').appendChild(b);
-            });
-        } else if (qData.type === 'tf') {
-            area.innerHTML = `<div class="question-text">${qData.q}</div><div class="tf-grid">
-                <button class="btn btn-tf" onclick="checkAnswer(true === ${qData.ans}, this)">VERDADERO</button>
-                <button class="btn btn-tf" onclick="checkAnswer(false === ${qData.ans}, this)">FALSO</button>
-            </div>`;
-        }
-    }
+        let qTitle = data.q.includes('[RAZONAMIENTO]') 
+            ? `<span class="razonamiento-tag">RAZONAMIENTO</span>` + data.q.replace('[RAZONAMIENTO]', '')
+            : data.q;
 
-    function checkAnswer(isCorrect, clickedBtn) {
-        const qData = selectedQuestions[currentQ];
-        const fArea = document.getElementById('feedback-area');
-        const fText = document.getElementById('feedback-text');
+        area.innerHTML = `<div class="question-box">${qTitle}</div><div class="options" id="opts"></div>`;
         
-        const btns = document.querySelectorAll('.btn');
-        btns.forEach(b => {
-            b.disabled = true;
-            b.style.cursor = 'not-allowed';
-            b.style.opacity = '0.6';
+        data.opts.forEach((o, i) => {
+            const b = document.createElement('button');
+            b.className = 'btn';
+            b.innerText = o;
+            b.onclick = () => check(i);
+            document.getElementById('opts').appendChild(b);
         });
-
-        if (isCorrect) {
-            clickedBtn.style.background = '#f0fbf4';
-            clickedBtn.style.borderColor = '#2ecc71';
-            
-            score += (10 / QUESTIONS_PER_GAME); 
-            correctCount++;
-            fArea.className = 'correct-box';
-            fText.innerHTML = `<b>¡CORRECTO! 🎯</b><br><br>${qData.info}`;
-        } else {
-            clickedBtn.style.background = '#fdf2f0';
-            clickedBtn.style.borderColor = '#e74c3c';
-            
-            wrongCount++;
-            fArea.className = 'wrong-box';
-            fText.innerHTML = `<b>INCORRECTO ❌</b><br><br>${qData.info}`;
-        }
-        
-        fArea.style.display = 'block';
-        document.getElementById('score-count').innerText = `PUNTOS: ${score.toFixed(1)}`;
     }
 
-    function nextQuestion() {
-        currentQ++;
-        if (currentQ < QUESTIONS_PER_GAME) {
-            renderQuestion();
+    function check(idx) {
+        const data = bank[current];
+        const f = document.getElementById('feedback');
+        const ft = document.getElementById('f-text');
+        const btns = document.querySelectorAll('.btn');
+        btns.forEach(b => b.disabled = true);
+
+        if(idx === data.ans) {
+            score += (10 / totalQ);
+            f.className = 'correct';
+            ft.innerHTML = `<b>¡CORRECTO!</b><br>${data.info}`;
         } else {
-            showFinal();
+            f.className = 'wrong';
+            ft.innerHTML = `<b>INCORRECTO</b><br>${data.info}`;
         }
+        f.style.display = 'block';
+        document.getElementById('s-txt').innerText = `Nota: ${score.toFixed(1)}`;
     }
 
-    function showFinal() {
-        document.getElementById('quiz-ui').style.display = 'none';
-        document.getElementById('score-screen').style.display = 'block';
-        
-        let finalMark = score.toFixed(1);
-        if(finalMark > 10) finalMark = 10; 
-
-        document.getElementById('total-pts').innerText = finalMark;
-        document.getElementById('c-count').innerText = correctCount;
-        document.getElementById('w-count').innerText = wrongCount;
-        
-        let rankText = document.getElementById('rank-text');
-        if (finalMark >= 9) {
-            rankText.innerText = "¡SOBRESALIENTE! Tienes un razonamiento lingüístico espectacular.";
-            rankText.style.color = "var(--success)";
-        } else if (finalMark >= 5) {
-            rankText.innerText = "¡APROBADO! Vas por buen camino, aunque hay conceptos que reforzar.";
-            rankText.style.color = "var(--accent)";
-        } else {
-            rankText.innerText = "INSUFICIENTE. ¡Toca repasar a fondo la teoría y volver a intentarlo!";
-            rankText.style.color = "var(--error)";
+    function next() {
+        current++;
+        if(current < totalQ) render();
+        else {
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            let final = score.toFixed(1);
+            document.getElementById('final-mark').innerText = final;
+            document.getElementById('rank-msg').innerText = final >= 5 ? "¡Aprobado! Buen trabajo." : "Debes repasar más el temario.";
         }
     }
 
-    initGame();
+    render();
 </script>
-
 </body>
 </html>

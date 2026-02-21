@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENGLISH EXAM - 1º ESO (Second Term)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --english-blue: #002366;
+            --english-red: #cf142b;
+            --bg-gray: #f0f2f5;
+            --success: #27ae60;
+            --error: #c0392b;
+        }
+
+        body {
+            background-color: var(--bg-gray);
+            font-family: 'Nunito', sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        #quiz-container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-left: 10px solid var(--english-blue);
+            border-right: 10px solid var(--english-red);
+        }
+
+        .header { text-align: center; border-bottom: 2px solid #eee; margin-bottom: 20px; padding-bottom: 10px; }
+        .stats { display: flex; justify-content: space-between; font-weight: bold; color: var(--english-blue); margin-bottom: 10px; }
+        
+        .progress-bar { height: 10px; background: #e0e0e0; border-radius: 5px; margin-bottom: 25px; overflow: hidden; }
+        #progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--english-blue), var(--english-red)); transition: 0.4s; }
+
+        .question-box { font-size: 1.25rem; font-weight: 800; margin-bottom: 20px; color: #333; }
+        .tag-razonamiento { background: #f39c12; color: white; padding: 3px 8px; border-radius: 5px; font-size: 0.8rem; margin-right: 10px; vertical-align: middle; }
+
+        .options-grid { display: grid; gap: 10px; }
+        .option-btn {
+            background: #fff; border: 2px solid #ddd; padding: 15px;
+            border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: 600;
+            transition: 0.2s; text-align: left;
+        }
+        .option-btn:hover:not(:disabled) { border-color: var(--english-blue); background: #f8f9ff; }
+
+        #feedback {
+            display: none; margin-top: 20px; padding: 15px; border-radius: 10px;
+            text-align: center; font-weight: bold; animation: fadeIn 0.3s;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .correct-ans { background: #e8f5e9; color: var(--success); border: 1px solid var(--success); }
+        .wrong-ans { background: #ffebee; color: var(--error); border: 1px solid var(--error); }
+
+        .action-btn {
+            margin-top: 15px; background: var(--english-blue); color: white;
+            border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer;
+            font-size: 1rem; font-weight: bold; width: 100%;
+        }
+
+        #final-screen { display: none; text-align: center; }
+        .score-circle { font-size: 4rem; color: var(--english-red); font-weight: 800; margin: 20px 0; }
+    </style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <div id="quiz-ui">
+        <div class="header">
+            <h1>🇬🇧 ENGLISH EXAM - 1º ESO</h1>
+            <div class="stats">
+                <span id="current-q">Question: 1 / 40</span>
+                <span id="current-score">Grade: 0.0</span>
+            </div>
+            <div class="progress-bar"><div id="progress-fill"></div></div>
+        </div>
+
+        <div id="question-area"></div>
+
+        <div id="feedback">
+            <p id="feedback-msg"></p>
+            <button class="action-btn" onclick="nextQuestion()">NEXT QUESTION ➔</button>
+        </div>
+    </div>
+
+    <div id="final-screen">
+        <h2>EXAM COMPLETED!</h2>
+        <div class="score-circle" id="final-grade">0.0</div>
+        <p id="rank-message"></p>
+        <button class="action-btn" onclick="location.reload()">RESTART EXAM</button>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        // Unit 1: Food & Quantifiers
+        { q: "Complete: 'There _____ some milk in the fridge.'", opts: ["is", "are", "isn't any", "are many"], ans: 0, info: "Milk is uncountable, so we use 'there is' (singular)." },
+        { q: "[RAZONAMIENTO] 'How _____ oranges do you eat?'", opts: ["much", "many", "any", "some"], ans: 1, info: "Oranges are countable plural, so we use 'How many'." },
+        { q: "Which is a vegetable?", opts: ["Chicken", "Lettuce", "Rice", "Apple"], ans: 1, info: "Lettuce (lechuga) is a vegetable." },
+        { q: "Complete: 'I don't have _____ bread for the sandwich.'", opts: ["some", "a", "any", "many"], ans: 2, info: "We use 'any' for negative sentences with uncountable nouns." },
+        { q: "[RAZONAMIENTO] 'How _____ sugar do you want in your coffee?'", opts: ["many", "much", "any", "a lot"], ans: 1, info: "Sugar is uncountable, so we use 'How much'." },
+
+        // Unit 2: Present Simple & Animals
+        { q: "Third person singular: 'She _____ (go) to the park every day.'", opts: ["go", "gos", "goes", "going"], ans: 2, info: "Verbs ending in -o add -es (goes)." },
+        { q: "Which animal has a very long neck?", opts: ["Elephant", "Giraffe", "Lion", "Shark"], ans: 1, info: "Giraffes have long necks to reach tall trees." },
+        { q: "[RAZONAMIENTO] Choose the correct order:", opts: ["I always am happy", "Always I am happy", "I am always happy", "I am happy always"], ans: 2, info: "The Adverb of Frequency goes AFTER the verb 'To Be'." },
+        { q: "Negative form: 'They _____ like spiders.'", opts: ["doesn't", "don't", "not", "aren't"], ans: 1, info: "For 'They', the auxiliary is 'don't'." },
+        { q: "An animal that lives in the ocean is a...", opts: ["Whale", "Tiger", "Eagle", "Cow"], ans: 0, info: "A whale (ballena) lives in the ocean." },
+
+        // Unit 3: Present Continuous vs Simple
+        { q: "[RAZONAMIENTO] 'Look! It _____ (rain) right now.'", opts: ["rains", "is raining", "raining", "rain"], ans: 1, info: "Key word: 'right now' indicates Present Continuous (am/is/are + -ing)." },
+        { q: "Where do you borrow books?", opts: ["Museum", "Library", "Supermarket", "Bakery"], ans: 1, info: "Library = Biblioteca." },
+        { q: "'I usually _____ coffee, but today I _____ tea.'", opts: ["drink / am drinking", "am drinking / drink", "drinks / drinking", "drink / drink"], ans: 0, info: "Usually = habit (Simple). Today = exception (Continuous)." },
+        { q: "Which place is for buying bread?", opts: ["Newsagent's", "Bakery", "Pharmacy", "Cinema"], ans: 1, info: "Bakery = Panadería." },
+        { q: "Question form: '_____ you doing your homework now?'", opts: ["Do", "Are", "Is", "Does"], ans: 1, info: "Present Continuous questions start with the verb To Be." },
+
+        // Unit 4: Past Simple & Jobs
+        { q: "Past Simple of 'WATCH':", opts: ["watchied", "watching", "watched", "watch"], ans: 2, info: "Regular verb: add -ed." },
+        { q: "[RAZONAMIENTO] 'I _____ (go) to the cinema yesterday.'", opts: ["goed", "was", "went", "gone"], ans: 2, info: "Go is irregular: go -> went." },
+        { q: "A person who puts out fires is a...", opts: ["Doctor", "Teacher", "Firefighter", "Lawyer"], ans: 2, info: "Firefighter = Bombero." },
+        { q: "Negative past: 'We _____ see the film.'", opts: ["don't", "didn't", "weren't", "no"], ans: 1, info: "Past negative uses 'didn't' + infinitive." },
+        { q: "Question form: '_____ you finish the exam?'", opts: ["Do", "Was", "Did", "Were"], ans: 2, info: "Past Simple questions start with 'Did'." },
+
+        // Unit 5: Comparison of Adjectives
+        { q: "Comparative of 'FAST':", opts: ["fastest", "faster", "more fast", "fastier"], ans: 1, info: "Short adjective: add -er." },
+        { q: "[RAZONAMIENTO] 'This car is _____ expensive than that one.'", opts: ["more", "most", "er", "the"], ans: 0, info: "Long adjective (expensive): use 'more'." },
+        { q: "Superlative of 'GOOD':", opts: ["the goodest", "the better", "the best", "the most good"], ans: 2, info: "Good -> Better (comp) -> Best (super)." },
+        { q: "'Elephants are _____ (big) than dogs.'", opts: ["bigger", "biger", "more big", "the biggest"], ans: 0, info: "Big: ends in CVC, so we double the last letter (bigger)." },
+        { q: "Which is the superlative of 'dangerous'?", opts: ["dangerouser", "the most dangerous", "more dangerous", "the dangerousest"], ans: 1, info: "Long adjective: use 'the most'." },
+
+        // Unit 6: Past Continuous & House
+        { q: "[RAZONAMIENTO] 'I _____ (sleep) when the phone rang.'", opts: ["slept", "was sleeping", "am sleeping", "were sleeping"], ans: 1, info: "Past Continuous (was/were + -ing) for a long action interrupted by a short one." },
+        { q: "Where do you cook in a house?", opts: ["Bathroom", "Kitchen", "Garage", "Bedroom"], ans: 1, info: "Kitchen = Cocina." },
+        { q: "Plural of 'was' in Past Continuous:", opts: ["was", "were", "are", "been"], ans: 1, info: "We use 'were' for You, We, They." },
+        { q: "Which part of the house is underground?", opts: ["Attic", "Balcony", "Basement", "Garden"], ans: 2, info: "Basement = Sótano." },
+        { q: "Negative: 'They _____ playing tennis at 5:00.'", opts: ["wasn't", "weren't", "didn't", "not"], ans: 1, info: "Negative of 'were' is 'weren't'." },
+
+        // Unit 7: Future (Going to / Present Continuous)
+        { q: "'I _____ (visit) my grandparents next Saturday.' (Plan)", opts: ["am going to visit", "visit", "visiting", "goes to visit"], ans: 0, info: "We use 'be going to' for intentions and plans." },
+        { q: "Which is a geographical feature?", opts: ["Table", "Mountain", "Car", "Pencil"], ans: 1, info: "Mountain (montaña) is a geographical feature." },
+        { q: "A large body of salt water is a...", opts: ["River", "Lake", "Ocean", "Forest"], ans: 2, info: "Ocean = Océano." },
+        { q: "Question: '_____ she going to travel to London?'", opts: ["Is", "Are", "Does", "Am"], ans: 0, info: "'She' uses 'Is'." },
+        { q: "[RAZONAMIENTO] 'We _____ (have) a party tonight!' (Arrangement)", opts: ["have", "are having", "going to have", "had"], ans: 1, info: "Present Continuous can be used for fixed future arrangements." },
+
+        // Unit 8: Will & First Conditional
+        { q: "Future prediction: 'I think it _____ rain tomorrow.'", opts: ["is", "will", "going to", "shall"], ans: 1, info: "We use 'will' for predictions based on what we think." },
+        { q: "[RAZONAMIENTO] First Conditional: 'If it rains, we _____ stay at home.'", opts: ["stay", "will stay", "stayed", "are stay"], ans: 1, info: "Structure: If + Present Simple, Will + Infinitive." },
+        { q: "A person who is happy and smiles is...", opts: ["Sad", "Cheerful", "Angry", "Lazy"], ans: 1, info: "Cheerful = Alegre." },
+        { q: "First Conditional: 'If you _____ (study), you will pass.'", opts: ["study", "studies", "will study", "studied"], ans: 0, info: "The 'If' clause takes Present Simple." },
+        { q: "Opposite of 'Hard-working' (trabajador):", opts: ["Shy", "Lazy", "Kind", "Brave"], ans: 1, info: "Lazy = Perezoso/vago." }
+    ];
+
+    let current = 0;
+    let score = 0;
+    const totalQ = questions.length;
+
+    function renderQuestion() {
+        const data = questions[current];
+        const area = document.getElementById('question-area');
+        document.getElementById('current-q').innerText = `Question: ${current + 1} / ${totalQ}`;
+        document.getElementById('progress-fill').style.width = `${(current / totalQ) * 100}%`;
+        document.getElementById('feedback').style.display = 'none';
+
+        let qText = data.q.includes('[RAZONAMIENTO]') 
+            ? `<span class="tag-razonamiento">LOGIC</span>` + data.q.replace('[RAZONAMIENTO]', '')
+            : data.q;
+
+        area.innerHTML = `<div class="question-box">${qText}</div><div class="options-grid" id="opts"></div>`;
+        
+        data.opts.forEach((o, i) => {
+            const b = document.createElement('button');
+            b.className = 'option-btn';
+            b.innerText = o;
+            b.onclick = () => checkAnswer(i);
+            document.getElementById('opts').appendChild(b);
+        });
+    }
+
+    function checkAnswer(idx) {
+        const data = questions[current];
+        const f = document.getElementById('feedback');
+        const msg = document.getElementById('feedback-msg');
+        const btns = document.querySelectorAll('.option-btn');
+        btns.forEach(b => b.disabled = true);
+
+        if(idx === data.ans) {
+            score += (10 / totalQ);
+            f.className = 'correct-ans';
+            msg.innerHTML = `EXCELLENT! 🌟<br>${data.info}`;
+        } else {
+            f.className = 'wrong-ans';
+            msg.innerHTML = `Ouch! The correct answer was: "${data.opts[data.ans]}"<br>${data.info}`;
+        }
+        f.style.display = 'block';
+        document.getElementById('current-score').innerText = `Grade: ${score.toFixed(1)}`;
+    }
+
+    function nextQuestion() {
+        current++;
+        if(current < totalQ) {
+            renderQuestion();
+        } else {
+            showFinal();
+        }
+    }
+
+    function showFinal() {
+        document.getElementById('quiz-ui').style.display = 'none';
+        document.getElementById('final-screen').style.display = 'block';
+        let final = score.toFixed(1);
+        if (final > 10) final = 10;
+        document.getElementById('final-grade').innerText = final;
+        
+        const msg = document.getElementById('rank-message');
+        if(final >= 9) msg.innerText = "AMAZING! You are a master of English!";
+        else if(final >= 5) msg.innerText = "GOOD JOB! You passed, but keep practicing.";
+        else msg.innerText = "KEEP TRYING! You need to review the grammar units.";
+    }
+
+    renderQuestion();
+</script>
+</body>
+</html>

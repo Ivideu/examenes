@@ -3,181 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Master Pro - Units 1-7</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <title>Voice Quest: El Examen de Música</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #4a69bd; --success: #78e08f; --error: #eb2f06; --warning: #fa983a; --bg: #f1f2f6; }
-        body { font-family: 'Fredoka', sans-serif; background: var(--bg); display: flex; justify-content: center; padding: 20px; }
-        .quiz-container { background: white; width: 100%; max-width: 800px; padding: 30px; border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border: 4px solid var(--primary); }
-        .stats-bar { display: flex; justify-content: space-between; font-weight: 600; color: var(--primary); margin-bottom: 10px; }
-        .progress-bg { height: 15px; background: #dfe4ea; border-radius: 10px; margin-bottom: 25px; }
-        #progress-fill { height: 100%; background: var(--primary); width: 0%; border-radius: 10px; transition: 0.4s; }
-        .badge { background: var(--warning); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; text-transform: uppercase; }
-        .question-text { font-size: 1.5rem; margin: 20px 0; color: #2f3542; font-weight: 600; }
-        input { width: 100%; padding: 15px; border: 3px solid #ced4da; border-radius: 15px; font-size: 1.1rem; margin-bottom: 10px; box-sizing: border-box; }
-        input:focus { border-color: var(--primary); outline: none; }
-        .btn-main { background: var(--primary); color: white; border: none; padding: 18px; width: 100%; border-radius: 15px; font-size: 1.2rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        .btn-main:hover { filter: brightness(1.1); transform: scale(1.01); }
-        .options-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .option-card { padding: 15px; border: 2px solid #ced4da; border-radius: 15px; cursor: pointer; font-weight: 600; text-align: center; transition: 0.2s; }
-        .option-card:hover { border-color: var(--primary); background: #f8f9fa; }
-        .feedback { margin-top: 20px; padding: 15px; border-radius: 15px; display: none; font-weight: 600; text-align: center; }
-        .correct { background: var(--success); color: #1e3799; }
-        .incorrect { background: var(--error); color: white; }
+        :root {
+            --primary: #00f2ff;
+            --secondary: #7000ff;
+            --bg: #0d0d1a;
+            --text: #ffffff;
+            --correct: #39ff14;
+            --wrong: #ff3131;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        #quiz-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        h1 { font-family: 'Orbitron', sans-serif; text-align: center; color: var(--primary); text-transform: uppercase; }
+        
+        .question-box { display: none; }
+        .question-box.active { display: block; animation: fadeIn 0.5s; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Botones */
+        .btn-option {
+            background: transparent;
+            border: 1px solid var(--text);
+            color: var(--text);
+            padding: 12px;
+            margin: 8px 0;
+            width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: left;
+            font-size: 1rem;
+        }
+
+        .btn-option:hover { background: var(--secondary); border-color: var(--secondary); }
+
+        /* Verdadero y Falso */
+        .tf-container { display: flex; gap: 10px; }
+        .btn-tf { flex: 1; text-align: center; font-weight: bold; }
+
+        /* Emparejamiento */
+        .matching-container { display: flex; justify-content: space-between; gap: 10px; margin-top: 10px; }
+        .column { display: flex; flex-direction: column; gap: 10px; width: 48%; }
+        .match-item { 
+            background: #222; border: 1px solid var(--primary); padding: 8px; 
+            border-radius: 5px; cursor: pointer; font-size: 0.9rem; min-height: 40px;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+        }
+        .match-item.selected { background: var(--secondary); border-color: white; }
+
+        #score-board { text-align: center; font-family: 'Orbitron'; font-size: 1.5rem; display: none; }
+        .progress-bar { height: 5px; background: #333; margin-bottom: 20px; border-radius: 5px; }
+        .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: 0.5s; }
+
     </style>
 </head>
 <body>
 
-<div class="quiz-container">
-    <div class="stats-bar">
-        <span id="score-text">Aciertos: 0</span>
-        <span id="streak-text">Racha: 🔥 0</span>
-    </div>
-    <div class="progress-bg"><div id="progress-fill"></div></div>
+<div id="quiz-container">
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
     
-    <div id="quiz-body">
-        </div>
+    <div id="intro" class="question-box active">
+        <h1>🎙️ Voice Quest</h1>
+        <p style="text-align: center;">Demuestra que eres un experto en el instrumento vocal.</p>
+        <button class="btn-option" style="text-align: center; font-weight: bold;" onclick="startQuiz()">¡EMPEZAR EXAMEN!</button>
+    </div>
 
-    <div id="feedback-area" class="feedback"></div>
+    <div id="q1" class="question-box">
+        <h3>1. ¿Cuál es el "motor" del instrumento vocal encargado de abastecer el aire?</h3>
+        <button class="btn-option" onclick="check(1, 'A')">A) Aparato Fonador</button>
+        <button class="btn-option" onclick="check(1, 'B')">B) Aparato Respiratorio</button>
+        <button class="btn-option" onclick="check(1, 'C')">C) Aparato Resonador</button>
+        <button class="btn-option" onclick="check(1, 'D')">D) Los Altavoces</button>
+    </div>
+
+    <div id="q2" class="question-box">
+        <h3>2. ¿Tenemos exactamente 2 cuerdas vocales en total?</h3>
+        <div class="tf-container">
+            <button class="btn-option btn-tf" onclick="check(2, false)">VERDADERO</button>
+            <button class="btn-option btn-tf" onclick="check(2, true)">FALSO</button>
+        </div>
+        <p style="font-size: 0.8rem; margin-top: 10px; color: #aaa;">Pista: Contamos con dos falsas y dos verdaderas.</p>
+    </div>
+
+    <div id="q3" class="question-box">
+        <h3>3. ¿Cuál es la voz masculina más aguda (equivalente a los antiguos Castrati)?</h3>
+        <button class="btn-option" onclick="check(3, 'A')">A) Tenor</button>
+        <button class="btn-option" onclick="check(3, 'B')">B) Bajo</button>
+        <button class="btn-option" onclick="check(3, 'C')">C) Contratenor</button>
+        <button class="btn-option" onclick="check(3, 'D')">D) Barítono</button>
+    </div>
+
+    <div id="q4" class="question-box">
+        <h3>4. Empareja cada agrupación con su descripción:</h3>
+        <div class="matching-container">
+            <div class="column" id="col-left">
+                <div class="match-item" onclick="selectMatch('L', this)" data-val="1">Escolanía</div>
+                <div class="match-item" onclick="selectMatch('L', this)" data-val="2">Dúo</div>
+                <div class="match-item" onclick="selectMatch('L', this)" data-val="3">Orfeón</div>
+            </div>
+            <div class="column" id="col-right">
+                <div class="match-item" onclick="selectMatch('R', this)" data-val="2">2 Cantantes</div>
+                <div class="match-item" onclick="selectMatch('R', this)" data-val="3">Hasta 100 voces</div>
+                <div class="match-item" onclick="selectMatch('R', this)" data-val="1">Voces infantiles</div>
+            </div>
+        </div>
+        <button class="btn-option" style="margin-top: 20px; text-align: center;" onclick="checkMatching()">ENVIAR PAREJAS</button>
+    </div>
+
+    <div id="score-board">
+        <h2 id="result-text">¡Misión cumplida!</h2>
+        <p>Tu puntuación es:</p>
+        <div id="final-score" style="font-size: 4rem; color: var(--primary);">0</div>
+        <button class="btn-option" style="text-align: center;" onclick="location.reload()">REINTENTAR</button>
+    </div>
 </div>
 
 <script>
-// Base de datos extendida de los documentos
-const verbsDB = [
-    { inf: "be", pas: "was/were", part: "been", esp: "ser/estar" },
-    { inf: "begin", pas: "began", part: "begun", esp: "empezar" },
-    { inf: "bite", pas: "bit", part: "bitten", esp: "morder" },
-    { inf: "break", pas: "broke", part: "broken", esp: "romper" },
-    { inf: "bring", pas: "brought", part: "brought", esp: "traer" },
-    { inf: "build", pas: "built", part: "built", esp: "construir" },
-    { inf: "buy", pas: "bought", part: "bought", esp: "comprar" },
-    { inf: "choose", pas: "chose", part: "chosen", esp: "escoger" },
-    { inf: "come", pas: "came", part: "come", esp: "venir" },
-    { inf: "do", pas: "did", part: "done", esp: "hacer" },
-    { inf: "drive", pas: "drove", part: "driven", esp: "conducir" },
-    { inf: "eat", pas: "ate", part: "eaten", esp: "comer" },
-    { inf: "fly", pas: "flew", part: "flown", esp: "volar" },
-    { inf: "give", pas: "gave", part: "given", esp: "dar" },
-    { inf: "go", pas: "went", part: "gone", esp: "ir" },
-    { inf: "know", pas: "knew", part: "known", esp: "saber" },
-    { inf: "see", pas: "saw", part: "seen", esp: "ver" },
-    { inf: "write", pas: "wrote", part: "written", esp: "escribir" }
-];
+    let currentStep = 0;
+    let score = 0;
+    const totalQuestions = 4;
 
-const vocabDB = [
-    { en: "bean", es: "judía", unit: "Unit 1" },
-    { en: "sausage", es: "salchicha", unit: "Unit 1" },
-    { en: "dangerous", es: "peligroso", unit: "Unit 1" },
-    { en: "shark", es: "tiburón", unit: "Unit 2" },
-    { en: "neighbourhood", es: "urbanización", unit: "Unit 4" },
-    { en: "musician", es: "músico", unit: "Unit 4" },
-    { en: "petrol station", es: "gasolinera" , unit: "Unit 4"},
-    { en: "conquer", es: "conquistar", unit: "Unit 5" },
-    { en: "jewellery", es: "joyas", unit: "Unit 5" },
-    { en: "carpet", es: "alfombra", unit: "Unit 6" },
-    { en: "cupboard", es: "armario", unit: "Unit 6" },
-    { en: "waterfall", es: "cascada", unit: "Unit 7" },
-    { en: "swimsuit", es: "bañador", unit: "Unit 7" },
-    { en: "boring", es: "aburrido", unit: "Unit 7" }
-];
+    function startQuiz() {
+        showStep(1);
+    }
 
-let score = 0;
-let streak = 0;
-let currentQ = 0;
-const totalQ = 20;
-
-function loadQuestion() {
-    if(currentQ >= totalQ) return finish();
-    
-    currentQ++;
-    document.getElementById('progress-fill').style.width = (currentQ/totalQ)*100 + "%";
-    document.getElementById('feedback-area').style.display = 'none';
-    
-    const type = Math.floor(Math.random() * 4);
-    const body = document.getElementById('quiz-body');
-
-    if (type === 0) { // TRIPLE VERBO
-        const v = verbsDB[Math.floor(Math.random()*verbsDB.length)];
-        body.innerHTML = `
-            <span class="badge">Verbos Irregulares</span>
-            <div class="question-text">Completa las 3 formas de: "${v.esp}"</div>
-            <input type="text" id="i1" placeholder="Infinitivo">
-            <input type="text" id="i2" placeholder="Pasado Simple">
-            <input type="text" id="i3" placeholder="Participio">
-            <button class="btn-main" onclick="checkTriple('${v.inf}','${v.pas}','${v.part}')">Comprobar</button>
-        `;
-    } else if (type === 1) { // MULTIPLE CHOICE
-        const item = vocabDB[Math.floor(Math.random()*vocabDB.length)];
-        let opts = [item.es];
-        while(opts.length < 4) {
-            let r = vocabDB[Math.floor(Math.random()*vocabDB.length)].es;
-            if(!opts.includes(r)) opts.push(r);
+    function showStep(step) {
+        document.querySelectorAll('.question-box').forEach(el => el.classList.remove('active'));
+        if(step <= totalQuestions) {
+            document.getElementById('q' + step).classList.add('active');
+            document.getElementById('progress').style.width = ((step-1) / totalQuestions * 100) + '%';
+        } else {
+            showResults();
         }
-        opts.sort(() => Math.random() - 0.5);
-
-        body.innerHTML = `
-            <span class="badge">${item.unit}</span>
-            <div class="question-text">¿Qué significa "${item.en}"?</div>
-            <div class="options-container">
-                ${opts.map(o => `<div class="option-card" onclick="checkSimple('${o}','${item.es}')">${o}</div>`).join('')}
-            </div>
-        `;
-    } else { // TRADUCCIÓN LIBRE
-        const item = vocabDB[Math.floor(Math.random()*vocabDB.length)];
-        const toEng = Math.random() > 0.5;
-        body.innerHTML = `
-            <span class="badge">Traducción</span>
-            <div class="question-text">Traduce: "${toEng ? item.es : item.en}"</div>
-            <input type="text" id="free-ans" placeholder="Escribe en ${toEng ? 'inglés' : 'español'}...">
-            <button class="btn-main" onclick="checkFree('${toEng ? item.en : item.es}')">Enviar</button>
-        `;
+        currentStep = step;
     }
-}
 
-function giveFeedback(isCorrect, msg) {
-    const f = document.getElementById('feedback-area');
-    f.style.display = 'block';
-    if(isCorrect) {
-        score++; streak++;
-        f.className = "feedback correct";
-        f.innerText = "⭐ ¡Perfecto! " + msg;
-    } else {
-        streak = 0;
-        f.className = "feedback incorrect";
-        f.innerText = "❌ Ups... " + msg;
+    function check(qNum, answer) {
+        let correct = false;
+        if(qNum === 1 && answer === 'B') correct = true;
+        if(qNum === 2 && answer === true) correct = true; // Es Falso que tengamos solo 2
+        if(qNum === 3 && answer === 'C') correct = true;
+
+        if(correct) score += 2.5;
+        showStep(currentStep + 1);
     }
-    document.getElementById('score-text').innerText = "Aciertos: " + score;
-    document.getElementById('streak-text').innerText = "Racha: 🔥 " + streak;
-    setTimeout(loadQuestion, 2500);
-}
 
-function checkTriple(c1, c2, c3) {
-    const u1 = document.getElementById('i1').value.trim().toLowerCase();
-    const u2 = document.getElementById('i2').value.trim().toLowerCase();
-    const u3 = document.getElementById('i3').value.trim().toLowerCase();
-    giveFeedback(u1===c1 && u2===c2 && u3===c3, `Correcto: ${c1} | ${c2} | ${c3}`);
-}
+    // Lógica para emparejar
+    let selectedL = null;
+    let selectedR = null;
+    let matchesFound = 0;
 
-function checkSimple(sel, corr) {
-    giveFeedback(sel === corr, `La respuesta era: ${corr}`);
-}
+    function selectMatch(side, element) {
+        if(side === 'L') {
+            document.querySelectorAll('#col-left .match-item').forEach(i => i.classList.remove('selected'));
+            selectedL = element;
+        } else {
+            document.querySelectorAll('#col-right .match-item').forEach(i => i.classList.remove('selected'));
+            selectedR = element;
+        }
+        element.classList.add('selected');
 
-function checkFree(corr) {
-    const ans = document.getElementById('free-ans').value.trim().toLowerCase();
-    giveFeedback(ans === corr.toLowerCase(), `La respuesta correcta es: ${corr}`);
-}
+        if(selectedL && selectedR) {
+            if(selectedL.dataset.val === selectedR.dataset.val) {
+                selectedL.style.visibility = 'hidden';
+                selectedR.style.visibility = 'hidden';
+                matchesFound++;
+                selectedL = null; selectedR = null;
+            } else {
+                alert("¡No coinciden! Intenta otra vez.");
+                selectedL.classList.remove('selected');
+                selectedR.classList.remove('selected');
+                selectedL = null; selectedR = null;
+            }
+        }
+    }
 
-function finish() {
-    document.getElementById('quiz-body').innerHTML = `
-        <div style="text-align:center">
-            <h2>🏆 ¡Examen Completado!</h2>
-            <p style="font-size:1.4rem">Puntuación: ${score} / ${totalQ}</p>
-            <button class="btn-main" onclick="location.reload()">Reiniciar</button>
-        </div>
-    `;
-}
+    function checkMatching() {
+        if(matchesFound === 3) score += 2.5;
+        showStep(5);
+    }
 
-loadQuestion();
+    function showResults() {
+        document.getElementById('progress').style.width = '100%';
+        document.getElementById('score-board').style.display = 'block';
+        document.getElementById('final-score').innerText = score.toFixed(1) + "/10";
+        if(score < 5) document.getElementById('result-text').innerText = "¡Sigue practicando, recluta!";
+    }
 </script>
 
 </body>

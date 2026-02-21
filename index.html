@@ -3,57 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Exámenes</title>
+    <title>Panel de Exámenes - Menú Principal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-blue: #4a90e2;
+            --primary-teal: #4ecdc4;
+            --primary-green: #45b649;
+            --accent-pink: #ff4081;
+            --bg-light: #f5f7fa;
+            --card-white: #ffffff;
+            --text-dark: #2c3e50;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            margin: 0;
-            background-color: #f4f7f6;
         }
 
         h1 {
-            color: #333;
-            margin-bottom: 30px;
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            color: var(--primary-blue);
+            font-size: 2rem;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            width: 300px;
+            gap: 20px;
+            width: 90%;
+            max-width: 400px;
+            background: var(--card-white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #e1e8ed;
         }
 
         .btn {
             display: block;
-            padding: 15px 25px;
+            padding: 18px 25px;
             text-align: center;
             text-decoration: none;
-            color: white;
-            font-weight: bold;
-            border-radius: 8px;
-            transition: transform 0.2s, background-color 0.2s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            border: 2px solid #e1e8ed;
+            transition: all 0.3s ease;
+            background: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .btn:hover {
+        /* Efectos específicos por materia */
+        .musica:hover {
+            border-color: var(--accent-pink);
+            background: #fff0f5;
+            color: var(--accent-pink);
             transform: translateY(-3px);
-            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.2);
         }
 
-        /* Colores por materia */
-        .musica { background-color: #ff6b6b; }
-        .sociales { background-color: #4ecdc4; }
-        .biologia { background-color: #45b649; }
+        .sociales:hover {
+            border-color: var(--primary-teal);
+            background: #f0fdfc;
+            color: var(--primary-teal);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
+        }
 
-        .musica:hover { background-color: #ee5253; }
-        .sociales:hover { background-color: #2ebfac; }
-        .biologia:hover { background-color: #388e3c; }
+        .biologia:hover {
+            border-color: var(--primary-green);
+            background: #f1f8f1;
+            color: var(--primary-green);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(69, 182, 73, 0.2);
+        }
 
+        /* Pie de página decorativo */
+        .footer-note {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #95a5a6;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
@@ -65,6 +110,8 @@
         <a href="https://ivideu.github.io/examenes/sociales.html" class="btn sociales">SOCIALES</a>
         <a href="https://ivideu.github.io/examenes/biologia.html" class="btn biologia">BIOLOGÍA</a>
     </div>
+
+    <div class="footer-note">Selecciona un examen para comenzar</div>
 
 </body>
 </html>

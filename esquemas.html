@@ -99,6 +99,30 @@
             color: #95a5a6;
             font-weight: 500;
         }
+            .btn-back {
+        background-color: #34495e; /* Color elegante a juego con las tablas */
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-back:hover {
+        background-color: #2c3e50;
+        transform: translateX(-5px); /* Efecto visual de ir hacia atrás */
+    }
+
+    .btn-back:active {
+        transform: scale(0.95);
+    }
+
     </style>
 </head>
 <body>
@@ -112,6 +136,11 @@
         <a href="https://ivideu.github.io/examenes/lenguae.html" class="btn musica">LENGUA</a>
         <a href="https://ivideu.github.io/examenes/inglese.html" class="btn sociales">INGLES</a>
     </div>
+    <div style="margin-bottom: 20px;">
+    <button onclick="window.history.back()" class="btn-back">
+        ⬅ Volver
+    </button>
+</div>
 
     <div class="footer-note">Selecciona un examen para comenzar</div>
 

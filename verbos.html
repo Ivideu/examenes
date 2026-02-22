@@ -3,214 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Irregular Verbs - 1º ESO</title>
+    <title>Super List: Irregular Verbs</title>
     <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --bg: #f0f3f7;
+            --text: #2d3436;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f0f4f8;
+            background-color: var(--bg);
+            color: var(--text);
             margin: 0;
             padding: 20px;
         }
+
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: auto;
             background: white;
             padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-        
-        /* Botón Volver */
-        .btn-back {
-            background-color: #34495e;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
-            text-decoration: none;
-        }
-        .btn-back:hover {
-            background-color: #2c3e50;
-            transform: translateX(-5px);
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         }
 
-        h1 {
+        /* Cabecera Dinámica */
+        .header {
             text-align: center;
-            color: #2c3e50;
-            border-bottom: 4px solid #9b59b6;
-            padding-bottom: 10px;
-            text-transform: uppercase;
+            border-bottom: 3px solid var(--secondary);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
         }
 
-        /* Tabla de Verbos */
+        .btn-back {
+            background: #34495e;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            float: left;
+            transition: 0.3s;
+        }
+
+        .btn-back:hover { transform: translateX(-5px); background: #2c3e50; }
+
+        h1 { color: var(--primary); margin: 10px 0; font-size: 2.2em; }
+
+        .stats {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Buscador */
+        .search-box {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #dfe6e9;
+            border-radius: 15px;
+            font-size: 18px;
+            margin-bottom: 30px;
+            outline: none;
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
+
+        .search-box:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(108, 92, 231, 0.2); }
+
+        /* Tabla Estilizada */
         .table-container {
             overflow-x: auto;
-            margin-top: 20px;
+            border-radius: 15px;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             background: white;
         }
+
         th {
-            background-color: #9b59b6;
+            background: var(--primary);
             color: white;
             padding: 15px;
-            text-align: left;
-            position: sticky;
-            top: 0;
-        }
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-        }
-        tr:nth-child(even) {
-            background-color: #f8f0fb;
-        }
-        tr:hover {
-            background-color: #f1e6f7;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1px;
         }
 
-        /* Etiquetas de ayuda visual */
-        .verb-bold {
-            font-weight: bold;
-            color: #8e44ad;
-        }
-        .translation {
-            color: #666;
-            font-style: italic;
-        }
-        .highlight-box {
-            background: #e8f4fd;
-            border-left: 5px solid #3498db;
+        td {
             padding: 15px;
-            margin: 20px 0;
-            border-radius: 4px;
+            border-bottom: 1px solid #f1f2f6;
+            text-align: left;
+        }
+
+        tr:hover { background-color: #f9f9ff; }
+
+        .v-inf { font-weight: bold; color: var(--primary); font-size: 1.1em; }
+        .v-past { color: #e67e22; font-weight: 600; }
+        .v-part { color: #27ae60; font-weight: 600; }
+        .v-esp { color: #7f8c8d; font-style: italic; }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+            h1 { font-size: 1.5em; }
+            td, th { padding: 10px; font-size: 0.85em; }
+            .btn-back { float: none; width: 100%; margin-bottom: 15px; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <button onclick="window.history.back()" class="btn-back">
-        ⬅ Volver
-    </button>
-
-    <h1>🇬🇧 Irregular Verbs List</h1>
-
-    <div class="highlight-box">
-        <strong>💡 Consejo de estudio:</strong> Intenta aprender los verbos de 5 en 5. ¡Recuerda que muchos se usan en el <i>Past Simple</i> que entra en tu examen!.
+    <button onclick="window.history.back()" class="btn-back">⬅ VOLVER</button>
+    
+    <div class="header">
+        <h1>Irregular Verbs Master List</h1>
+        <div class="stats">Verbos en la lista: <span id="count">0</span></div>
+        <input type="text" id="search" class="search-box" placeholder="🔍 Escribe un verbo o significado (ej: 'break' o 'romper')..." onkeyup="buscar()">
     </div>
 
     <div class="table-container">
-        <table>
+        <table id="verbTable">
             <thead>
                 <tr>
-                    <th>Infinitive </th>
-                    <th>Past Simple </th>
-                    <th>Past Participle </th>
-                    <th>Spanish </th>
+                    <th>Infinitive</th>
+                    <th>Past Simple</th>
+                    <th>Past Participle</th>
+                    <th>Traducción</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td class="verb-bold">be</td>
-                    <td>was / were</td>
-                    <td>been</td>
-                    <td class="translation">ser / estar</td>
-                </tr>
-                <tr>
-                    <td class="verb-bold">become</td>
-                    <td>became</td>
-                    <td>become</td>
-                    <td class="translation">llegar a ser</td>
-                </tr>
-                <tr>
-                    <td class="verb-bold">begin</td>
-                    <td>began</td>
-                    <td>begun</td>
-                    <td class="translation">empezar</td>
-                </tr>
-                <tr>
-                    <td class="verb-bold">break</td>
-                    <td>broke</td>
-                    <td>broken</td>
-                    <td class="translation">romper</td>
-                </tr>
-                <tr>
-                    <td class="verb-bold">bring</td>
-                    <td>brought</td>
-                    <td>brought</td>
-                    <td class="translation">traer</td>
-                </tr>
-                <tr>
-                    <td class="verb-bold">buy</td>
-                    <td>bought</td>
-                    <td>bought</td>
-                    <td class="translation">comprar</td>
-                </tr>
-                <tr>
-                    <td class="verb-bold">come</td>
-                    <td>came</td>
-                    <td>come</td>
-                    <td class="translation">venir</td>
-                </tr>
-                <tr>
-                    <td class="verb-bold">do</td>
-                    <td>did</td>
-                    <td>done</td>
-                    <td class="translation">hacer</td>
-                </tr>
-                <tr>
-                    <td class="verb-bold">eat</td>
-                    <td>ate</td>
-                    <td>eaten</td>
-                    <td class="translation">comer</td>
-                </tr>
-                <tr>
-                    <td class="verb-bold">go</td>
-                    <td>went</td>
-                    <td>gone</td>
-                    <td class="translation">ir</td>
-                </tr>
-                <tr>
-                    <td class="verb-bold">have</td>
-                    <td>had</td>
-                    <td>had</td>
-                    <td class="translation">tener / haber</td>
-                </tr>
-                <tr>
-                    <td class="verb-bold">know</td>
-                    <td>knew</td>
-                    <td>known</td>
-                    <td class="translation">saber / conocer</td>
-                </tr>
-                <tr>
-                    <td class="verb-bold">speak</td>
-                    <td>spoke</td>
-                    <td>spoken</td>
-                    <td class="translation">hablar</td>
-                </tr>
-                <tr>
-                    <td class="verb-bold">write</td>
-                    <td>wrote</td>
-                    <td>written</td>
-                    <td class="translation">escribir</td>
-                </tr>
+            <tbody id="listaVerbos">
+                <tr><td class="v-inf">be</td><td class="v-past">was/were</td><td class="v-part">been</td><td class="v-esp">ser/estar</td></tr>
+                <tr><td class="v-inf">beat</td><td class="v-past">beat</td><td class="v-part">beat/beaten</td><td class="v-esp">golpear</td></tr>
+                <tr><td class="v-inf">become</td><td class="v-past">became</td><td class="v-part">become</td><td class="v-esp">llegar a ser</td></tr>
+                <tr><td class="v-inf">begin</td><td class="v-past">began</td><td class="v-part">begun</td><td class="v-esp">empezar</td></tr>
+                <tr><td class="v-inf">bend</td><td class="v-past">bent</td><td class="v-part">bent</td><td class="v-esp">doblar</td></tr>
+                <tr><td class="v-inf">bet</td><td class="v-past">bet</td><td class="v-part">bet</td><td class="v-esp">apostar</td></tr>
+                <tr><td class="v-inf">bite</td><td class="v-past">bit</td><td class="v-part">bitten</td><td class="v-esp">morder/picar</td></tr>
+                <tr><td class="v-inf">bleed</td><td class="v-past">bled</td><td class="v-part">bled</td><td class="v-esp">sangrar</td></tr>
+                <tr><td class="v-inf">blow</td><td class="v-past">blew</td><td class="v-part">blown</td><td class="v-esp">soplar</td></tr>
+                <tr><td class="v-inf">break</td><td class="v-past">broke</td><td class="v-part">broken</td><td class="v-esp">romper</td></tr>
+                <tr><td class="v-inf">bring</td><td class="v-past">brought</td><td class="v-part">brought</td><td class="v-esp">traer</td></tr>
+                <tr><td class="v-inf">build</td><td class="v-past">built</td><td class="v-part">built</td><td class="v-esp">construir</td></tr>
+                <tr><td class="v-inf">burn</td><td class="v-past">burned/burnt</td><td class="v-part">burned/burnt</td><td class="v-esp">quemar</td></tr>
+                <tr><td class="v-inf">burst</td><td class="v-past">burst</td><td class="v-part">burst</td><td class="v-esp">estallar</td></tr>
+                <tr><td class="v-inf">buy</td><td class="v-past">bought</td><td class="v-part">bought</td><td class="v-esp">comprar</td></tr>
+                <tr><td class="v-inf">catch</td><td class="v-past">caught</td><td class="v-part">caught</td><td class="v-esp">coger</td></tr>
+                <tr><td class="v-inf">choose</td><td class="v-past">chose</td><td class="v-part">chosen</td><td class="v-esp">escoger</td></tr>
+                <tr><td class="v-inf">come</td><td class="v-past">came</td><td class="v-part">come</td><td class="v-esp">venir</td></tr>
+                <tr><td class="v-inf">cost</td><td class="v-past">cost</td><td class="v-part">cost</td><td class="v-esp">costar</td></tr>
+                <tr><td class="v-inf">cut</td><td class="v-past">cut</td><td class="v-part">cut</td><td class="v-esp">cortar</td></tr>
+                <tr><td class="v-inf">deal</td><td class="v-past">dealt</td><td class="v-part">dealt</td><td class="v-esp">tratar</td></tr>
+                <tr><td class="v-inf">dig</td><td class="v-past">dug</td><td class="v-part">dug</td><td class="v-esp">cavar</td></tr>
+                <tr><td class="v-inf">do</td><td class="v-past">did</td><td class="v-part">done</td><td class="v-esp">hacer</td></tr>
+                <tr><td class="v-inf">draw</td><td class="v-past">drew</td><td class="v-part">drawn</td><td class="v-esp">dibujar</td></tr>
+                <tr><td class="v-inf">dream</td><td class="v-past">dreamed/dreamt</td><td class="v-part">dreamed/dreamt</td><td class="v-esp">soñar</td></tr>
+                <tr><td class="v-inf">drink</td><td class="v-past">drank</td><td class="v-part">drunk</td><td class="v-esp">beber</td></tr>
+                <tr><td class="v-inf">drive</td><td class="v-past">drove</td><td class="v-part">driven</td><td class="v-esp">conducir</td></tr>
+                <tr><td class="v-inf">eat</td><td class="v-past">ate</td><td class="v-part">eaten</td><td class="v-esp">comer</td></tr>
+                <tr><td class="v-inf">fall</td><td class="v-past">fell</td><td class="v-part">fallen</td><td class="v-esp">caer</td></tr>
+                <tr><td class="v-inf">feed</td><td class="v-past">fed</td><td class="v-part">fed</td><td class="v-esp">alimentar</td></tr>
+                <tr><td class="v-inf">feel</td><td class="v-past">felt</td><td class="v-part">felt</td><td class="v-esp">sentir</td></tr>
+                <tr><td class="v-inf">fight</td><td class="v-past">fought</td><td class="v-part">fought</td><td class="v-esp">pelear</td></tr>
+                <tr><td class="v-inf">find</td><td class="v-past">found</td><td class="v-part">found</td><td class="v-esp">encontrar</td></tr>
+                <tr><td class="v-inf">fly</td><td class="v-past">flew</td><td class="v-part">flown</td><td class="v-esp">volar</td></tr>
+                <tr><td class="v-inf">forget</td><td class="v-past">forgot</td><td class="v-part">forgotten</td><td class="v-esp">olvidar</td></tr>
+                <tr><td class="v-inf">forgive</td><td class="v-past">forgave</td><td class="v-part">forgiven</td><td class="v-esp">perdonar</td></tr>
+                <tr><td class="v-inf">freeze</td><td class="v-past">froze</td><td class="v-part">frozen</td><td class="v-esp">congelar</td></tr>
+                <tr><td class="v-inf">get</td><td class="v-past">got</td><td class="v-part">got/gotten</td><td class="v-esp">conseguir/obtener</td></tr>
+                <tr><td class="v-inf">give</td><td class="v-past">gave</td><td class="v-part">given</td><td class="v-esp">dar</td></tr>
+                <tr><td class="v-inf">go</td><td class="v-past">went</td><td class="v-part">gone</td><td class="v-esp">ir</td></tr>
+                <tr><td class="v-inf">grow</td><td class="v-past">grew</td><td class="v-part">grown</td><td class="v-esp">crecer</td></tr>
+                <tr><td class="v-inf">have</td><td class="v-past">had</td><td class="v-part">had</td><td class="v-esp">tener / haber</td></tr>
+                <tr><td class="v-inf">hear</td><td class="v-past">heard</td><td class="v-part">heard</td><td class="v-esp">oír</td></tr>
+                <tr><td class="v-inf">hide</td><td class="v-past">hid</td><td class="v-part">hidden</td><td class="v-esp">esconder</td></tr>
+                <tr><td class="v-inf">hit</td><td class="v-past">hit</td><td class="v-part">hit</td><td class="v-esp">golpear</td></tr>
+                <tr><td class="v-inf">hold</td><td class="v-past">held</td><td class="v-part">held</td><td class="v-esp">sujetar</td></tr>
+                <tr><td class="v-inf">hurt</td><td class="v-past">hurt</td><td class="v-part">hurt</td><td class="v-esp">herir</td></tr>
+                <tr><td class="v-inf">keep</td><td class="v-past">kept</td><td class="v-part">kept</td><td class="v-esp">guardar / mantener</td></tr>
+                <tr><td class="v-inf">know</td><td class="v-past">knew</td><td class="v-part">known</td><td class="v-esp">saber / conocer</td></tr>
+                <tr><td class="v-inf">learn</td><td class="v-past">learned/learnt</td><td class="v-part">learned/learnt</td><td class="v-esp">aprender</td></tr>
+                <tr><td class="v-inf">leave</td><td class="v-past">left</td><td class="v-part">left</td><td class="v-esp">irse / dejar</td></tr>
+                <tr><td class="v-inf">lend</td><td class="v-past">lent</td><td class="v-part">lent</td><td class="v-esp">prestar</td></tr>
+                <tr><td class="v-inf">let</td><td class="v-past">let</td><td class="v-part">let</td><td class="v-esp">dejar / permitir</td></tr>
+                <tr><td class="v-inf">lie</td><td class="v-past">lay</td><td class="v-part">lain</td><td class="v-esp">echarse / tumbarse</td></tr>
+                <tr><td class="v-inf">light</td><td class="v-past">lit</td><td class="v-part">lit</td><td class="v-esp">encender</td></tr>
+                <tr><td class="v-inf">lose</td><td class="v-past">lost</td><td class="v-part">lost</td><td class="v-esp">perder</td></tr>
+                <tr><td class="v-inf">make</td><td class="v-past">made</td><td class="v-part">made</td><td class="v-esp">hacer / fabricar</td></tr>
+                <tr><td class="v-inf">mean</td><td class="v-past">meant</td><td class="v-part">meant</td><td class="v-esp">significar / querer decir</td></tr>
+                <tr><td class="v-inf">meet</td><td class="v-past">met</td><td class="v-part">met</td><td class="v-esp">conocer a / encontrarse</td></tr>
+                <tr><td class="v-inf">pay</td><td class="v-past">paid</td><td class="v-part">paid</td><td class="v-esp">pagar</td></tr>
+                <tr><td class="v-inf">put</td><td class="v-past">put</td><td class="v-part">put</td><td class="v-esp">poner</td></tr>
+                <tr><td class="v-inf">read</td><td class="v-past">read</td><td class="v-part">read</td><td class="v-esp">leer</td></tr>
+                <tr><td class="v-inf">ride</td><td class="v-past">rode</td><td class="v-part">ridden</td><td class="v-esp">montar</td></tr>
+                <tr><td class="v-inf">ring</td><td class="v-past">rang</td><td class="v-part">rung</td><td class="v-esp">sonar / telefonear</td></tr>
+                <tr><td class="v-inf">rise</td><td class="v-past">rose</td><td class="v-part">risen</td><td class="v-esp">subir / levantarse</td></tr>
+                <tr><td class="v-inf">run</td><td class="v-past">ran</td><td class="v-part">run</td><td class="v-esp">correr</td></tr>
+                <tr><td class="v-inf">say</td><td class="v-past">said</td><td class="v-part">said</td><td class="v-esp">decir</td></tr>
+                <tr><td class="v-inf">see</td><td class="v-past">saw</td><td class="v-part">seen</td><td class="v-esp">ver</td></tr>
+                <tr><td class="v-inf">sell</td><td class="v-past">sold</td><td class="v-part">sold</td><td class="v-esp">vender</td></tr>
+                <tr><td class="v-inf">send</td><td class="v-past">sent</td><td class="v-part">sent</td><td class="v-esp">enviar</td></tr>
+                <tr><td class="v-inf">set</td><td class="v-past">set</td><td class="v-part">set</td><td class="v-esp">colocar / poner</td></tr>
+                <tr><td class="v-inf">shake</td><td class="v-past">shook</td><td class="v-part">shaken</td><td class="v-esp">sacudir</td></tr>
+                <tr><td class="v-inf">shine</td><td class="v-past">shone</td><td class="v-part">shone</td><td class="v-esp">brillar</td></tr>
+                <tr><td class="v-inf">shoot</td><td class="v-past">shot</td><td class="v-part">shot</td><td class="v-esp">disparar</td></tr>
+                <tr><td class="v-inf">show</td><td class="v-past">showed</td><td class="v-part">showed/shown</td><td class="v-esp">mostrar</td></tr>
+                <tr><td class="v-inf">shut</td><td class="v-past">shut</td><td class="v-part">shut</td><td class="v-esp">cerrar</td></tr>
+                <tr><td class="v-inf">sing</td><td class="v-past">sang</td><td class="v-part">sung</td><td class="v-esp">cantar</td></tr>
+                <tr><td class="v-inf">sink</td><td class="v-past">sank</td><td class="v-part">sunk</td><td class="v-esp">hundirse</td></tr>
+                <tr><td class="v-inf">sit</td><td class="v-past">sat</td><td class="v-part">sat</td><td class="v-esp">sentarse</td></tr>
+                <tr><td class="v-inf">sleep</td><td class="v-past">slept</td><td class="v-part">slept</td><td class="v-esp">dormir</td></tr>
+                <tr><td class="v-inf">speak</td><td class="v-past">spoke</td><td class="v-part">spoken</td><td class="v-esp">hablar</td></tr>
+                <tr><td class="v-inf">spend</td><td class="v-past">spent</td><td class="v-part">spent</td><td class="v-esp">gastar / pasar (tiempo)</td></tr>
+                <tr><td class="v-inf">stand</td><td class="v-past">stood</td><td class="v-part">stood</td><td class="v-esp">estar de pie</td></tr>
+                <tr><td class="v-inf">steal</td><td class="v-past">stole</td><td class="v-part">stolen</td><td class="v-esp">robar</td></tr>
+                <tr><td class="v-inf">swim</td><td class="v-past">swam</td><td class="v-part">swum</td><td class="v-esp">nadar</td></tr>
+                <tr><td class="v-inf">take</td><td class="v-past">took</td><td class="v-part">taken</td><td class="v-esp">coger / tomar</td></tr>
+                <tr><td class="v-inf">teach</td><td class="v-past">taught</td><td class="v-part">taught</td><td class="v-esp">enseñar</td></tr>
+                <tr><td class="v-inf">tell</td><td class="v-past">told</td><td class="v-part">told</td><td class="v-esp">contar / decir</td></tr>
+                <tr><td class="v-inf">think</td><td class="v-past">thought</td><td class="v-part">thought</td><td class="v-esp">pensar</td></tr>
+                <tr><td class="v-inf">throw</td><td class="v-past">threw</td><td class="v-part">thrown</td><td class="v-esp">lanzar / tirar</td></tr>
+                <tr><td class="v-inf">understand</td><td class="v-past">understood</td><td class="v-part">understood</td><td class="v-esp">entender</td></tr>
+                <tr><td class="v-inf">wake</td><td class="v-past">woke</td><td class="v-part">woken</td><td class="v-esp">despertar</td></tr>
+                <tr><td class="v-inf">wear</td><td class="v-past">wore</td><td class="v-part">worn</td><td class="v-esp">llevar puesto</td></tr>
+                <tr><td class="v-inf">win</td><td class="v-past">won</td><td class="v-part">won</td><td class="v-esp">ganar</td></tr>
+                <tr><td class="v-inf">write</td><td class="v-past">wrote</td><td class="v-part">written</td><td class="v-esp">escribir</td></tr>
             </tbody>
         </table>
     </div>
 </div>
+
+<script>
+    function buscar() {
+        let input = document.getElementById("search");
+        let filter = input.value.toLowerCase();
+        let table = document.getElementById("verbTable");
+        let tr = table.getElementsByTagName("tr");
+        let count = 0;
+
+        for (let i = 1; i < tr.length; i++) {
+            let rowText = tr[i].innerText.toLowerCase();
+            if (rowText.includes(filter)) {
+                tr[i].style.display = "";
+                count++;
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+        document.getElementById("count").innerText = count;
+    }
+
+    // Al cargar la página, contar todos
+    window.onload = () => {
+        document.getElementById("count").innerText = document.querySelectorAll("#listaVerbos tr").length;
+    }
+</script>
 
 </body>
 </html>

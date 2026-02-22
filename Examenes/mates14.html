@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MATH CHALLENGE: Tema 14 - 1º ESO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --math-blue: #0984e3;
+            --math-dark: #2d3436;
+            --math-accent: #6c5ce7;
+            --success: #00b894;
+            --error: #d63031;
+            --bg: #dfe6e9;
+        }
+
+        body {
+            background: var(--bg);
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #game-container {
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            border-left: 10px solid var(--math-blue);
+        }
+
+        .header { text-align: center; border-bottom: 2px dashed #b2bec3; padding-bottom: 20px; margin-bottom: 20px; }
+        .stats { display: flex; justify-content: space-between; font-family: 'Fira Code', monospace; color: var(--math-blue); }
+
+        .question-box { font-size: 1.4rem; font-weight: 800; margin-bottom: 25px; color: var(--math-dark); }
+        
+        /* Estilo para problemas interactivos */
+        .interactive-tool {
+            background: #f1f2f6;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+        }
+
+        .options { display: grid; gap: 10px; }
+        .btn {
+            background: #fff; border: 2px solid #dfe6e9; padding: 15px;
+            border-radius: 12px; cursor: pointer; font-size: 1.1rem; font-weight: 600;
+            transition: 0.3s; text-align: left;
+        }
+        .btn:hover:not(:disabled) { border-color: var(--math-blue); background: #f0f7ff; }
+
+        #feedback {
+            display: none; margin-top: 20px; padding: 20px; border-radius: 10px;
+            text-align: center; font-weight: bold;
+        }
+        .correct { background: #e8f8f5; color: var(--success); border: 2px solid var(--success); }
+        .wrong { background: #fdedec; color: var(--error); border: 2px solid var(--error); }
+
+        .next-btn {
+            margin-top: 20px; background: var(--math-dark); color: white;
+            border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer;
+            font-weight: 800; width: 100%;
+        }
+
+        #results { display: none; text-align: center; }
+        .big-score { font-size: 6rem; color: var(--math-blue); margin: 0; }
+        
+        input[type="number"] {
+            padding: 8px; border-radius: 5px; border: 1px solid #ccc; width: 60px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <div id="quiz">
+        <div class="header">
+            <h1>📐 MASTER MATH: TEMA 14</h1>
+            <p>Funciones, Coordenadas y Estadística</p>
+            <div class="stats">
+                <span id="q-txt">Pregunta: 1 / 10</span>
+                <span id="s-txt">Puntos: 0.0</span>
+            </div>
+        </div>
+
+        <div id="question-area"></div>
+
+        <div id="feedback">
+            <p id="f-text"></p>
+            <button class="next-btn" onclick="next()">SIGUIENTE RETO ➔</button>
+        </div>
+    </div>
+
+    <div id="results">
+        <h2>REPORTE FINAL DE CALIFICACIÓN</h2>
+        <h1 class="big-score" id="final-mark">0</h1>
+        <p id="rank-msg"></p>
+        <button class="next-btn" onclick="location.reload()">VOLVER A INTENTAR</button>
+    </div>
+</div>
+
+<script>
+    const bank = [
+        {
+            q: "[INTERACTIVO] Calcula la MEDIA de estas notas de examen: 4, 6, 8, 10.",
+            type: "calc",
+            data: [4, 6, 8, 10],
+            ans: 7,
+            opts: ["6.5", "7", "7.5", "28"],
+            info: "La media se calcula sumando todo (28) y dividiendo entre el número de datos (4). 28 / 4 = 7."
+        },
+        {
+            q: "¿En qué cuadrante se encuentra el punto P(-3, -5)?",
+            type: "test",
+            opts: ["1º Cuadrante", "2º Cuadrante", "3º Cuadrante", "4º Cuadrante"],
+            ans: 2,
+            info: "En el 3º cuadrante, tanto la X como la Y son negativas."
+        },
+        {
+            q: "[COORDENADAS] Si un punto está sobre el eje de ordenadas (Y), ¿cuánto vale su coordenada X?",
+            type: "test",
+            opts: ["Vale 1", "Vale lo mismo que Y", "Vale 0", "Depende del punto"],
+            ans: 2,
+            info: "Cualquier punto en el eje Y tiene siempre la X = 0 (por ejemplo: (0, 5))."
+        },
+        {
+            q: "En una gráfica tiempo-distancia, si la línea es horizontal (paralela al eje X), ¿qué significa?",
+            type: "test",
+            opts: ["Que el objeto va muy rápido", "Que el objeto está parado", "Que el tiempo se ha detenido", "Que vuelve al origen"],
+            ans: 1,
+            info: "Si el tiempo pasa pero la distancia no cambia, el objeto está en reposo."
+        },
+        {
+            q: "[ESTADÍSTICA] ¿Qué es la MODA?",
+            type: "test",
+            opts: ["El valor central", "El promedio de los datos", "El valor que más veces se repite", "La diferencia entre el mayor y el menor"],
+            ans: 2,
+            info: "La moda es el dato con mayor frecuencia absoluta."
+        },
+        {
+            q: "[INTERACTIVO] Si lanzas un dado 5 veces y sale: 1, 3, 3, 4, 6. ¿Cuál es el RANGO?",
+            type: "test",
+            opts: ["3", "5", "6", "4"],
+            ans: 1,
+            info: "El rango es la diferencia entre el valor máximo (6) y el mínimo (1). 6 - 1 = 5."
+        },
+        {
+            q: "Si una función siempre sube al mirar de izquierda a derecha, se dice que es:",
+            type: "test",
+            opts: ["Decreciente", "Creciente", "Constante", "Simétrica"],
+            ans: 1,
+            info: "Es creciente porque al aumentar la X, aumenta la Y."
+        },
+        {
+            q: "¿Cómo se llama el punto (0, 0)?",
+            type: "test",
+            opts: ["Punto final", "Eje X", "Eje Y", "Origen de coordenadas"],
+            ans: 3,
+            info: "Es el lugar donde se cruzan ambos ejes cartesianos."
+        },
+        {
+            q: "[PROBLEMA] En una tabla de frecuencias, la suma de todas las frecuencias relativas debe ser siempre:",
+            type: "test",
+            opts: ["100", "0", "1", "El número total de datos"],
+            ans: 2,
+            info: "La suma de las frecuencias relativas siempre da 1 (o 100%)."
+        },
+        {
+            q: "Para representar la evolución de las temperaturas a lo largo de una semana, ¿qué gráfico es mejor?",
+            type: "test",
+            opts: ["Diagrama de sectores", "Gráfico de líneas", "Pictograma", "No se puede representar"],
+            ans: 1,
+            info: "Los gráficos de líneas son ideales para mostrar variaciones a lo largo del tiempo."
+        }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let selectedQuestions = [];
+
+    function init() {
+        selectedQuestions = bank.sort(() => 0.5 - Math.random()).slice(0, 10);
+        render();
+    }
+
+    function render() {
+        const item = selectedQuestions[current];
+        const area = document.getElementById('question-area');
+        document.getElementById('q-txt').innerText = `Pregunta: ${current + 1} / 10`;
+        document.getElementById('feedback').style.display = 'none';
+
+        let html = `<div class="question-box">${item.q}</div>`;
+
+        if(item.type === "calc") {
+            html += `<div class="interactive-tool">
+                Sumatorio: <input type="number" id="user-sum" placeholder="Suma"> 
+                ÷ Datos: <input type="number" value="${item.data.length}" disabled>
+            </div>`;
+        }
+
+        html += `<div class="options">`;
+        item.opts.forEach((opt, i) => {
+            html += `<button class="btn" onclick="check(${i})">${opt}</button>`;
+        });
+        html += `</div>`;
+
+        area.innerHTML = html;
+    }
+
+    function check(idx) {
+        const item = selectedQuestions[current];
+        const f = document.getElementById('feedback');
+        const ft = document.getElementById('f-text');
+        const btns = document.querySelectorAll('.btn');
+        btns.forEach(b => b.disabled = true);
+
+        if(idx === item.ans) {
+            score += 1;
+            f.className = 'correct';
+            ft.innerHTML = `¡EXCELENTE! 🎯<br>${item.info}`;
+        } else {
+            f.className = 'wrong';
+            ft.innerHTML = `ERROR DE CÁLCULO 📉<br>La respuesta era: ${item.opts[item.ans]}<br>${item.info}`;
+        }
+        f.style.display = 'block';
+        document.getElementById('s-txt').innerText = `Puntos: ${score.toFixed(1)}`;
+    }
+
+    function next() {
+        current++;
+        if(current < 10) render();
+        else {
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('final-mark').innerText = score.toFixed(1);
+            document.getElementById('rank-msg').innerText = score >= 5 ? "¡Has superado el desafío matemático!" : "Necesitas practicar más el análisis de gráficas y tablas.";
+        }
+    }
+
+    init();
+</script>
+</body>
+</html>

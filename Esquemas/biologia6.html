@@ -2,196 +2,253 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enciclopedia Detallada: El Reino de los Invertebrados</title>
+    <title>Fichas Dinámicas: El Mundo de los Invertebrados</title>
     <style>
         :root {
-            --primary-dark: #1b4f72;
-            --primary-light: #2e86c1;
-            --accent: #d35400;
-            --bg-page: #fdfefe;
-            --text-main: #2c3e50;
-            --border: #d5dbdb;
+            --poriferos: #48cae4;
+            --cnidarios: #fb8500;
+            --gusanos: #8ecae6;
+            --moluscos: #219ebc;
+            --artropodos: #023e8a;
+            --equinodermos: #ffb703;
+            --dark: #023047;
+            --light: #f8f9fa;
         }
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--bg-page); color: var(--text-main); line-height: 1.8; margin: 0; padding: 25px; }
-        .master-container { max-width: 1200px; margin: 0 auto; background: white; padding: 50px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid var(--border); }
-        header { border-bottom: 6px solid var(--primary-dark); margin-bottom: 40px; text-align: center; padding-bottom: 20px; }
-        h1 { color: var(--primary-dark); font-size: 3rem; text-transform: uppercase; letter-spacing: 2px; margin: 0; }
-        h2 { background: var(--primary-dark); color: white; padding: 15px 25px; border-radius: 8px; margin-top: 50px; font-size: 1.8rem; }
-        h3 { color: var(--primary-light); border-left: 5px solid var(--accent); padding-left: 15px; margin-top: 35px; font-size: 1.5rem; }
-        .description-block { background: #f4f6f7; padding: 25px; border-radius: 12px; border-left: 8px solid var(--primary-light); margin: 20px 0; }
-        .tech-pill { display: inline-block; background: #ebf5fb; border: 1px solid var(--primary-light); color: var(--primary-dark); padding: 2px 12px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; }
-        .important { color: var(--accent); font-weight: bold; }
-        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-top: 25px; }
-        .group-card { border: 1px solid var(--border); padding: 25px; border-radius: 12px; background: #fff; transition: 0.3s; }
-        .group-card:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-color: var(--primary-light); }
-        ul { padding-left: 20px; }
-        li { margin-bottom: 12px; }
-        footer { text-align: center; margin-top: 60px; font-size: 0.85rem; color: #7f8c8d; border-top: 1px solid #eee; padding-top: 25px; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 20px;
+            color: var(--dark);
+        }
+
+        .header-main {
+            text-align: center;
+            padding: 40px 0;
+            background: var(--dark);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        /* Estilo de las Fichas */
+        .card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card-header {
+            padding: 20px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-body {
+            padding: 25px;
+            flex-grow: 1;
+        }
+
+        .tech-tag {
+            display: inline-block;
+            background: #eee;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .concept-title {
+            color: var(--dark);
+            border-bottom: 2px solid #eee;
+            margin: 15px 0 10px 0;
+            font-size: 1.1rem;
+        }
+
+        /* Colores por Grupo */
+        .bg-poriferos { background-color: var(--poriferos); }
+        .bg-cnidarios { background-color: var(--cnidarios); }
+        .bg-gusanos { background-color: var(--gusanos); }
+        .bg-moluscos { background-color: var(--moluscos); }
+        .bg-artropodos { background-color: var(--artropodos); }
+        .bg-equinodermos { background-color: var(--equinodermos); }
+
+        ul {
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .footer-info {
+            text-align: center;
+            margin-top: 50px;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+
     </style>
 </head>
 <body>
 
-<div class="master-container">
-    <header>
-        <h1>Los Animales Invertebrados</h1>
-        <p>Estudio exhaustivo de la anatomía, fisiología y clasificación del reino animal sin columna vertebral.</p>
-    </header>
+<div class="header-main">
+    <h1>ENCICLOPEDIA DE INVERTEBRADOS</h1>
+    <p>Guía Técnica Dinámica basada en los apuntes de Screenshot_1.pdf</p>
+</div>
 
-    <div class="description-block">
-        <strong>Definición General:</strong> Los invertebrados son animales que se caracterizan por la ausencia de columna vertebral o espina dorsal. Representan el grupo más diverso del planeta. Aunque no tienen huesos internos, muchos han desarrollado sistemas de soporte como <span class="tech-pill">conchas calizas</span> (caracoles), <span class="tech-pill">exoesqueletos rígidos</span> (artrópodos) o placas internas denominadas <span class="tech-pill">endoesqueletos</span> (equinodermos).
+<div class="container">
+
+    <div class="card">
+        <div class="card-header bg-poriferos">
+            Poríferos
+            <span>🧽</span>
+        </div>
+        <div class="card-body">
+            <span class="tech-tag">Simetría Radial/Asimétricos</span>
+            <p>Animales sésiles (fijos) y acuáticos que funcionan mediante filtración.</p>
+            
+            <div class="concept-title">Mecánica Hídrica</div>
+            <ul>
+                <li><span class="highlight">Poros:</span> Canales de entrada de agua.</li>
+                <li><span class="highlight">Atrio:</span> Cavidad central de recogida.</li>
+                <li><span class="highlight">Ósculo:</span> Gran orificio de salida superior.</li>
+            </ul>
+            
+            <div class="concept-title">Estructura</div>
+            <p>Esqueleto de <span class="highlight">espongina</span> (material blando) con espinas de soporte.</p>
+        </div>
     </div>
 
-    <section>
-        <h2>1. Poríferos (Esponjas)</h2>
-        <p>Son los animales pluricelulares más primitivos y sencillos que existen. Carecen de tejidos verdaderos y su vida es exclusivamente acuática.</p>
-        
-        <div class="description-block">
-            <h3>Anatomía y Funcionamiento Hídrico</h3>
+    <div class="card">
+        <div class="card-header bg-cnidarios">
+            Cnidarios
+            <span>🪼</span>
+        </div>
+        <div class="card-body">
+            <span class="tech-tag">Carnívoros</span>
+            <p>Acuáticos con células especializadas para la caza.</p>
             
-
-[Image of the internal structure of a sponge]
-
-            <p>Su cuerpo funciona como un sistema de bombeo de agua constante:</p>
+            <div class="concept-title">Arma Biológica</div>
+            <p>Poseen <span class="highlight">cnidocitos</span> en tentáculos que disparan veneno paralizante al contacto.</p>
+            
+            <div class="concept-title">Dos Formas Vitales</div>
             <ul>
-                <li><strong>Poros:</strong> Toda la pared de su cuerpo está perforada por canales diminutos llamados <span class="tech-pill">poros</span>.</li>
-                <li><strong>Atrio:</strong> El agua que entra por los poros converge en una cavidad central espaciosa denominada <span class="tech-pill">atrio</span>.</li>
-                <li><strong>Ósculo:</strong> El agua cargada de desechos es expulsada por un orificio superior de mayor tamaño llamado <span class="tech-pill">ósculo</span>.</li>
-                <li><strong>Nutrición:</strong> Son <span class="important">filtradores</span>. Atrapan el alimento (partículas y microorganismos) directamente del agua mientras esta circula por su interior.</li>
-                <li><strong>Sostén:</strong> Poseen un armazón flexible de espinas microscópicas hechas de <span class="tech-pill">espongina</span>.</li>
+                <li><span class="highlight">Pólipo:</span> Forma de saco, fijo al sustrato. Crea colonias como corales.</li>
+                <li><span class="highlight">Medusa:</span> Forma de sombrilla, natación libre.</li>
             </ul>
         </div>
-    </section>
+    </div>
 
-    <section>
-        <h2>2. Cnidarios</h2>
-        <p>Este grupo incluye animales con simetría radial y una organización corporal basada en tejidos carnívoros altamente especializados.</p>
-        
-        <div class="description-block">
-            <h3>Especialización Táctica: El Cnidocito</h3>
-            
-            <p>Poseen células exclusivas llamadas <span class="tech-pill">cnidocitos</span> localizadas en sus tentáculos. Estas actúan como arpones microscópicos: al contacto, disparan un filamento que inyecta una <span class="important">sustancia paralizante</span> para capturar a sus presas.</p>
-            
-            <div class="grid-layout">
-                <div class="group-card">
-                    <strong>El Pólipo (Sésil)</strong>
-                    <p>Tiene forma de saco y vive fijo al sustrato mediante una ventosa. Su orificio superior (boca/ano) está rodeado de tentáculos. Los corales son pólipos que forman colonias gigantescas.</p>
-                </div>
-                <div class="group-card">
-                    <strong>La Medusa (Móvil)</strong>
-                    <p>Tiene forma de sombrilla y vive flotando en el agua. Estructuralmente es idéntica a un pólipo, pero en posición invertida.</p>
-                </div>
-            </div>
-            
+    <div class="card">
+        <div class="card-header bg-gusanos">
+            Gusanos
+            <span>🪱</span>
         </div>
-    </section>
-
-    <section>
-        <h2>3. Clasificación Extensa de los Gusanos</h2>
-        <p>Presentan simetría bilateral, cuerpo alargado y carecen de cualquier tipo de esqueleto rígido.</p>
-
-        <div class="grid-layout">
-            <div class="group-card">
-                <h3>Platelmintos (Planos)</h3>
-                <p>Cuerpo aplanado. Destacan dos tipos:</p>
-                <ul>
-                    <li><span class="important">Tenia:</span> Parásito que puede medir hasta 8 metros. Posee un <span class="tech-pill">escólex</span> (cabeza) con garfios y ventosas para anclarse al intestino.</li>
-                    <li><span class="important">Planaria:</span> Pequeño gusano de vida libre con una capacidad de <span class="tech-pill">regeneración</span> asombrosa (puede reconstruir su cuerpo entero desde un fragmento).</li>
-                </ul>
-                
-
-[Image of the scolex of a tapeworm]
-
-            </div>
-            <div class="group-card">
-                <h3>Nematodos (Cilíndricos)</h3>
-                <p>Gusanos con forma de hilo y extremos afilados. Son muy comunes como parásitos intestinales en humanos y otros animales.</p>
-            </div>
-            <div class="group-card">
-                <h3>Anélidos (Segmentados)</h3>
-                <p>Su cuerpo está dividido en anillos iguales. Un ejemplo clave es la <span class="important">lombriz de tierra</span>:</p>
-                <ul>
-                    <li><strong>Sedas/Quetas:</strong> Estructuras para anclarse y moverse por el suelo.</li>
-                    <li><strong>Clitelo:</strong> Un abultamiento de anillos más gruesos donde se almacenan los huevos.</li>
-                    <li><strong>Ecosistema:</strong> Son vitales porque crean <span class="tech-pill">humus</span> y airean el terreno.</li>
-                </ul>
-                
-
-[Image of the anatomy of an earthworm]
-
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <h2>4. Fisiología de los Moluscos</h2>
-        <p>Poseen un cuerpo blando dividido en tres regiones: <strong>Cabeza</strong> (sentidos), <strong>Masa Visceral</strong> (órganos) y <strong>Pie Musculoso</strong> (movimiento).</p>
-
-        <div class="description-block">
-            <ul class="tech-list">
-                <li><strong>Bivalvos:</strong> Protegidos por una concha de dos <span class="tech-pill">valvas</span>. Son filtradores y usan <span class="tech-pill">sifones</span> para mover el agua hacia sus branquias e intestino. </li>
-                <li><strong>Gasterópodos:</strong> (Caracoles y babosas). Poseen una <span class="tech-pill">rádula</span>, una lengua con dientes quitinosos para raspar la vegetación. Respiran por cavidad pulmonar o branquias. </li>
-                <li><strong>Cefalópodos:</strong> (Pulpos y calamares). Tienen tentáculos con ventosas y una mandíbula fuerte llamada <span class="important">pico de loro</span>. Utilizan un sifón para expulsar agua y tinta a propulsión.</li>
-            </ul>
-        </div>
-    </section>
-
-    <section>
-        <h2>5. El Éxito de los Artrópodos</h2>
-        <p>Grupo más numeroso de la Tierra. Su éxito radica en el <strong>exoesqueleto</strong> y los apéndices articulados.</p>
-
-        <div class="description-block">
-            <h3>Crecimiento y Metamorfosis</h3>
-            <p>Al tener un exoesqueleto rígido, deben realizar la <span class="important">muda</span> periódicamente. Presentan dos tipos de ciclos de vida:</p>
+        <div class="card-body">
+            <span class="tech-tag">Simetría Bilateral</span>
+            <p>Cuerpo alargado y blando sin esqueleto rígido.</p>
+            
+            <div class="concept-title">Diversidad Técnica</div>
             <ul>
-                <li><strong>Incompleta:</strong> Nace una <span class="tech-pill">ninfa</span> que se parece al adulto (ej: saltamontes).</li>
-                <li><strong>Completa:</strong> Pasa por las fases de huevo, larva, <span class="tech-pill">pupa o crisálida</span> y finalmente adulto (ej: mariposa).</li>
+                <li><span class="highlight">Platelmintos:</span> Planos. La Tenia usa su <span class="highlight">escólex</span> para anclarse.</li>
+                <li><span class="highlight">Nematodos:</span> Cilíndricos y parásitos.</li>
+                <li><span class="highlight">Anélidos:</span> Segmentados en anillos. Poseen <span class="highlight">clitelo</span> y <span class="highlight">quetas</span> para el movimiento.</li>
             </ul>
-            
-
-[Image of the life cycle of a butterfly showing complete metamorphosis]
-
-            
-            <div class="grid-layout">
-                <div class="group-card">
-                    <strong>Arácnidos:</strong> Cuerpo dividido en cefalotórax y abdomen. Tienen <span class="tech-pill">quelíceros</span> (uñas con veneno) y <span class="tech-pill">palpos</span>. No tienen antenas. 
-
-[Image of the body regions of an arachnid]
-
-                </div>
-                <div class="group-card">
-                    <strong>Crustáceos:</strong> Tienen un exoesqueleto reforzado con <span class="tech-pill">carbonato cálcico</span>. Poseen dos pares de antenas.
-                </div>
-                <div class="group-card">
-                    <strong>Insectos:</strong> Únicos invertebrados que vuelan. Cuerpo en tres partes: cabeza, tórax (donde están las patas y alas) y abdomen.
-                </div>
-                <div class="group-card">
-                    <strong>Miriápodos:</strong> Cuerpo formado por un tronco con muchos anillos. Ciempiés (1 par patas/anillo) y milpiés (2 pares).
-                </div>
-            </div>
         </div>
-    </section>
+    </div>
 
-    <section>
-        <h2>6. Los Equinodermos y el Sistema Hidráulico</h2>
-        <p>Animales exclusivamente marinos con un <span class="tech-pill">endoesqueleto</span> de placas calizas con espinas bajo la piel.</p>
-
-        <div class="description-block">
-            <h3>El Sistema Ambulacral</h3>
-            
-
-[Image of the water vascular system of a starfish]
-
-            <p>Es un sistema exclusivo de canales internos que se llenan de agua. Mediante <span class="important">presión hidráulica</span>, extienden unos pequeños tubos con ventosas llamados <span class="tech-pill">pies ambulacrales</span>, que les sirven para desplazarse lentamente, respirar o capturar presas.</p>
-            
-            <p><strong>Clasificación:</strong> Asteroideos (estrellas), Equinoideos (erizos), Holoturoideos (pepinos de mar), Ofiuroideos y Crinoideos.</p>
-            <p><strong>Dato Maestro:</strong> Las estrellas de mar tienen un poder de regeneración extremo: pueden reconstruir todo su cuerpo a partir de un solo brazo perdido.</p>
+    <div class="card">
+        <div class="card-header bg-moluscos">
+            Moluscos
+            <span>🐌</span>
         </div>
-    </section>
+        <div class="card-body">
+            <span class="tech-tag">Cuerpo Blando</span>
+            <p>Divididos en Cabeza, Masa Visceral y Pie Musculoso.</p>
+            
+            <div class="concept-title">Especializaciones</div>
+            <ul>
+                <li><span class="highlight">Gasterópodos:</span> Poseen <span class="highlight">rádula</span> para raspar alimento.</li>
+                <li><span class="highlight">Bivalvos:</span> Dos valvas y respiración por <span class="highlight">sifones</span>.</li>
+                <li><span class="highlight">Cefalópodos:</span> Mandíbula en <span class="highlight">pico de loro</span> y propulsión a tinta.</li>
+            </ul>
+        </div>
+    </div>
 
-    <footer>
-        Guía Maestra de Invertebrados - Basada íntegramente en el contenido del archivo Screenshot_1.pdf.
-    </footer>
+    <div class="card">
+        <div class="card-header bg-artropodos">
+            Artrópodos
+            <span>🐜</span>
+        </div>
+        <div class="card-body">
+            <span class="tech-tag">Exoesqueleto</span>
+            <p>El grupo más exitoso. Crecen mediante el proceso de la <strong>muda</strong>.</p>
+            
+            <div class="concept-title">Ciclo de Vida</div>
+            <ul>
+                <li><span class="highlight">Incompleta:</span> Huevo -> Ninfa -> Adulto.</li>
+                <li><span class="highlight">Completa:</span> Huevo -> Larva -> <span class="highlight">Pupa/Crisálida</span> -> Adulto.</li>
+            </ul>
+
+            <div class="concept-title">Grupos</div>
+            <p>Insectos (voladores), Arácnidos (quelíceros), Crustáceos (carbonato cálcico) y Miriápodos.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-equinodermos">
+            Equinodermos
+            <span>⭐</span>
+        </div>
+        <div class="card-body">
+            <span class="tech-tag">Endoesqueleto Calizo</span>
+            <p>Animales marinos con un sistema hidráulico único en el mundo animal.</p>
+            
+            <div class="concept-title">Sistema Ambulacral</div>
+            <p>Canales internos que, por <span class="highlight">presión de agua</span>, extienden los <strong>pies ambulacrales</strong> con ventosas para moverse.</p>
+            
+            <div class="concept-title">Poder Especial</div>
+            <p>Alta capacidad de <span class="highlight">regeneración</span>: una estrella puede reconstruirse desde un solo brazo.</p>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer-info">
+    Guía Completa e Íntegra. Fuente: Screenshot_1.pdf - Temario de Biología.
 </div>
 
 </body>

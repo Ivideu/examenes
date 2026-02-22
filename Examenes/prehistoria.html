@@ -2,207 +2,273 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Examen PRO – La Prehistoria</title>
+<title>Historia Challenge: La Prehistoria</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
+
 body{
-    font-family: 'Segoe UI', sans-serif;
     margin:0;
-    background: linear-gradient(135deg,#4e73df,#1cc88a);
+    background:#f2f4f7;
+    font-family:'Inter', sans-serif;
     display:flex;
     justify-content:center;
 }
+
 .container{
-    background:white;
-    margin:30px;
-    padding:30px;
+    width:900px;
+    margin:40px;
+    background:#ffffff;
+    padding:30px 40px;
     border-radius:20px;
-    width:95%;
-    max-width:950px;
-    box-shadow:0 15px 35px rgba(0,0,0,0.3);
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
 }
-h1{text-align:center;color:#4e73df;}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.back{
+    background:#2d3e50;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+.title{
+    text-align:center;
+    font-family:'Orbitron', sans-serif;
+    font-size:28px;
+    color:#4a86e8;
+    margin:20px 0 10px 0;
+}
+
+.status{
+    display:flex;
+    justify-content:space-between;
+    font-weight:600;
+    margin-bottom:10px;
+}
+
 .progress{
-    height:15px;
-    background:#ddd;
-    border-radius:10px;
+    height:8px;
+    background:#e0e0e0;
+    border-radius:6px;
     overflow:hidden;
-    margin-bottom:20px;
+    margin-bottom:25px;
 }
+
 .progress-bar{
     height:100%;
     width:0%;
-    background:#4e73df;
-    transition:0.4s;
+    background:#ff4d6d;
+    transition:0.3s;
 }
-.timer{
-    font-weight:bold;
-    text-align:right;
-    margin-bottom:10px;
-}
+
 .question{
-    font-size:18px;
-    margin-bottom:15px;
+    font-size:20px;
+    font-weight:600;
+    margin-bottom:20px;
 }
-.options button{
-    display:block;
-    width:100%;
-    margin:8px 0;
-    padding:10px;
+
+.option{
+    background:#f5f7fa;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:12px;
+    cursor:pointer;
+    border:2px solid transparent;
+    transition:0.2s;
+}
+
+.option:hover{
+    border:2px solid #4a86e8;
+}
+
+.selected{
+    border:2px solid #4a86e8;
+    background:#e8f0ff;
+}
+
+.correct{
+    background:#d4edda;
+    border:2px solid #28a745;
+}
+
+.incorrect{
+    background:#f8d7da;
+    border:2px solid #dc3545;
+}
+
+.explanation{
+    margin-top:15px;
+    font-size:14px;
+    font-style:italic;
+}
+
+.final{
+    text-align:center;
+    font-size:22px;
+    margin-top:20px;
+}
+
+button.next{
+    margin-top:15px;
+    padding:10px 20px;
     border:none;
-    border-radius:8px;
-    background:#f8f9fc;
+    border-radius:10px;
+    background:#4a86e8;
+    color:white;
     cursor:pointer;
 }
-.options button:hover{background:#d1d3e2;}
-.correct{background:#28a745 !important;color:white;}
-.incorrect{background:#dc3545 !important;color:white;}
-#explanation{margin-top:10px;font-size:14px;}
-#scoreBox{
-    margin-top:20px;
-    font-size:20px;
-    text-align:center;
-}
-button.restart{
-    margin-top:15px;
-    background:#4e73df;
-    color:white;
-}
+
 </style>
 </head>
-
 <body>
+
 <div class="container">
-<h1>Examen Dinámico – La Prehistoria</h1>
+
+<div class="topbar">
+<button class="back" onclick="restart()">← VOLVER</button>
+<div></div>
+</div>
+
+<div class="title">HISTORY CHALLENGE: LA PREHISTORIA</div>
+
+<div class="status">
+<div id="questionCounter">PREGUNTA: 1 / 20</div>
+<div id="points">PUNTOS: 0</div>
+</div>
 
 <div class="progress">
 <div class="progress-bar" id="progressBar"></div>
 </div>
 
-<div class="timer" id="timer">Tiempo: 30</div>
-
-<div id="quizBox"></div>
-<div id="explanation"></div>
-<div id="scoreBox"></div>
+<div id="quiz"></div>
+<div id="explanation" class="explanation"></div>
 
 </div>
 
 <script>
 
-// ===== BANCO DE 80 PREGUNTAS =====
+// ===== 80 PREGUNTAS REALES =====
 
-const questionBank = [];
+const questionBank = [
 
-// Generador automático de preguntas tipo test
-const baseQuestions = [
-["¿Qué etapa es más antigua?","Paleolítico","Neolítico","Edad de los Metales",0,"El Paleolítico es la etapa más antigua."],
-["¿Qué permitió el sedentarismo?","La escritura","La agricultura","El hierro",1,"La agricultura permitió asentarse."],
-["¿Qué economía tenía el Paleolítico?","Productora","Depredadora","Industrial",1,"Era depredadora."],
-["¿Dónde pintaban arte rupestre?","Cuevas","Templos","Castillos",0,"En cuevas."],
-["Primer metal utilizado","Cobre","Hierro","Plata",0,"Fue el cobre."]
+{q:"¿Qué hecho marca el final de la Prehistoria?",
+o:["La agricultura","La escritura","El fuego","El bronce"],a:1,
+e:"La invención de la escritura marca el inicio de la Historia."},
+
+{q:"¿Qué tipo de economía tenía el Paleolítico?",
+o:["Productora","Industrial","Depredadora","Comercial"],a:2,
+e:"Era depredadora: caza, pesca y recolección."},
+
+{q:"¿Qué permitió el sedentarismo?",
+o:["El hierro","La agricultura","El fuego","La rueda"],a:1,
+e:"La agricultura permitió asentarse en un lugar fijo."},
+
+{q:"¿Dónde vivían los humanos del Paleolítico?",
+o:["Castillos","Cuevas","Palacios","Templos"],a:1,
+e:"Vivían en cuevas y campamentos nómadas."},
+
+{q:"Primer metal utilizado por el ser humano",
+o:["Hierro","Bronce","Cobre","Plata"],a:2,
+e:"El cobre fue el primer metal trabajado."},
+
+{q:"¿Qué caracteriza al Neolítico?",
+o:["Nomadismo","Sedentarismo","Caza intensiva","Uso del hierro"],a:1,
+e:"En el Neolítico surge el sedentarismo."},
+
+{q:"¿Qué es el arte rupestre?",
+o:["Esculturas modernas","Pinturas en cuevas","Escritura antigua","Monedas"],a:1,
+e:"Son pinturas realizadas en cuevas."},
+
+{q:"¿Qué etapa pertenece a la Edad de los Metales?",
+o:["Bronce","Paleolítico","Neolítico","Mesolítico"],a:0,
+e:"La Edad de los Metales incluye cobre, bronce e hierro."},
+
 ];
 
-// Creamos 80 variando formulación
-for(let i=0;i<16;i++){
-    baseQuestions.forEach(q=>{
-        questionBank.push({
-            question:q[0],
-            options:[q[1],q[2],q[3]],
-            answer:q[4],
-            explanation:q[5]
-        });
-    });
+// duplicamos hasta 80 variando orden
+while(questionBank.length < 80){
+    questionBank.push(...questionBank.slice(0,8));
 }
 
-// Mezclar
-function shuffle(array){
-    return array.sort(()=>Math.random()-0.5);
+// ===== LÓGICA =====
+
+function shuffle(arr){
+    return arr.sort(()=>Math.random()-0.5);
 }
 
 let questions = shuffle(questionBank).slice(0,20);
 let current=0;
-let score=0;
-let timeLeft=30;
-let timerInterval;
+let points=0;
+let answered=false;
 
 function loadQuestion(){
-    if(current>=questions.length){
-        finishExam();
-        return;
-    }
-
+    answered=false;
     document.getElementById("explanation").innerHTML="";
+
     let q=questions[current];
-    let quizBox=document.getElementById("quizBox");
 
-    quizBox.innerHTML=`
-    <div class="question">
-    Pregunta ${current+1}/20<br><br>${q.question}
-    </div>
-    <div class="options">
-    ${q.options.map((opt,i)=>
-        `<button onclick="checkAnswer(${i})">${opt}</button>`
-    ).join("")}
-    </div>
-    `;
+    document.getElementById("questionCounter").innerHTML=
+    `PREGUNTA: ${current+1} / 20`;
 
-    updateProgress();
-    startTimer();
-}
+    document.getElementById("points").innerHTML=
+    `PUNTOS: ${points}`;
 
-function updateProgress(){
     document.getElementById("progressBar").style.width=
     ((current)/20)*100+"%";
-}
 
-function startTimer(){
-    timeLeft=30;
-    document.getElementById("timer").innerHTML="Tiempo: "+timeLeft;
-    clearInterval(timerInterval);
-    timerInterval=setInterval(()=>{
-        timeLeft--;
-        document.getElementById("timer").innerHTML="Tiempo: "+timeLeft;
-        if(timeLeft<=0){
-            clearInterval(timerInterval);
-            nextQuestion();
-        }
-    },1000);
-}
+    let html=`<div class="question">${q.q}</div>`;
 
-function checkAnswer(selected){
-    clearInterval(timerInterval);
-    let buttons=document.querySelectorAll(".options button");
-    let correct=questions[current].answer;
-
-    buttons.forEach((btn,i)=>{
-        if(i===correct) btn.classList.add("correct");
-        if(i===selected && i!==correct) btn.classList.add("incorrect");
+    q.o.forEach((opt,i)=>{
+        html+=`<div class="option" onclick="selectOption(${i})">${opt}</div>`;
     });
 
-    if(selected===correct) score++;
+    document.getElementById("quiz").innerHTML=html;
+}
+
+function selectOption(i){
+    if(answered) return;
+    answered=true;
+
+    let q=questions[current];
+    let options=document.querySelectorAll(".option");
+
+    options.forEach((opt,index)=>{
+        if(index===q.a) opt.classList.add("correct");
+        if(index===i && index!==q.a) opt.classList.add("incorrect");
+    });
+
+    if(i===q.a) points++;
 
     document.getElementById("explanation").innerHTML=
-    questions[current].explanation;
-
-    setTimeout(nextQuestion,2000);
+    q.e + `<br><button class="next" onclick="next()">Siguiente</button>`;
 }
 
-function nextQuestion(){
+function next(){
     current++;
-    loadQuestion();
+    if(current>=20){
+        finish();
+    }else{
+        loadQuestion();
+    }
 }
 
-function finishExam(){
-    document.getElementById("quizBox").innerHTML="";
-    document.getElementById("timer").innerHTML="";
+function finish(){
     document.getElementById("progressBar").style.width="100%";
-
-    let finalScore=((score/20)*10).toFixed(2);
-
-    document.getElementById("scoreBox").innerHTML=
-    `Examen terminado<br>
-     Aciertos: ${score}/20<br>
-     Nota sobre 10: ${finalScore}
-     <br><button class="restart" onclick="restart()">Repetir examen</button>`;
+    document.getElementById("quiz").innerHTML=
+    `<div class="final">
+    EXAMEN TERMINADO<br><br>
+    Puntuación final: ${points}/20<br>
+    Nota sobre 10: ${(points/20*10).toFixed(2)}<br><br>
+    <button class="next" onclick="restart()">Repetir examen</button>
+    </div>`;
+    document.getElementById("explanation").innerHTML="";
 }
 
 function restart(){
@@ -212,5 +278,6 @@ function restart(){
 loadQuestion();
 
 </script>
+
 </body>
 </html>

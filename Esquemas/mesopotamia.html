@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MasterClass Total: Mesopotamia (Nivel Pro)</title>
+    <style>
+        :root {
+            --m-river: #2980b9;
+            --m-gold: #f39c12;
+            --m-clay: #d35400;
+            --m-brick: #c0392b;
+            --m-night: #2c3e50;
+            --m-green: #27ae60;
+            --bg: #fdfaf6;
+        }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: #333; line-height: 1.5; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: auto; }
+        
+        .btn-back { background: var(--m-night); color: white; padding: 12px 25px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; margin-bottom: 30px; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn-back:hover { background: #000; transform: scale(1.05); }
+
+        header { text-align: center; margin-bottom: 40px; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-bottom: 6px solid var(--m-gold); }
+        header h1 { color: var(--m-night); margin: 0; font-size: 2.3rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        .fichas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px; }
+
+        /* Ficha Maestra */
+        .ficha { background: white; border-radius: 18px; padding: 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); border-left: 12px solid; transition: 0.3s; position: relative; }
+        .ficha:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
+
+        .ficha h2 { margin-top: 0; font-size: 1.4rem; border-bottom: 2px solid #eee; padding-bottom: 10px; color: var(--m-night); }
+        .ficha h3 { font-size: 1rem; color: #555; text-transform: uppercase; margin-top: 15px; margin-bottom: 5px; }
+        
+        .ficha ul { padding-left: 20px; margin: 10px 0; }
+        .ficha li { margin-bottom: 6px; font-size: 0.92rem; }
+        .ficha b { color: #000; }
+
+        /* Etiquetas dinámicas */
+        .badge { display: inline-block; background: #f0f0f0; padding: 3px 10px; border-radius: 15px; font-size: 0.75rem; font-weight: bold; margin-top: 10px; color: #666; }
+
+        /* Colores por sección */
+        .f-geo { border-left-color: var(--m-river); }
+        .f-his { border-left-color: var(--m-brick); }
+        .f-soc { border-left-color: var(--m-gold); }
+        .f-eco { border-left-color: var(--m-green); }
+        .f-cul { border-left-color: var(--m-clay); }
+
+        /* Cuadro de "Clave de Examen" */
+        .nota-examen { background: #fff9e6; border: 1px dashed var(--m-gold); padding: 12px; border-radius: 10px; margin-top: 15px; font-size: 0.85rem; }
+        .nota-examen b { color: #d35400; text-transform: uppercase; }
+
+        @media (max-width: 600px) { .fichas-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <button onclick="window.history.back()" class="btn-back">⬅ VOLVER AL CURSO</button>
+    
+    <header>
+        <h1>Mesopotamia: La Cuna de la Historia</h1>
+        <p>Estudio exhaustivo del contenido del archivo - Máximo Nivel</p>
+    </header>
+
+    <div class="fichas-container fichas-grid">
+        
+        <div class="ficha f-geo">
+            <h2>🌍 01. Contexto Geográfico</h2>
+            <p>Situada en el Próximo Oriente, entre los ríos <b>Tigris</b> y <b>Éufrates</b>.</p>
+            <ul>
+                <li><b>Alta Mesopotamia (Norte):</b> Zona montañosa, de clima seco. Hogar de los <b>Asirios</b>.</li>
+                <li><b>Baja Mesopotamia (Sur):</b> Llanura aluvial fértil cerca del Golfo Pérsico. Hogar de <b>Sumerios</b> y <b>Acadios</b>.</li>
+                <li><b>Creciente Fértil:</b> Región en forma de media luna que une Mesopotamia, Fenicia y Egipto, ideal para la agricultura por el limo.</li>
+            </ul>
+            <span class="badge">ESPACIO GEOGRÁFICO</span>
+        </div>
+
+        <div class="ficha f-his">
+            <h2>⏳ 02. Etapas Históricas</h2>
+            <h3>1. Sumerios (3.500-2.300 a.C.):</h3>
+            <ul>
+                <li>Primeras <b>Ciudades-Estado</b> (Ur, Uruk, Eridu, Lagash).</li>
+                <li>Invención de la escritura y el control del agua.</li>
+            </ul>
+            <h3>2. Imperio Acadio (2.300-2.140 a.C.):</h3>
+            <ul>
+                <li><b>Sargón I</b> conquista Sumer y crea el primer imperio unificado.</li>
+            </ul>
+            <h3>3. Imperio Babilónico (1.800-1.500 a.C.):</h3>
+            <ul>
+                <li>Babilonia se convierte en el centro del mundo bajo <b>Hammurabi</b>.</li>
+            </ul>
+            <h3>4. Imperio Asirio y Persa:</h3>
+            <ul>
+                <li>Asirios: Grandes guerreros (Assurbanipal).</li>
+                <li>Persas: Ciro II pone fin a las civilizaciones mesopotámicas en el 539 a.C.</li>
+            </ul>
+            <span class="badge">EJE CRONOLÓGICO</span>
+        </div>
+
+        <div class="ficha f-soc">
+            <h2>👑 03. El Poder del Rey</h2>
+            <p>En Mesopotamia, el jefe político era también el líder religioso.</p>
+            <ul>
+                <li><b>Patesi / Lugal:</b> Príncipe-Sacerdote. Era el intermediario entre los dioses y el pueblo.</li>
+                <li><b>Funciones:</b> Dirigía el ejército, administraba la justicia, organizaba el culto y supervisaba los canales de riego.</li>
+                <li><b>Estado Teocrático:</b> El poder venía directamente de los dioses.</li>
+            </ul>
+            <div class="nota-examen">
+                <b>⚠️ Dato de 10:</b> El Rey vivía en el Palacio, pero el centro económico inicial era el <b>Zigurat</b> (Templo).
+            </div>
+            <span class="badge">ESTRUCTURA POLÍTICA</span>
+        </div>
+
+        <div class="ficha f-soc">
+            <h2>👥 04. Sociedad Jerarquizada</h2>
+            <h3>1. Grupo Privilegiado:</h3>
+            <ul>
+                <li><b>Rey y Familia:</b> Cúspide de la pirámide.</li>
+                <li><b>Sacerdotes y Aristocracia:</b> Poseían las mejores tierras.</li>
+                <li><b>Escribas y Funcionarios:</b> Controlaban los impuestos y la escritura.</li>
+            </ul>
+            <h3>2. Resto de la Población:</h3>
+            <ul>
+                <li><b>Hombres Libres:</b> Campesinos (80%), artesanos y comerciantes.</li>
+                <li><b>Esclavos:</b> Prisioneros de guerra o personas endeudadas. Eran propiedad de otros.</li>
+            </ul>
+            <span class="badge">PIRÁMIDE SOCIAL</span>
+        </div>
+
+        <div class="ficha f-eco">
+            <h2>🌾 05. Economía de Regadío</h2>
+            <p>La riqueza dependía totalmente de los ríos Tigris y Éufrates.</p>
+            <ul>
+                <li><b>Agricultura:</b> Cereales (trigo, cebada), hortalizas y palmeras de dátiles.</li>
+                <li><b>Ingeniería Hidráulica:</b> Construcción de <b>canales, diques y acequias</b> para evitar inundaciones y regar tierras secas.</li>
+                <li><b>Comercio:</b> Mesopotamia carecía de piedra, madera y metales, por lo que intercambiaban sus excedentes agrícolas por estos materiales.</li>
+            </ul>
+            <span class="badge">PRODUCCIÓN Y COMERCIO</span>
+        </div>
+
+        <div class="ficha f-cul">
+            <h2>📝 06. Cultura y Ciencia</h2>
+            <h3>Escritura Cuneiforme:</h3>
+            <ul>
+                <li>Nació para llevar la contabilidad del templo.</li>
+                <li>Se realizaba con un punzón de caña sobre tablillas de <b>arcilla húmeda</b> que luego se cocían.</li>
+            </ul>
+            <h3>Ciencias Avanzadas:</h3>
+            <ul>
+                <li><b>Matemáticas:</b> Sistema sexagesimal (base 60) para la hora y los círculos.</li>
+                <li><b>Astronomía:</b> Crearon calendarios lunares y predijeron eclipses.</li>
+                <li><b>Derecho:</b> Código de Hammurabi ("Ojo por ojo").</li>
+            </ul>
+            <span class="badge">LEGADO CULTURAL</span>
+        </div>
+
+        <div class="ficha f-cul">
+            <h2>🏛️ 07. Arquitectura Innovadora</h2>
+            <p>Al no tener piedra, inventaron nuevas formas de construcción:</p>
+            <ul>
+                <li><b>Material:</b> Ladrillos de <b>adobe</b> (barro y paja) y azulejos vidriados.</li>
+                <li><b>Aportes Técnicos:</b> Inventaron el <b>arco</b> y la <b>bóveda</b>.</li>
+                <li><b>El Zigurat:</b> Torre escalonada que servía de templo, observatorio astronómico y almacén de grano.</li>
+                <li><b>Palacios:</b> Rodeados de murallas, decorados con relieves y toros alados (Lammasu).</li>
+            </ul>
+            <div class="nota-examen">
+                <b>💡 Clave:</b> La <b>Puerta de Ishtar</b> es el mejor ejemplo de ladrillo vidriado azul.
+            </div>
+            <span class="badge">ARTE MESOPOTÁMICO</span>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

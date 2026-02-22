@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masterclass Matemáticas: Funciones y Estadística</title>
+    <title>Masterclass Matemáticas: Funciones y Estadística con Ejemplos Gráficos</title>
     <style>
         :root {
             --math-blue: #2980b9;
@@ -85,6 +85,7 @@
             border-radius: 12px;
             transition: 0.3s;
             cursor: pointer;
+            text-align: center; /* Centrar contenido de las fichas */
         }
         .ficha:hover {
             border-color: var(--math-orange);
@@ -110,6 +111,13 @@
             font-size: 0.8rem;
             margin-right: 5px;
         }
+        .ficha img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -123,78 +131,90 @@
     <section>
         <h2>1. El Plano Cartesiano</h2>
         <div class="concept-card">
-            <p>Los <strong>ejes coordenados</strong> son dos rectas perpendiculares que dividen el plano en 4 cuadrantes[cite: 5].</p>
+            [cite_start]<p>Los <strong>ejes coordenados</strong> son dos rectas perpendiculares que dividen el plano en 4 cuadrantes[cite: 5].</p>
             <ul>
-                <li><strong>Eje X (Abscisas):</strong> Recta horizontal[cite: 7].</li>
-                <li><strong>Eje Y (Ordenadas):</strong> Recta vertical[cite: 7].</li>
-                <li><strong>Origen O(0,0):</strong> Punto donde se cortan ambos ejes[cite: 6, 9].</li>
+                [cite_start]<li><strong>Eje X (Abscisas):</strong> Recta horizontal[cite: 7].</li>
+                [cite_start]<li><strong>Eje Y (Ordenadas):</strong> Recta vertical[cite: 7].</li>
+                [cite_start]<li><strong>Origen O(0,0):</strong> Punto donde se cortan ambos ejes[cite: 6, 9].</li>
             </ul>
         </div>
-        <p>Para localizar un punto <strong>P(x, y)</strong>: se busca la abscisa (X) y luego la ordenada (Y)[cite: 1, 8].</p>
+        [cite_start]<p>Para localizar un punto <strong>P(x, y)</strong>: se busca la abscisa (X) y luego la ordenada (Y)[cite: 1, 8].</p>
     </section>
 
     <section>
         <h2>2. Interpretación de Gráficas</h2>
         <div class="concept-card">
-            <p><span class="badge">Crecimiento</span> Una gráfica es <strong>creciente</strong> si al ir de izquierda a derecha los valores de <em>y</em> aumentan[cite: 33].</p>
-            <p><span class="badge">Decrecimiento</span> Es <strong>decreciente</strong> si los valores de <em>y</em> disminuyen[cite: 34].</p>
-            <p><span class="badge">Extremos</span> Un <strong>máximo</strong> es un punto donde la gráfica pasa de crecer a decrecer. Un <strong>mínimo</strong> es donde pasa de decrecer a crecer[cite: 36, 37].</p>
+            [cite_start]<p><span class="badge">Crecimiento</span> Una gráfica es <strong>creciente</strong> si al ir de izquierda a derecha los valores de <em>y</em> aumentan[cite: 33].</p>
+            [cite_start]<p><span class="badge">Decrecimiento</span> Es <strong>decreciente</strong> si los valores de <em>y</em> disminuyen[cite: 34].</p>
+            <p><span class="badge">Extremos</span> Un <strong>máximo</strong> es un punto donde la gráfica pasa de crecer a decrecer. [cite_start]Un <strong>mínimo</strong> es donde pasa de decrecer a crecer[cite: 36, 37].</p>
         </div>
 
         <h3>Función Lineal</h3>
-        <p>Es una recta que pasa por el origen de coordenadas. Su ecuación es:</p>
+        [cite_start]<p>Es una recta que pasa por el origen de coordenadas[cite: 46]. Su ecuación es:</p>
         <div class="formula">y = m · x</div>
-        <p>Donde <strong>m</strong> es la constante de proporcionalidad directa.</p>
+        [cite_start]<p>Donde <strong>m</strong> es la constante de proporcionalidad directa[cite: 46].</p>
     </section>
 
     <section>
         <h2>3. Estadística: Tablas y Medidas</h2>
         <div class="concept-card">
-            <p><strong>Población:</strong> Conjunto total de elementos a estudiar[cite: 83].</p>
-            <p><strong>Muestra:</strong> Parte de la población que sirve para obtener conclusiones[cite: 84].</p>
-            <p><strong>Carácter Estadístico:</strong> Puede ser <strong>Cualitativo</strong> (cualidad) o <strong>Cuantitativo</strong> (cantidad)[cite: 60].</p>
+            [cite_start]<p><strong>Población:</strong> Conjunto total de elementos a estudiar[cite: 83].</p>
+            [cite_start]<p><strong>Muestra:</strong> Parte de la población que sirve para obtener conclusiones[cite: 84].</p>
+            [cite_start]<p><strong>Carácter Estadístico:</strong> Puede ser <strong>Cualitativo</strong> (cualidad) o <strong>Cuantitativo</strong> (cantidad)[cite: 60].</p>
         </div>
 
         <h3>Medidas de Centralización</h3>
         <ul>
-            <li><strong>Media (x̄):</strong> Suma de todos los datos dividida por el total (N)[cite: 64].</li>
-            <li><strong>Mediana:</strong> Valor central al ordenar los datos[cite: 65].</li>
-            <li><strong>Moda:</strong> Valor con mayor frecuencia absoluta[cite: 78].</li>
+            [cite_start]<li><strong>Media (x̄):</strong> Suma de todos los datos dividida por el total (N)[cite: 64].</li>
+            [cite_start]<li><strong>Mediana:</strong> Valor central al ordenar los datos[cite: 65].</li>
+            [cite_start]<li><strong>Moda:</strong> Valor con mayor frecuencia absoluta[cite: 78].</li>
         </ul>
     </section>
 
     <section>
-        <h2>🗂️ Fichas de Repaso Rápido</h2>
+        <h2>🗂️ Fichas de Repaso Rápido con Ejemplos Gráficos</h2>
         <div class="grid-fichas">
             <div class="ficha">
                 <span class="ficha-titulo">Coordenadas</span>
-                <span class="ficha-q">¿Dónde está un punto con x=0?</span>
-                <span class="ficha-a">Se encuentra sobre el eje Y[cite: 9].</span>
+                <span class="ficha-q">Punto en el plano cartesiano P(3, 2)</span>
+                [cite_start]<span class="ficha-a">Se localiza 3 en el eje X y 2 en el eje Y.</span>
+                <p>
+                </p>
             </div>
             <div class="ficha">
                 <span class="ficha-titulo">Gráficas</span>
-                <span class="ficha-q">¿Cómo se interpreta una gráfica?</span>
-                <span class="ficha-a">Siempre se recorre el eje X de izquierda a derecha[cite: 32].</span>
+                <span class="ficha-q">Identifica si la gráfica es creciente o decreciente.</span>
+                [cite_start]<span class="ficha-a">Es una gráfica creciente.</span>
+                <p>
+                </p>
             </div>
             <div class="ficha">
                 <span class="ficha-titulo">Estadística</span>
-                <span class="ficha-q">¿Qué es la frecuencia absoluta (nᵢ)?</span>
-                <span class="ficha-a">Es el número de veces que se repite un valor[cite: 62].</span>
+                <span class="ficha-q">¿Cuál es la moda de estos datos?</span>
+                <span class="ficha-a">Datos: 2, 3, 3, 4, 5. La moda es 3 (se repite más).</span>
+                <p>
+                </p>
             </div>
             <div class="ficha">
                 <span class="ficha-titulo">Proporcionalidad</span>
-                <span class="ficha-q">¿Cómo se calcula la constante 'm'?</span>
-                <span class="ficha-a">Dividiendo cualquier valor de 'y' entre su correspondiente 'x'[cite: 28].</span>
+                <span class="ficha-q">Ejemplo de Función Lineal</span>
+                <span class="ficha-a">y = 2x. Por cada unidad de x, y aumenta 2.</span>
+                <p>
+                </p>
             </div>
             <div class="ficha">
                 <span class="ficha-titulo">Gráficos Visuales</span>
-                <span class="ficha-q">¿Qué es un pictograma?</span>
-                <span class="ficha-a">Un gráfico que usa dibujos como unidades de medida[cite: 90].</span>
+                <span class="ficha-q">Ejemplo de Pictograma</span>
+                <span class="ficha-a">Un dibujo de una manzana = 10 ventas.</span>
+                <p>
+                </p>
             </div>
             <div class="ficha">
-                <span class="ficha-titulo">Estadística Avanzada</span>
-                <span class="ficha-q">¿Qué es el gráfico de tallo y hojas?</span>
-                <span class="ficha-a">Usa las decenas como tallo y las unidades como hojas[cite: 96].</span>
+                <span class="ficha-titulo">Gráfico de Tallo y Hojas</span>
+                <span class="ficha-q">Representa los datos 12, 15, 21, 23, 25</span>
+                <span class="ficha-a">Tallo 1 | Hojas 2, 5. Tallo 2 | Hojas 1, 3, 5.</span>
+                <p>
+                </p>
             </div>
         </div>
     </section>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enciclopedia de Fichas: Biología de las Plantas</title>
+    <style>
+        :root {
+            --primary: #1b5e20;
+            --secondary: #4caf50;
+            --accent: #ef6c00;
+            --blue: #0277bd;
+            --purple: #6a1b9a;
+            --bg: #f0f4f0;
+        }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg); margin: 0; padding: 20px; color: #1a1a1a; }
+        .container { max-width: 1200px; margin: auto; }
+        
+        .btn-back { background: #263238; color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; float: left; font-weight: bold; margin-bottom: 20px; transition: 0.3s; }
+        .btn-back:hover { background: #000; transform: scale(1.05); }
+        
+        header { text-align: center; clear: both; margin-bottom: 40px; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        header h1 { color: var(--primary); margin: 0; font-size: 2.2rem; }
+
+        .fichas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 25px;
+        }
+
+        .ficha {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-top: 12px solid;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ficha h2 { margin-top: 0; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+        .ficha h3 { font-size: 1.1rem; margin: 15px 0 5px 0; color: #333; text-decoration: underline; }
+        .ficha p, .ficha li { font-size: 0.95rem; line-height: 1.6; color: #333; }
+        .ficha ul { padding-left: 20px; margin: 10px 0; }
+        
+        .info-box { background: #f9f9f9; padding: 10px; border-radius: 8px; border-left: 4px solid #ddd; margin: 10px 0; font-style: italic; }
+        .keyword { font-weight: bold; color: #000; }
+
+        /* Colores Temáticos */
+        .f-nutricion { border-color: var(--secondary); }
+        .f-relacion { border-color: var(--blue); }
+        .f-reproduccion { border-color: var(--accent); }
+        .f-clasificacion { border-color: var(--purple); }
+
+        @media (max-width: 600px) { .fichas-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <button onclick="window.history.back()" class="btn-back">⬅ VOLVER AL MENÚ</button>
+    
+    <header>
+        <h1>Guía Completa: El Reino de las Plantas</h1>
+        <p>Estudio detallado de estructuras, funciones y procesos biológicos</p>
+    </header>
+
+    <div class="fichas-grid">
+        
+        <div class="ficha f-nutricion">
+            <h2>🌿 Nutrición y Transporte</h2>
+            <p>Las plantas realizan un proceso complejo de transformación de energía:</p>
+            <ul>
+                <li><span class="keyword">Entrada de sustancias:</span> Agua y sales minerales por los pelos absorbentes de la raíz (Savia Bruta).</li>
+                <li><span class="keyword">El Xilema:</span> Vasos leñosos que transportan la savia bruta hacia las hojas de forma ascendente.</li>
+                <li><span class="keyword">El Floema:</span> Vasos liberianos que reparten la <span class="keyword">Savia Elaborada</span> (azúcares) por toda la planta.</li>
+                <li><span class="keyword">Clorofila:</span> Pigmento verde en los cloroplastos que capta la energía lumínica.</li>
+            </ul>
+            <div class="info-box">Dato: Durante la noche, las plantas solo respiran (absorben O2 y expulsan CO2), pero no hacen fotosíntesis.</div>
+        </div>
+
+        <div class="ficha f-relacion">
+            <h2>📡 Función de Relación Detallada</h2>
+            <p>Capacidad de reaccionar a cambios ambientales mediante movimientos específicos:</p>
+            <h3>Tropismos (Crecimiento dirigido):</h3>
+            <ul>
+                <li><span class="keyword">Fototropismo:</span> El tallo busca la luz (+) y la raíz huye de ella (-).</li>
+                <li><span class="keyword">Geotropismo:</span> La raíz crece hacia el centro de la Tierra (+) y el tallo en contra (-).</li>
+                <li><span class="keyword">Tigmotropismo:</span> Respuesta al contacto físico (como las plantas trepadoras).</li>
+            </ul>
+            <h3>Nastias (Movimientos rápidos):</h3>
+            <ul>
+                <li><span class="keyword">Fotonastias:</span> Apertura/cierre según la luz (Dondiego de noche).</li>
+                <li><span class="keyword">Sismonastias:</span> Reacción al roce o golpe (Mimosa pudica).</li>
+            </ul>
+        </div>
+
+        <div class="ficha f-reproduccion">
+            <h2>🧬 Anatomía de la Flor</h2>
+            <p>Estructuras organizadas en verticilos (círculos):</p>
+            <ul>
+                <li><span class="keyword">Gineceo (Pistilo):</span> Parte femenina. Formado por el <span class="keyword">estigma</span> (recepción), <span class="keyword">estilo</span> (conducto) y <span class="keyword">ovario</span> (contiene óvulos).</li>
+                <li><span class="keyword">Androceo (Estambres):</span> Parte masculina. Formado por el filamento y la <span class="keyword">antera</span> (donde están los sacos polínicos).</li>
+                <li><span class="keyword">Envolturas:</span> Corola (pétalos para atraer polinizadores) y Cáliz (sépalos protectores).</li>
+            </ul>
+        </div>
+
+        <div class="ficha f-reproduccion">
+            <h2>🔄 Fases del Ciclo Vital</h2>
+            <p>Desde el polen hasta la nueva planta:</p>
+            <ol>
+                <li><span class="keyword">Polinización:</span> Puede ser anemógama (viento) o zoógama (animales).</li>
+                <li><span class="keyword">Fecundación:</span> El grano de polen desarrolla un <span class="keyword">tubo polínico</span> para llegar al óvulo.</li>
+                <li><span class="keyword">Transformación:</span> El óvulo se convierte en semilla (contiene el embrión y reservas) y el ovario suele carnosizarse formando el fruto.</li>
+                <li><span class="keyword">Dispersión:</span> El fruto protege y ayuda a esparcir las semillas lejos de la madre.</li>
+            </ol>
+        </div>
+
+        <div class="ficha f-reproduccion">
+            <h2>🌱 Reproducción Asexual</h2>
+            <p>Tipos de tallos especializados para la clonación natural:</p>
+            <ul>
+                <li><span class="keyword">Tubérculos:</span> Tallos subterráneos cortos y gruesos (Patata).</li>
+                <li><span class="keyword">Bulbos:</span> Tallos rodeados de hojas carnosas subterráneas (Cebolla, Tulipán).</li>
+                <li><span class="keyword">Rizomas:</span> Tallos subterráneos horizontales que crecen indefinidamente (Jengibre, Lirio).</li>
+                <li><span class="keyword">Estolones:</span> Tallos rastreros que enraízan en los nudos (Fresa).</li>
+            </ul>
+        </div>
+
+        <div class="ficha f-clasificacion">
+            <h2>🌲 Clasificación del Reino Plantae</h2>
+            <h3>Plantas sin Semillas (Criptógamas):</h3>
+            <ul>
+                <li><span class="keyword">Briófitos (Musgos):</span> Sin vasos conductores, necesitan mucha humedad.</li>
+                <li><span class="keyword">Pteridófitos (Helechos):</span> Con vasos conductores pero se reproducen por <span class="keyword">esporas</span>.</li>
+            </ul>
+            <h3>Plantas con Semillas (Espermatofitas):</h3>
+            <ul>
+                <li><span class="keyword">Gimnospermas:</span> Semilla desnuda. Flores en inflorescencias (piñas). Hoja acicular.</li>
+                <li><span class="keyword">Angiospermas:</span> Semilla protegida. Flores verdaderas y frutos. Pueden ser Monocotiledóneas o Dicotiledóneas.</li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

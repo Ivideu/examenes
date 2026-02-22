@@ -3,187 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fichas: Biología de las Plantas</title>
+    <title>Panel de Exámenes - Menú Principal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #27ae60;
-            --secondary: #2ecc71;
-            --accent: #e67e22;
-            --info: #3498db;
-            --purple: #9b59b6;
-            --bg: #f8f9fa;
-        }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg); margin: 0; padding: 20px; color: #2c3e50; }
-        .container { max-width: 1100px; margin: auto; }
-        
-        /* Botón Volver */
-        .btn-back { background: #34495e; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; float: left; font-weight: bold; margin-bottom: 20px; transition: 0.3s; }
-        .btn-back:hover { background: #2c3e50; transform: translateX(-5px); }
-        
-        header { text-align: center; clear: both; margin-bottom: 40px; }
-        header h1 { color: var(--primary); font-size: 2.2rem; text-transform: uppercase; margin-bottom: 5px; }
-        header p { color: #7f8c8d; font-weight: 500; }
-
-        /* Rejilla de Fichas */
-        .fichas-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            --primary-blue: #4a90e2;
+            --primary-teal: #4ecdc4;
+            --primary-green: #45b649;
+            --accent-pink: #ff4081;
+            --bg-light: #f5f7fa;
+            --card-white: #ffffff;
+            --text-dark: #2c3e50;
         }
 
-        /* Estilo de la Ficha */
-        .ficha {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-top: 6px solid;
-            transition: all 0.3s ease;
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
             display: flex;
             flex-direction: column;
-            position: relative;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
-        .ficha:hover { transform: translateY(-8px); box-shadow: 0 12px 20px rgba(0,0,0,0.1); }
 
-        .icon-top {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            color: var(--primary-blue);
+            font-size: 2rem;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 90%;
+            max-width: 400px;
+            background: var(--card-white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #e1e8ed;
+        }
+
+        .btn {
             display: block;
-        }
-
-        .ficha h2 { 
-            margin: 0 0 12px 0; 
-            font-size: 1.3rem; 
+            padding: 18px 25px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            border: 2px solid #e1e8ed;
+            transition: all 0.3s ease;
+            background: white;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .ficha p { 
-            line-height: 1.6; 
-            font-size: 0.95rem; 
-            margin: 0;
-            color: #444;
+        /* Efectos específicos por materia */
+        .musica:hover {
+            border-color: var(--accent-pink);
+            background: #fff0f5;
+            color: var(--accent-pink);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.2);
         }
 
-        .ficha ul {
-            padding-left: 20px;
-            margin-top: 10px;
+        .sociales:hover {
+            border-color: var(--primary-teal);
+            background: #f0fdfc;
+            color: var(--primary-teal);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
         }
 
-        .ficha li { margin-bottom: 5px; }
+        .biologia:hover {
+            border-color: var(--primary-green);
+            background: #f1f8f1;
+            color: var(--primary-green);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(69, 182, 73, 0.2);
+        }
 
-        /* Colores por Tipo de Ficha */
-        .f-verde { border-color: var(--primary); }
-        .f-verde h2 { color: var(--primary); }
-        
-        .f-naranja { border-color: var(--accent); }
-        .f-naranja h2 { color: var(--accent); }
-        
-        .f-azul { border-color: var(--info); }
-        .f-azul h2 { color: var(--info); }
-        
-        .f-morado { border-color: var(--purple); }
-        .f-morado h2 { color: var(--purple); }
-
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.6rem; }
-            .fichas-grid { grid-template-columns: 1fr; }
+        /* Pie de página decorativo */
+        .footer-note {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #95a5a6;
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <button onclick="window.history.back()" class="btn-back">⬅ VOLVER</button>
-    
-    <header>
-        <h1>Esquema: Biología Vegetal</h1>
-        <p>1º ESO - Resumen completo por secciones</p>
-    </header>
+    <h1>BIOLOGIA - NATURALES</h1>
 
-    <div class="fichas-grid">
+    <div class="container">
         
-        <div class="ficha f-verde">
-            <span class="icon-top">🌿</span>
-            <h2>Las Plantas</h2>
-            <p>Son seres vivos con las siguientes características comunes:</p>
-            <ul>
-                <li><b>Eucariotas:</b> Células con núcleo.</li>
-                <li><b>Pluricelulares:</b> Formadas por muchas células.</li>
-                <li><b>Autótrofas:</b> Fabrican su propio alimento.</li>
-                <li><b>Tejidos:</b> Poseen células especializadas.</li>
-            </ul>
-        </div>
-
-        <div class="ficha f-verde">
-            <span class="icon-top">🧪</span>
-            <h2>Nutrición</h2>
-            <p>Proceso mediante el cual obtienen energía:</p>
-            <ul>
-                <li><b>Absorción:</b> Agua y sales (Savia Bruta) por la raíz.</li>
-                <li><b>Fotosíntesis:</b> Transformación en Savia Elaborada usando luz solar y CO2.</li>
-                <li><b>Respiración:</b> Toman O2 y liberan CO2 (día y noche).</li>
-            </ul>
-        </div>
-
-        <div class="ficha f-azul">
-            <span class="icon-top">☀️</span>
-            <h2>Relación</h2>
-            <p>Responden al medio ambiente a través de movimientos:</p>
-            <ul>
-                <li><b>Tropismos:</b> Movimientos permanentes hacia un estímulo (Luz, Gravedad, Agua).</li>
-                <li><b>Nastias:</b> Movimientos pasajeros (ej. cierre de hojas de una mimosa o pétalos de una flor).</li>
-            </ul>
-        </div>
-
-        <div class="ficha f-naranja">
-            <span class="icon-top">🌸</span>
-            <h2>Reprod. Sexual</h2>
-            <p>Ocurre en las flores mediante varias fases:</p>
-            <ul>
-                <li><b>Polinización:</b> Transporte del polen al pistilo.</li>
-                <li><b>Fecundación:</b> Unión del polen con el óvulo.</li>
-                <li><b>Formación:</b> El óvulo se hace semilla y el ovario fruto.</li>
-                <li><b>Germinación:</b> La semilla nace.</li>
-            </ul>
-        </div>
-
-        <div class="ficha f-naranja">
-            <span class="icon-top">✂️</span>
-            <h2>Reprod. Asexual</h2>
-            <p>Intervienen partes de la planta para crear otra igual:</p>
-            <ul>
-                <li><b>Estolones:</b> Tallos sobre el suelo (Fresas).</li>
-                <li><b>Rizomas:</b> Tallos bajo el suelo (Césped).</li>
-                <li><b>Tubérculos:</b> Tallos subterráneos cargados de alimento (Patatas).</li>
-                <li><b>Bulbos:</b> Tallos con hojas carnosas (Cebollas).</li>
-            </ul>
-        </div>
-
-        <div class="ficha f-morado">
-            <span class="icon-top">🌲</span>
-            <h2>Gimnospermas</h2>
-            <p>Plantas con semillas pero <b>sin frutos</b> reales:</p>
-            <ul>
-                <li>Flores pequeñas llamadas piñas o conos.</li>
-                <li>Suelen ser árboles de hoja perenne.</li>
-                <li>Ejemplos: Pinos, abetos y cedros.</li>
-            </ul>
-        </div>
-
-        <div class="ficha f-morado">
-            <span class="icon-top">🌻</span>
-            <h2>Angiospermas</h2>
-            <p>Plantas con flores vistosas y <b>semillas en frutos</b>:</p>
-            <ul>
-                <li>Grupo más numeroso y variado.</li>
-                <li>Tienen flores completas (cáliz, corola, estambres, pistilo).</li>
-                <li>Ejemplos: Rosales, encinas, trigo, manzanos.</li>
-            </ul>
-        </div>
+        <a href="https://ivideu.github.io/Esquemas/biologia5.html" class="btn sociales">UNIDAD 5</a>
+        <a href="https://ivideu.github.io/Esquemas/biologia6.html" class="btn musica">UNIDAD 6</a>
 
     </div>
-</div>
+
+    <div class="footer-note">Selecciona un examen para comenzar</div>
 
 </body>
 </html>

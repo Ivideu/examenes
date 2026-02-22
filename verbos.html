@@ -3,46 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista Completa de Verbos Irregulares - 1º ESO</title>
+    <title>Lista Completa: 120 Verbos Irregulares</title>
     <style>
         :root {
             --primary: #6c5ce7;
-            --secondary: #a29bfe;
-            --accent: #fd79a8;
-            --bg: #f8f9fa;
+            --bg: #f4f7f6;
             --text: #2d3436;
         }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 20px; }
         .container { max-width: 1000px; margin: auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         
-        /* Cabecera */
-        .header { text-align: center; margin-bottom: 25px; }
-        h1 { color: var(--primary); text-transform: uppercase; margin: 10px 0; }
-        .btn-back { background: #34495e; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; float: left; font-weight: bold; }
+        /* Botón Volver */
+        .btn-back { background: #34495e; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; float: left; font-weight: bold; transition: 0.3s; margin-bottom: 10px; }
         .btn-back:hover { background: #2c3e50; transform: translateX(-3px); }
 
-        /* Controles Dinámicos */
-        .controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-        .search-box { flex: 1; padding: 12px; border: 2px solid #eee; border-radius: 10px; font-size: 16px; outline: none; transition: 0.3s; }
-        .search-box:focus { border-color: var(--primary); }
-        .counter { background: var(--primary); color: white; padding: 12px 20px; border-radius: 10px; font-weight: bold; }
+        .header { text-align: center; clear: both; margin-bottom: 25px; }
+        h1 { color: var(--primary); text-transform: uppercase; margin: 10px 0; font-size: 1.8em; }
 
-        /* Tabla Estilizada */
+        /* Buscador y Contador */
+        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
+        .search-box { flex: 1; padding: 12px; border: 2px solid #eee; border-radius: 10px; font-size: 16px; outline: none; }
+        .search-box:focus { border-color: var(--primary); }
+        .counter { background: var(--primary); color: white; padding: 12px 20px; border-radius: 10px; font-weight: bold; min-width: 120px; text-align: center; }
+
+        /* Tabla Visual con Colores Alternos */
         .table-wrapper { overflow-x: auto; border-radius: 15px; border: 1px solid #eee; }
         table { width: 100%; border-collapse: collapse; min-width: 600px; }
         th { background: var(--primary); color: white; padding: 15px; text-align: left; position: sticky; top: 0; }
-        td { padding: 12px 15px; border-bottom: 1px solid #f1f1f1; }
-        tr:nth-child(even) { background-color: #fcfaff; }
-        tr:hover { background-color: #f1e6f7; }
+        td { padding: 12px 15px; border-bottom: 1px solid #f1f1f1; font-size: 15px; }
+
+        /* Colores dinámicos por línea */
+        tbody tr:nth-child(4n+1) { background-color: #ffffff; } /* Blanca */
+        tbody tr:nth-child(4n+2) { background-color: #f1f9ff; } /* Azul suave */
+        tbody tr:nth-child(4n+3) { background-color: #fff9f1; } /* Naranja suave */
+        tbody tr:nth-child(4n+4) { background-color: #f5f1ff; } /* Púrpura suave */
+        
+        tr:hover { filter: brightness(0.95); cursor: default; }
 
         .inf { font-weight: bold; color: var(--primary); }
         .past { color: #e67e22; font-weight: 600; }
         .part { color: #27ae60; font-weight: 600; }
-        .esp { color: #7f8c8d; font-style: italic; }
+        .esp { color: #636e72; font-style: italic; }
 
         @media (max-width: 600px) {
             .btn-back { float: none; width: 100%; margin-bottom: 15px; }
-            td, th { padding: 8px; font-size: 14px; }
+            .controls { flex-direction: column; }
         }
     </style>
 </head>
@@ -52,12 +57,12 @@
     <button onclick="window.history.back()" class="btn-back">⬅ VOLVER</button>
     
     <div class="header">
-        <h1>Irregular Verbs: All-in-One</h1>
-        <p>Todos los verbos del listado oficial para 1º ESO</p>
+        <h1>Irregular Verbs (120 Verbs List)</h1>
+        <p>Busca en inglés o español para filtrar la lista completa</p>
     </div>
 
     <div class="controls">
-        <input type="text" id="searchInput" class="search-box" placeholder="🔍 Busca un verbo o significado..." onkeyup="filter()">
+        <input type="text" id="searchInput" class="search-box" placeholder="🔍 Buscar verbo..." onkeyup="filter()">
         <div class="counter">Verbos: <span id="verbCount">0</span></div>
     </div>
 
@@ -109,61 +114,81 @@
                 <tr><td class="inf">forget</td><td class="past">forgot</td><td class="part">forgotten</td><td class="esp">olvidar</td></tr>
                 <tr><td class="inf">forgive</td><td class="past">forgave</td><td class="part">forgiven</td><td class="esp">perdonar</td></tr>
                 <tr><td class="inf">freeze</td><td class="past">froze</td><td class="part">frozen</td><td class="esp">congelar</td></tr>
-                <tr><td class="inf">get</td><td class="past">got</td><td class="part">got / gotten</td><td class="esp">conseguir / obtener</td></tr>
+                <tr><td class="inf">get</td><td class="past">got</td><td class="part">got / gotten</td><td class="esp">conseguir</td></tr>
                 <tr><td class="inf">give</td><td class="past">gave</td><td class="part">given</td><td class="esp">dar</td></tr>
                 <tr><td class="inf">go</td><td class="past">went</td><td class="part">gone</td><td class="esp">ir</td></tr>
                 <tr><td class="inf">grow</td><td class="past">grew</td><td class="part">grown</td><td class="esp">crecer</td></tr>
-                <tr><td class="inf">have</td><td class="past">had</td><td class="part">had</td><td class="esp">tener / haber</td></tr>
+                <tr><td class="inf">hang</td><td class="past">hung</td><td class="part">hung</td><td class="esp">colgar</td></tr>
+                <tr><td class="inf">have</td><td class="past">had</td><td class="part">had</td><td class="esp">tener</td></tr>
                 <tr><td class="inf">hear</td><td class="past">heard</td><td class="part">heard</td><td class="esp">oír</td></tr>
                 <tr><td class="inf">hide</td><td class="past">hid</td><td class="part">hidden</td><td class="esp">esconder</td></tr>
                 <tr><td class="inf">hit</td><td class="past">hit</td><td class="part">hit</td><td class="esp">golpear</td></tr>
                 <tr><td class="inf">hold</td><td class="past">held</td><td class="part">held</td><td class="esp">sujetar</td></tr>
                 <tr><td class="inf">hurt</td><td class="past">hurt</td><td class="part">hurt</td><td class="esp">herir</td></tr>
-                <tr><td class="inf">keep</td><td class="past">kept</td><td class="part">kept</td><td class="esp">mantener / guardar</td></tr>
-                <tr><td class="inf">know</td><td class="past">knew</td><td class="part">known</td><td class="esp">saber / conocer</td></tr>
+                <tr><td class="inf">keep</td><td class="past">kept</td><td class="part">kept</td><td class="esp">guardar</td></tr>
+                <tr><td class="inf">know</td><td class="past">knew</td><td class="part">known</td><td class="esp">saber</td></tr>
+                <tr><td class="inf">lay</td><td class="past">laid</td><td class="part">laid</td><td class="esp">poner</td></tr>
+                <tr><td class="inf">lead</td><td class="past">led</td><td class="part">led</td><td class="esp">guiar</td></tr>
                 <tr><td class="inf">learn</td><td class="past">learned / learnt</td><td class="part">learned / learnt</td><td class="esp">aprender</td></tr>
                 <tr><td class="inf">leave</td><td class="past">left</td><td class="part">left</td><td class="esp">dejar / irse</td></tr>
                 <tr><td class="inf">lend</td><td class="past">lent</td><td class="part">lent</td><td class="esp">prestar</td></tr>
-                <tr><td class="inf">let</td><td class="past">let</td><td class="part">let</td><td class="esp">permitir / dejar</td></tr>
+                <tr><td class="inf">let</td><td class="past">let</td><td class="part">let</td><td class="esp">permitir</td></tr>
                 <tr><td class="inf">lie</td><td class="past">lay</td><td class="part">lain</td><td class="esp">tumbarse</td></tr>
                 <tr><td class="inf">light</td><td class="past">lit</td><td class="part">lit</td><td class="esp">encender</td></tr>
                 <tr><td class="inf">lose</td><td class="past">lost</td><td class="part">lost</td><td class="esp">perder</td></tr>
                 <tr><td class="inf">make</td><td class="past">made</td><td class="part">made</td><td class="esp">hacer / fabricar</td></tr>
                 <tr><td class="inf">mean</td><td class="past">meant</td><td class="part">meant</td><td class="esp">significar</td></tr>
-                <tr><td class="inf">meet</td><td class="past">met</td><td class="part">met</td><td class="esp">conocer / quedar</td></tr>
+                <tr><td class="inf">meet</td><td class="past">met</td><td class="part">met</td><td class="esp">quedar / conocer</td></tr>
                 <tr><td class="inf">pay</td><td class="past">paid</td><td class="part">paid</td><td class="esp">pagar</td></tr>
                 <tr><td class="inf">put</td><td class="past">put</td><td class="part">put</td><td class="esp">poner</td></tr>
                 <tr><td class="inf">read</td><td class="past">read</td><td class="part">read</td><td class="esp">leer</td></tr>
-                <tr><td class="inf">ride</td><td class="past">rode</td><td class="part">ridden</td><td class="esp">montar (bici/caballo)</td></tr>
+                <tr><td class="inf">ride</td><td class="past">rode</td><td class="part">ridden</td><td class="esp">montar</td></tr>
                 <tr><td class="inf">ring</td><td class="past">rang</td><td class="part">rung</td><td class="esp">sonar / llamar</td></tr>
-                <tr><td class="inf">rise</td><td class="past">rose</td><td class="part">risen</td><td class="esp">subir / levantarse</td></tr>
+                <tr><td class="inf">rise</td><td class="past">rose</td><td class="part">risen</td><td class="esp">subir</td></tr>
                 <tr><td class="inf">run</td><td class="past">ran</td><td class="part">run</td><td class="esp">correr</td></tr>
                 <tr><td class="inf">say</td><td class="past">said</td><td class="part">said</td><td class="esp">decir</td></tr>
                 <tr><td class="inf">see</td><td class="past">saw</td><td class="part">seen</td><td class="esp">ver</td></tr>
                 <tr><td class="inf">sell</td><td class="past">sold</td><td class="part">sold</td><td class="esp">vender</td></tr>
                 <tr><td class="inf">send</td><td class="past">sent</td><td class="part">sent</td><td class="esp">enviar</td></tr>
-                <tr><td class="inf">set</td><td class="past">set</td><td class="part">set</td><td class="esp">poner / establecer</td></tr>
+                <tr><td class="inf">set</td><td class="past">set</td><td class="part">set</td><td class="esp">colocar</td></tr>
                 <tr><td class="inf">shake</td><td class="past">shook</td><td class="part">shaken</td><td class="esp">sacudir</td></tr>
                 <tr><td class="inf">shine</td><td class="past">shone</td><td class="part">shone</td><td class="esp">brillar</td></tr>
                 <tr><td class="inf">shoot</td><td class="past">shot</td><td class="part">shot</td><td class="esp">disparar</td></tr>
-                <tr><td class="inf">show</td><td class="past">showed</td><td class="part">shown / showed</td><td class="esp">mostrar</td></tr>
+                <tr><td class="inf">show</td><td class="past">showed</td><td class="part">shown</td><td class="esp">mostrar</td></tr>
                 <tr><td class="inf">shut</td><td class="past">shut</td><td class="part">shut</td><td class="esp">cerrar</td></tr>
                 <tr><td class="inf">sing</td><td class="past">sang</td><td class="part">sung</td><td class="esp">cantar</td></tr>
                 <tr><td class="inf">sink</td><td class="past">sank</td><td class="part">sunk</td><td class="esp">hundirse</td></tr>
                 <tr><td class="inf">sit</td><td class="past">sat</td><td class="part">sat</td><td class="esp">sentarse</td></tr>
                 <tr><td class="inf">sleep</td><td class="past">slept</td><td class="part">slept</td><td class="esp">dormir</td></tr>
+                <tr><td class="inf">slide</td><td class="past">slid</td><td class="part">slid</td><td class="esp">resbalar</td></tr>
+                <tr><td class="inf">smell</td><td class="past">smelled / smelt</td><td class="part">smelled / smelt</td><td class="esp">oler</td></tr>
                 <tr><td class="inf">speak</td><td class="past">spoke</td><td class="part">spoken</td><td class="esp">hablar</td></tr>
+                <tr><td class="inf">speed</td><td class="past">sped</td><td class="part">sped</td><td class="esp">acelerar</td></tr>
                 <tr><td class="inf">spend</td><td class="past">spent</td><td class="part">spent</td><td class="esp">gastar / pasar tiempo</td></tr>
+                <tr><td class="inf">spill</td><td class="past">spilled / spilt</td><td class="part">spilled / spilt</td><td class="esp">derramar</td></tr>
+                <tr><td class="inf">spin</td><td class="past">spun</td><td class="part">spun</td><td class="esp">girar</td></tr>
+                <tr><td class="inf">spit</td><td class="past">spit / spat</td><td class="part">spit / spat</td><td class="esp">escupir</td></tr>
+                <tr><td class="inf">split</td><td class="past">split</td><td class="part">split</td><td class="esp">dividir</td></tr>
+                <tr><td class="inf">spread</td><td class="past">spread</td><td class="part">spread</td><td class="esp">extender</td></tr>
+                <tr><td class="inf">spring</td><td class="past">sprang</td><td class="part">sprung</td><td class="esp">saltar</td></tr>
                 <tr><td class="inf">stand</td><td class="past">stood</td><td class="part">stood</td><td class="esp">estar de pie</td></tr>
                 <tr><td class="inf">steal</td><td class="past">stole</td><td class="part">stolen</td><td class="esp">robar</td></tr>
                 <tr><td class="inf">stick</td><td class="past">stuck</td><td class="part">stuck</td><td class="esp">pegar</td></tr>
+                <tr><td class="inf">sting</td><td class="past">stung</td><td class="part">stung</td><td class="esp">picar</td></tr>
+                <tr><td class="inf">stink</td><td class="past">stank</td><td class="part">stunk</td><td class="esp">apestar</td></tr>
+                <tr><td class="inf">strike</td><td class="past">struck</td><td class="part">struck</td><td class="esp">golpear</td></tr>
+                <tr><td class="inf">swear</td><td class="past">swore</td><td class="part">sworn</td><td class="esp">jurar</td></tr>
+                <tr><td class="inf">sweep</td><td class="past">swept</td><td class="part">swept</td><td class="esp">barrer</td></tr>
                 <tr><td class="inf">swim</td><td class="past">swam</td><td class="part">swum</td><td class="esp">nadar</td></tr>
-                <tr><td class="inf">take</td><td class="past">took</td><td class="part">taken</td><td class="esp">tomar / coger</td></tr>
+                <tr><td class="inf">swing</td><td class="past">swung</td><td class="part">swung</td><td class="esp">columpiarse</td></tr>
+                <tr><td class="inf">take</td><td class="past">took</td><td class="part">taken</td><td class="esp">coger / tomar</td></tr>
                 <tr><td class="inf">teach</td><td class="past">taught</td><td class="part">taught</td><td class="esp">enseñar</td></tr>
-                <tr><td class="inf">tell</td><td class="past">told</td><td class="part">told</td><td class="esp">contar / decir</td></tr>
+                <tr><td class="inf">tear</td><td class="past">tore</td><td class="part">torn</td><td class="esp">rasgar / romper</td></tr>
+                <tr><td class="inf">tell</td><td class="past">told</td><td class="part">told</td><td class="esp">decir / contar</td></tr>
                 <tr><td class="inf">think</td><td class="past">thought</td><td class="part">thought</td><td class="esp">pensar</td></tr>
-                <tr><td class="inf">throw</td><td class="past">threw</td><td class="part">thrown</td><td class="esp">lanzar / tirar</td></tr>
+                <tr><td class="inf">throw</td><td class="past">threw</td><td class="part">thrown</td><td class="esp">lanzar</td></tr>
                 <tr><td class="inf">understand</td><td class="past">understood</td><td class="part">understood</td><td class="esp">entender</td></tr>
+                <tr><td class="inf">upset</td><td class="past">upset</td><td class="part">upset</td><td class="esp">disgustar</td></tr>
                 <tr><td class="inf">wake</td><td class="past">woke</td><td class="part">woken</td><td class="esp">despertar</td></tr>
                 <tr><td class="inf">wear</td><td class="past">wore</td><td class="part">worn</td><td class="esp">llevar puesto</td></tr>
                 <tr><td class="inf">win</td><td class="past">won</td><td class="part">won</td><td class="esp">ganar</td></tr>

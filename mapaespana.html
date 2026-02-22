@@ -3,84 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Examen: Mapa Mudo</title>
+    <title>Examen Interactivo: Mapa Mudo de España</title>
     <style>
         :root {
             --primary: #2980b9;
+            --secondary: #34495e;
             --success: #27ae60;
             --bg: #f4f7f6;
         }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 20px; }
-        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 20px; shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         
-        .btn-back { background: #34495e; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; float: left; font-weight: bold; }
-        
-        .header { text-align: center; clear: both; margin-bottom: 20px; }
-        h1 { color: var(--primary); }
+        /* Botón Volver */
+        .btn-back { background: var(--secondary); color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; float: left; font-weight: bold; transition: 0.3s; }
+        .btn-back:hover { background: #2c3e50; transform: translateX(-3px); }
 
-        .map-container {
-            text-align: center;
+        .header { text-align: center; clear: both; margin-bottom: 20px; }
+        h1 { color: var(--primary); margin-top: 15px; }
+
+        /* Contenedor del Mapa */
+        .map-frame {
+            position: relative;
+            width: 100%;
             background: #eef2f3;
-            padding: 20px;
             border-radius: 15px;
+            padding: 10px;
+            border: 2px solid #ddd;
+            text-align: center;
             margin-bottom: 30px;
-            border: 2px dashed #bdc3c7;
+        }
+        .map-frame img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        /* Formulario de Respuestas */
+        .quiz-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .answer-row {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 8px;
+            gap: 10px;
         }
         
-        /* Simulación de mapa mudo */
-        .placeholder-map {
-            width: 100%;
-            max-width: 600px;
-            height: 350px;
-            background: #dff9fb;
-            margin: auto;
-            border: 1px solid #95a5a6;
+        /* Colores alternos por línea */
+        .answer-row:nth-child(4n+1) { background-color: #f1f9ff; } /* Azul */
+        .answer-row:nth-child(4n+2) { background-color: #fff9f1; } /* Naranja */
+        .answer-row:nth-child(4n+3) { background-color: #f5f1ff; } /* Morado */
+        .answer-row:nth-child(4n+4) { background-color: #f0fff4; } /* Verde */
+
+        .number-tag {
+            background: var(--primary);
+            color: white;
+            width: 28px;
+            height: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
+            border-radius: 50%;
             font-weight: bold;
-            color: #7f8c8d;
+            flex-shrink: 0;
         }
-
-        /* Formulario de examen */
-        .quiz-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-        .input-group {
-            padding: 10px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        /* Colores alternos para las preguntas */
-        .input-group:nth-child(4n+1) { background: #f1f9ff; }
-        .input-group:nth-child(4n+2) { background: #fff9f1; }
-        .input-group:nth-child(4n+3) { background: #f5f1ff; }
-        .input-group:nth-child(4n+4) { background: #f0fff4; }
-
         input {
-            width: 100%;
-            padding: 8px;
+            flex-grow: 1;
+            padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            font-size: 16px;
         }
 
-        .btn-check {
-            display: block;
+        .btn-finish {
             width: 100%;
             background: var(--success);
             color: white;
-            padding: 15px;
+            padding: 18px;
             border: none;
-            border-radius: 10px;
-            font-size: 18px;
+            border-radius: 12px;
+            font-size: 20px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 30px;
+            transition: 0.3s;
+        }
+        .btn-finish:hover { background: #219150; transform: scale(1.01); }
+
+        @media (max-width: 600px) {
+            .btn-back { float: none; width: 100%; margin-bottom: 15px; }
         }
     </style>
 </head>
@@ -90,52 +104,70 @@
     <button onclick="window.history.back()" class="btn-back">⬅ VOLVER</button>
     
     <div class="header">
-        <h1>Examen Geografía: Mapa Mudo</h1>
-        <p>Escribe el nombre de los accidentes geográficos correspondientes a cada número.</p>
+        <h1>Examen Geografía: España Física</h1>
+        <p>Identifica los sistemas montañosos y ríos señalados en el mapa.</p>
     </div>
 
-    <div class="map-container">
-        <div class="placeholder-map">
-            [ AQUÍ SE VISUALIZA TU MAPA ADJUNTO ]
-            <div style="position:absolute; top:20%; left:30%; background:red; color:white; border-radius:50%; width:25px;">1</div>
-            <div style="position:absolute; top:50%; left:60%; background:red; color:white; border-radius:50%; width:25px;">2</div>
-            <div style="position:absolute; top:70%; left:40%; background:red; color:white; border-radius:50%; width:25px;">3</div>
-        </div>
+    <div class="map-frame">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Spain_physical_map-blank.svg/1280px-Spain_physical_map-blank.svg.png" alt="Mapa Mudo España">
+        <p style="font-size: 12px; color: #7f8c8d;">Fuente: Mapa Físico Mudo de España</p>
     </div>
 
-    <form id="quizForm">
-        <div class="quiz-grid">
-            <div class="input-group">
-                <span><strong>1.</strong></span>
-                <input type="text" placeholder="Respuesta...">
+    <form id="geoQuiz">
+        <div class="quiz-container">
+            <div class="answer-row">
+                <div class="number-tag">1</div>
+                <input type="text" placeholder="Sistema montañoso al Norte...">
             </div>
-            <div class="input-group">
-                <span><strong>2.</strong></span>
-                <input type="text" placeholder="Respuesta...">
+            <div class="answer-row">
+                <div class="number-tag">2</div>
+                <input type="text" placeholder="Río que pasa por Zaragoza...">
             </div>
-            <div class="input-group">
-                <span><strong>3.</strong></span>
-                <input type="text" placeholder="Respuesta...">
+            <div class="answer-row">
+                <div class="number-tag">3</div>
+                <input type="text" placeholder="Sistema Central...">
             </div>
-            <div class="input-group">
-                <span><strong>4.</strong></span>
-                <input type="text" placeholder="Respuesta...">
+            <div class="answer-row">
+                <div class="number-tag">4</div>
+                <input type="text" placeholder="Río más largo de la península...">
             </div>
-            <div class="input-group">
-                <span><strong>5.</strong></span>
-                <input type="text" placeholder="Respuesta...">
+            <div class="answer-row">
+                <div class="number-tag">5</div>
+                <input type="text" placeholder="Montañas al Sur (Granada)...">
             </div>
-            <div class="input-group">
-                <span><strong>6.</strong></span>
-                <input type="text" placeholder="Respuesta...">
+            <div class="answer-row">
+                <div class="number-tag">6</div>
+                <input type="text" placeholder="Río que pasa por Sevilla...">
+            </div>
+            <div class="answer-row">
+                <div class="number-tag">7</div>
+                <input type="text" placeholder="Frontera natural con Francia...">
+            </div>
+            <div class="answer-row">
+                <div class="number-tag">8</div>
+                <input type="text" placeholder="Macizo Galaico...">
+            </div>
+            <div class="answer-row">
+                <div class="number-tag">9</div>
+                <input type="text" placeholder="Río Guadiana...">
+            </div>
+            <div class="answer-row">
+                <div class="number-tag">10</div>
+                <input type="text" placeholder="Archipiélago Canario...">
             </div>
         </div>
 
-        <button type="button" class="btn-check" onclick="alert('¡Examen enviado! Revisa tus respuestas con el libro.')">
-            FINALIZAR EXAMEN
+        <button type="button" class="btn-finish" onclick="checkAnswers()">
+            FINALIZAR Y CORREGIR
         </button>
     </form>
 </div>
+
+<script>
+    function checkAnswers() {
+        alert("¡Examen completado! Ahora compara tus respuestas con el mapa de estudio de tu libro.");
+    }
+</script>
 
 </body>
 </html>

@@ -114,12 +114,16 @@
         #score-screen { text-align: center; display: none; }
         .final-score { font-size: 4rem; color: var(--primary); font-family: 'Orbitron'; }
         .stat-box { display: flex; justify-content: space-around; margin: 20px 0; font-size: 1.2rem; }
+         /* Botón Volver */
+        .btn-back { background: #34495e; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; float: left; font-weight: bold; transition: 0.3s; margin-bottom: 10px; }
+        .btn-back:hover { background: #2c3e50; transform: translateX(-3px); }
     </style>
 </head>
 <body>
 
 <div id="game-container">
     <div id="quiz-ui">
+         <button onclick="window.history.back()" class="btn-back">⬅ VOLVER</button>
         <h1>MUSIC CHALLENGE: LA VOZ</h1>
         <div class="stats-bar">
             <span id="q-count">PREGUNTA: 1 / 40</span>

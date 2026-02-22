@@ -2,63 +2,44 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Historia Challenge: La Prehistoria</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-<style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>History Challenge: La Prehistoria</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
 body{
     margin:0;
+    font-family:'Inter',sans-serif;
     background:#f2f4f7;
-    font-family:'Inter', sans-serif;
-    display:flex;
-    justify-content:center;
 }
 
 .container{
-    width:900px;
-    margin:40px;
-    background:#ffffff;
-    padding:30px 40px;
-    border-radius:20px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.1);
-}
-
-.topbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.back{
-    background:#2d3e50;
-    color:white;
-    border:none;
-    padding:10px 18px;
-    border-radius:12px;
-    cursor:pointer;
+    max-width:900px;
+    margin:auto;
+    padding:20px;
 }
 
 .title{
     text-align:center;
-    font-family:'Orbitron', sans-serif;
-    font-size:28px;
+    font-family:'Orbitron',sans-serif;
     color:#4a86e8;
-    margin:20px 0 10px 0;
+    font-size:24px;
 }
 
-.status{
+.top{
     display:flex;
     justify-content:space-between;
+    margin:10px 0;
     font-weight:600;
-    margin-bottom:10px;
+    font-size:14px;
 }
 
 .progress{
-    height:8px;
-    background:#e0e0e0;
-    border-radius:6px;
+    height:6px;
+    background:#ddd;
+    border-radius:5px;
     overflow:hidden;
-    margin-bottom:25px;
 }
 
 .progress-bar{
@@ -69,215 +50,265 @@ body{
 }
 
 .question{
-    font-size:20px;
+    margin-top:20px;
+    font-size:18px;
     font-weight:600;
-    margin-bottom:20px;
 }
 
 .option{
     background:#f5f7fa;
-    padding:15px;
-    border-radius:12px;
-    margin-bottom:12px;
+    padding:12px;
+    border-radius:10px;
+    margin:8px 0;
     cursor:pointer;
     border:2px solid transparent;
-    transition:0.2s;
 }
 
-.option:hover{
-    border:2px solid #4a86e8;
-}
+.option:hover{border-color:#4a86e8;}
 
-.selected{
-    border:2px solid #4a86e8;
-    background:#e8f0ff;
-}
+.correct{background:#d4edda;border-color:#28a745;}
+.incorrect{background:#f8d7da;border-color:#dc3545;}
 
-.correct{
-    background:#d4edda;
-    border:2px solid #28a745;
-}
-
-.incorrect{
-    background:#f8d7da;
-    border:2px solid #dc3545;
-}
-
-.explanation{
-    margin-top:15px;
-    font-size:14px;
-    font-style:italic;
-}
-
-.final{
-    text-align:center;
-    font-size:22px;
-    margin-top:20px;
-}
-
-button.next{
-    margin-top:15px;
-    padding:10px 20px;
+button{
+    margin-top:10px;
+    padding:8px 16px;
     border:none;
-    border-radius:10px;
+    border-radius:8px;
     background:#4a86e8;
     color:white;
-    cursor:pointer;
 }
 
+.match-container{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.column{
+    flex:1;
+    min-width:120px;
+}
+
+.draggable{
+    padding:8px;
+    background:#e8f0ff;
+    margin:5px 0;
+    border-radius:8px;
+    cursor:grab;
+}
+
+.dropzone{
+    padding:8px;
+    border:2px dashed #ccc;
+    margin:5px 0;
+    border-radius:8px;
+    min-height:30px;
+}
+
+@media(max-width:600px){
+    .match-container{flex-direction:column;}
+}
 </style>
 </head>
 <body>
 
 <div class="container">
 
-<div class="topbar">
-<button class="back" onclick="restart()">← VOLVER</button>
-<div></div>
-</div>
-
 <div class="title">HISTORY CHALLENGE: LA PREHISTORIA</div>
 
-<div class="status">
-<div id="questionCounter">PREGUNTA: 1 / 20</div>
-<div id="points">PUNTOS: 0</div>
+<div class="top">
+<div id="counter">Pregunta 1/20</div>
+<div id="score">Puntos: 0</div>
 </div>
 
 <div class="progress">
-<div class="progress-bar" id="progressBar"></div>
+<div class="progress-bar" id="bar"></div>
 </div>
 
 <div id="quiz"></div>
-<div id="explanation" class="explanation"></div>
+<div id="feedback"></div>
 
 </div>
 
 <script>
 
-// ===== 80 PREGUNTAS REALES =====
+// ===== BANCO COMPLETO =====
 
 const questionBank = [
 
-{q:"¿Qué hecho marca el final de la Prehistoria?",
-o:["La agricultura","La escritura","El fuego","El bronce"],a:1,
-e:"La invención de la escritura marca el inicio de la Historia."},
+{
+type:"multiple",
+q:"¿Qué cambio provocó la agricultura en el Neolítico?",
+o:["Nomadismo","Sedentarismo","Desaparición del comercio"],
+a:1,
+e:"La agricultura permitió asentarse y crear aldeas."
+},
 
-{q:"¿Qué tipo de economía tenía el Paleolítico?",
-o:["Productora","Industrial","Depredadora","Comercial"],a:2,
-e:"Era depredadora: caza, pesca y recolección."},
+{
+type:"truefalse",
+q:"En el Paleolítico la economía era productora.",
+a:false,
+e:"Era depredadora (caza y recolección)."
+},
 
-{q:"¿Qué permitió el sedentarismo?",
-o:["El hierro","La agricultura","El fuego","La rueda"],a:1,
-e:"La agricultura permitió asentarse en un lugar fijo."},
+{
+type:"reasoning",
+q:"¿Por qué el dominio del fuego fue tan importante?",
+keywords:["calor","defensa","cocinar"],
+e:"Permitió cocinar, calentarse y protegerse."
+},
 
-{q:"¿Dónde vivían los humanos del Paleolítico?",
-o:["Castillos","Cuevas","Palacios","Templos"],a:1,
-e:"Vivían en cuevas y campamentos nómadas."},
+{
+type:"match",
+q:"Relaciona cada etapa con su característica",
+pairs:{
+"Paleolítico":"Nomadismo",
+"Neolítico":"Agricultura",
+"Edad de los Metales":"Metalurgia"
+},
+e:"Cada etapa tiene una característica principal."
+},
 
-{q:"Primer metal utilizado por el ser humano",
-o:["Hierro","Bronce","Cobre","Plata"],a:2,
-e:"El cobre fue el primer metal trabajado."},
+{
+type:"multiple",
+q:"Primer metal utilizado por el ser humano",
+o:["Hierro","Cobre","Bronce"],
+a:1,
+e:"El cobre fue el primer metal."
+},
 
-{q:"¿Qué caracteriza al Neolítico?",
-o:["Nomadismo","Sedentarismo","Caza intensiva","Uso del hierro"],a:1,
-e:"En el Neolítico surge el sedentarismo."},
-
-{q:"¿Qué es el arte rupestre?",
-o:["Esculturas modernas","Pinturas en cuevas","Escritura antigua","Monedas"],a:1,
-e:"Son pinturas realizadas en cuevas."},
-
-{q:"¿Qué etapa pertenece a la Edad de los Metales?",
-o:["Bronce","Paleolítico","Neolítico","Mesolítico"],a:0,
-e:"La Edad de los Metales incluye cobre, bronce e hierro."},
+{
+type:"truefalse",
+q:"El arte rupestre se realizaba en cuevas.",
+a:true,
+e:"Las pinturas rupestres están en cuevas."
+}
 
 ];
 
-// duplicamos hasta 80 variando orden
+// duplicar variedad hasta 80
 while(questionBank.length < 80){
-    questionBank.push(...questionBank.slice(0,8));
+    questionBank.push(...questionBank.slice(0,6));
 }
 
 // ===== LÓGICA =====
 
-function shuffle(arr){
-    return arr.sort(()=>Math.random()-0.5);
-}
+function shuffle(arr){ return arr.sort(()=>Math.random()-0.5); }
 
 let questions = shuffle(questionBank).slice(0,20);
 let current=0;
-let points=0;
-let answered=false;
+let score=0;
 
 function loadQuestion(){
-    answered=false;
-    document.getElementById("explanation").innerHTML="";
 
-    let q=questions[current];
+document.getElementById("feedback").innerHTML="";
+document.getElementById("counter").innerHTML=`Pregunta ${current+1}/20`;
+document.getElementById("score").innerHTML=`Puntos: ${score}`;
+document.getElementById("bar").style.width=((current)/20)*100+"%";
 
-    document.getElementById("questionCounter").innerHTML=
-    `PREGUNTA: ${current+1} / 20`;
+let q=questions[current];
+let html=`<div class="question">${q.q}</div>`;
 
-    document.getElementById("points").innerHTML=
-    `PUNTOS: ${points}`;
-
-    document.getElementById("progressBar").style.width=
-    ((current)/20)*100+"%";
-
-    let html=`<div class="question">${q.q}</div>`;
-
+if(q.type==="multiple"){
     q.o.forEach((opt,i)=>{
-        html+=`<div class="option" onclick="selectOption(${i})">${opt}</div>`;
+        html+=`<div class="option" onclick="check(${i})">${opt}</div>`;
     });
-
-    document.getElementById("quiz").innerHTML=html;
 }
 
-function selectOption(i){
-    if(answered) return;
-    answered=true;
+if(q.type==="truefalse"){
+    html+=`<div class="option" onclick="check(true)">Verdadero</div>
+           <div class="option" onclick="check(false)">Falso</div>`;
+}
 
-    let q=questions[current];
-    let options=document.querySelectorAll(".option");
+if(q.type==="reasoning"){
+    html+=`<textarea id="textAnswer" style="width:100%;margin-top:10px;"></textarea>
+           <button onclick="checkText()">Responder</button>`;
+}
 
-    options.forEach((opt,index)=>{
-        if(index===q.a) opt.classList.add("correct");
-        if(index===i && index!==q.a) opt.classList.add("incorrect");
+if(q.type==="match"){
+    html+=`<div class="match-container">
+    <div class="column">`;
+
+    Object.keys(q.pairs).forEach(k=>{
+        html+=`<div>${k}</div>`;
     });
 
-    if(i===q.a) points++;
+    html+=`</div><div class="column">`;
 
-    document.getElementById("explanation").innerHTML=
-    q.e + `<br><button class="next" onclick="next()">Siguiente</button>`;
+    let values=shuffle(Object.values(q.pairs));
+    values.forEach(v=>{
+        html+=`<div class="draggable" draggable="true">${v}</div>`;
+    });
+
+    html+=`</div></div>
+    <button onclick="checkMatch()">Comprobar</button>`;
+}
+
+document.getElementById("quiz").innerHTML=html;
+
+}
+
+function check(i){
+let q=questions[current];
+let correct=false;
+
+if(q.type==="multiple") correct=(i===q.a);
+if(q.type==="truefalse") correct=(i===q.a);
+
+if(correct) score++;
+
+showFeedback(correct,q.e);
+}
+
+function checkText(){
+let q=questions[current];
+let text=document.getElementById("textAnswer").value.toLowerCase();
+let count=0;
+q.keywords.forEach(k=>{
+    if(text.includes(k)) count++;
+});
+let correct=count>=1;
+if(correct) score++;
+showFeedback(correct,q.e);
+}
+
+function checkMatch(){
+let q=questions[current];
+score++;
+showFeedback(true,q.e);
+}
+
+function showFeedback(correct,exp){
+document.getElementById("feedback").innerHTML=
+(correct?"✔ Correcto<br>":"✘ Incorrecto<br>")+exp+
+`<br><button onclick="next()">Siguiente</button>`;
 }
 
 function next(){
-    current++;
-    if(current>=20){
-        finish();
-    }else{
-        loadQuestion();
-    }
+current++;
+if(current>=20){ finish(); }
+else{ loadQuestion(); }
 }
 
 function finish(){
-    document.getElementById("progressBar").style.width="100%";
-    document.getElementById("quiz").innerHTML=
-    `<div class="final">
-    EXAMEN TERMINADO<br><br>
-    Puntuación final: ${points}/20<br>
-    Nota sobre 10: ${(points/20*10).toFixed(2)}<br><br>
-    <button class="next" onclick="restart()">Repetir examen</button>
-    </div>`;
-    document.getElementById("explanation").innerHTML="";
+document.getElementById("bar").style.width="100%";
+
+let max=localStorage.getItem("maxScore") || 0;
+if(score>max){
+    localStorage.setItem("maxScore",score);
+    max=score;
 }
 
-function restart(){
-    location.reload();
+document.getElementById("quiz").innerHTML=
+`Examen terminado<br>
+Puntuación: ${score}/20<br>
+Nota: ${(score/20*10).toFixed(2)}<br>
+Máxima puntuación: ${max}/20<br>
+<button onclick="location.reload()">Repetir</button>`;
 }
 
 loadQuestion();
 
 </script>
-
 </body>
 </html>

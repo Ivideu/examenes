@@ -3,204 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Irregular Verbs Master List - 1º ESO</title>
+    <title>English Study Guide - 1st ESO</title>
     <style>
-        :root {
-            --primary: #8e44ad;
-            --secondary: #9b59b6;
-            --bg: #f4f7f6;
-            --text: #2c3e50;
-        }
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f0f2f5;
             margin: 0;
             padding: 20px;
         }
         .container {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: auto;
             background: white;
             padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        h1 { color: var(--primary); text-transform: uppercase; letter-spacing: 2px; }
-        
-        /* Botones y Controles */
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .btn-back {
-            background: #34495e;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        .btn-back:hover { background: #2c3e50; transform: translateX(-5px); }
-
-        #searchInput {
-            padding: 12px;
-            width: 100%;
-            max-width: 400px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 16px;
-            outline: none;
-            transition: 0.3s;
-        }
-        #searchInput:focus { border-color: var(--primary); box-shadow: 0 0 8px rgba(142,68,173,0.2); }
-
-        /* Tabla Dinámica */
-        .table-wrapper {
-            overflow-x: auto;
             border-radius: 15px;
-            border: 1px solid #eee;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 600px;
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 10px;
+            text-transform: uppercase;
         }
-        th {
-            background: var(--primary);
-            color: white;
-            padding: 18px;
-            text-align: left;
-            font-size: 1.1em;
-        }
-        td {
-            padding: 15px;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 1.05em;
-        }
-        tr:nth-child(even) { background-color: #fcfaff; }
-        tr:hover { background-color: #f1e6f7; cursor: default; }
-
-        .infinitivo { font-weight: bold; color: var(--primary); }
-        .pasado { color: #2980b9; font-weight: 500; }
-        .participio { color: #27ae60; font-weight: 500; }
-        .traduccion { color: #7f8c8d; font-style: italic; }
-
-        .counter {
-            background: var(--primary);
+        .term-badge {
+            background: #3498db;
             color: white;
             padding: 5px 15px;
-            border-radius: 15px;
+            border-radius: 20px;
             font-size: 0.9em;
+            display: inline-block;
+            margin-bottom: 20px;
         }
+        h2 {
+            color: #2980b9;
+            background: #e1f5fe;
+            padding: 12px;
+            border-left: 6px solid #3498db;
+            border-radius: 0 8px 8px 0;
+            margin-top: 30px;
+        }
+        .grid-units {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .unit-card {
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        .unit-card:hover { transform: translateY(-5px); }
+        
+        /* Colores por bloques de unidades */
+        .blue { border-top: 6px solid #3498db; background-color: #f7fbff; }
+        .green { border-top: 6px solid #2ecc71; background-color: #f7fffb; }
+        .orange { border-top: 6px solid #e67e22; background-color: #fffaf7; }
+        .purple { border-top: 6px solid #9b59b6; background-color: #fbf7ff; }
 
-        @media (max-width: 600px) {
-            .container { padding: 15px; }
-            td, th { padding: 10px; font-size: 0.9em; }
+        h3 { margin-top: 0; color: #2c3e50; font-size: 1.2em; }
+        .label { font-weight: bold; color: #7f8c8d; text-transform: uppercase; font-size: 0.8em; }
+        .grammar-list { list-style: none; padding: 0; }
+        .grammar-list li { margin-bottom: 5px; padding-left: 20px; position: relative; }
+        .grammar-list li::before { content: "✔"; position: absolute; left: 0; color: #27ae60; }
+        
+        .important-box {
+            background: #fff3cd;
+            border: 2px dashed #ffeeba;
+            color: #856404;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .vocab-tag {
+            display: inline-block;
+            background: #eee;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <button onclick="window.history.back()" class="btn-back">⬅ Volver</button>
-            <span class="counter">Total: <span id="verbCount">0</span> verbos</span>
+    <div style="text-align: center;">
+        <span class="term-badge">SECOND TERM - 1st ESO</span>
+    </div>
+    
+    <h1>🇬🇧 English Study Guide</h1>
+    <div class="important-box">
+        <h3>⚠️ IMPORTANT REMINDERS:</h3>
+         <p><strong> <a href="https://ivideu.github.io/examenes/verbos.html" class="term-badge">VERBOS IRREGULARES</a></strong> </p>
+    
+    </div>
+    <div class="grid-units">
+        <div class="unit-card blue">
+            <h3>Unit 1: Bon Appetit!</h3>
+            <p class="label">Grammar:</p>
+            <ul class="grammar-list">
+                <li>There is / There are [cite: 325]</li>
+                <li>Articles and quantifiers [cite: 326]</li>
+                <li>How much / How many [cite: 327]</li>
+            </ul>
+            <span class="vocab-tag">🍎 Food (p. 86) [cite: 328]</span>
         </div>
-        <h1>Irregular Verbs Master List</h1>
-        <p>Busca cualquier verbo en inglés o español para estudiar rápido.</p>
+
+        <div class="unit-card green">
+            <h3>Unit 2: Animal Facts</h3>
+            <p class="label">Grammar:</p>
+            <ul class="grammar-list">
+                <li>Present Simple [cite: 330]</li>
+                <li>Adverbs of Frequency [cite: 331]</li>
+            </ul>
+            <span class="vocab-tag">🦁 Animals (p. 86) [cite: 332]</span>
+        </div>
+
+        <div class="unit-card orange">
+            <h3>Unit 3: Around Town</h3>
+            <p class="label">Grammar:</p>
+            <ul class="grammar-list">
+                <li>Present Continuous vs. Simple [cite: 334]</li>
+            </ul>
+            <span class="vocab-tag">🏙️ Town (p. 87) [cite: 335]</span>
+        </div>
+
+        <div class="unit-card purple">
+            <h3>Unit 4: Then and Now</h3>
+            <p class="label">Grammar:</p>
+            <ul class="grammar-list">
+                <li>Past Simple [cite: 338]</li>
+            </ul>
+            <span class="vocab-tag">👨‍🏫 Jobs (p. 88) [cite: 339]</span>
+        </div>
+
+        <div class="unit-card blue">
+            <h3>Unit 5: As Good as Gold</h3>
+            <p class="label">Grammar:</p>
+            <ul class="grammar-list">
+                <li>Comparison of adjectives [cite: 341]</li>
+            </ul>
+            <span class="vocab-tag">✨ Adjectives (p. 89) [cite: 342]</span>
+        </div>
+
+        <div class="unit-card green">
+            <h3>Unit 6: At Home</h3>
+            <p class="label">Grammar:</p>
+            <ul class="grammar-list">
+                <li>Past Continuous / Simple [cite: 344]</li>
+            </ul>
+            <span class="vocab-tag">🏠 The House (p. 89) [cite: 345]</span>
+        </div>
+
+        <div class="unit-card orange">
+            <h3>Unit 7: On Holiday</h3>
+            <p class="label">Grammar:</p>
+            <ul class="grammar-list">
+                <li>Be Going to [cite: 347]</li>
+                <li>Present Continuous (Future meaning) [cite: 348]</li>
+            </ul>
+            <span class="vocab-tag">🏖️ Geo Features (p. 90) [cite: 349]</span>
+        </div>
+
+        <div class="unit-card purple">
+            <h3>Unit 8: Virtual World</h3>
+            <p class="label">Grammar:</p>
+            <ul class="grammar-list">
+                <li>Will [cite: 351]</li>
+                <li>First Conditional [cite: 353]</li>
+            </ul>
+            <span class="vocab-tag">👤 Personality (p. 90) [cite: 354]</span>
+        </div>
     </div>
 
-    <div class="controls">
-        <input type="text" id="searchInput" placeholder="🔍 Buscar verbo (ej: 'eat' o 'comer')..." onkeyup="filterVerbs()">
-    </div>
 
-    <div class="table-wrapper">
-        <table id="verbTable">
-            <thead>
-                <tr>
-                    <th>Infinitive</th>
-                    <th>Past Simple</th>
-                    <th>Past Participle</th>
-                    <th>Traducción</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td class="infinitivo">be</td><td class="pasado">was / were</td><td class="participio">been</td><td class="traduccion">ser / estar</td></tr>
-                <tr><td class="infinitivo">beat</td><td class="pasado">beat</td><td class="participio">beat / beaten</td><td class="traduccion">golpear</td></tr>
-                <tr><td class="infinitivo">become</td><td class="pasado">became</td><td class="participio">become</td><td class="traduccion">llegar a ser</td></tr>
-                <tr><td class="infinitivo">begin</td><td class="pasado">began</td><td class="participio">begun</td><td class="traduccion">empezar</td></tr>
-                <tr><td class="infinitivo">bend</td><td class="pasado">bent</td><td class="participio">bent</td><td class="traduccion">doblar</td></tr>
-                <tr><td class="infinitivo">bet</td><td class="pasado">bet</td><td class="participio">bet</td><td class="traduccion">apostar</td></tr>
-                <tr><td class="infinitivo">bite</td><td class="pasado">bit</td><td class="participio">bitten</td><td class="traduccion">morder / picar</td></tr>
-                <tr><td class="infinitivo">bleed</td><td class="pasado">bled</td><td class="participio">bled</td><td class="traduccion">sangrar</td></tr>
-                <tr><td class="infinitivo">blow</td><td class="pasado">blew</td><td class="participio">blown</td><td class="traduccion">soplar</td></tr>
-                <tr><td class="infinitivo">break</td><td class="pasado">broke</td><td class="participio">broken</td><td class="traduccion">romper</td></tr>
-                <tr><td class="infinitivo">bring</td><td class="pasado">brought</td><td class="participio">brought</td><td class="traduccion">traer</td></tr>
-                <tr><td class="infinitivo">build</td><td class="pasado">built</td><td class="participio">built</td><td class="traduccion">construir</td></tr>
-                <tr><td class="infinitivo">burn</td><td class="pasado">burned / burnt</td><td class="participio">burned / burnt</td><td class="traduccion">quemar</td></tr>
-                <tr><td class="infinitivo">burst</td><td class="pasado">burst</td><td class="participio">burst</td><td class="traduccion">estallar</td></tr>
-                <tr><td class="infinitivo">buy</td><td class="pasado">bought</td><td class="participio">bought</td><td class="traduccion">comprar</td></tr>
-                <tr><td class="infinitivo">catch</td><td class="pasado">caught</td><td class="participio">caught</td><td class="traduccion">coger</td></tr>
-                <tr><td class="infinitivo">choose</td><td class="pasado">chose</td><td class="participio">chosen</td><td class="traduccion">escoger</td></tr>
-                <tr><td class="infinitivo">come</td><td class="pasado">came</td><td class="participio">come</td><td class="traduccion">venir</td></tr>
-                <tr><td class="infinitivo">cost</td><td class="pasado">cost</td><td class="participio">cost</td><td class="traduccion">costar</td></tr>
-                <tr><td class="infinitivo">cut</td><td class="pasado">cut</td><td class="participio">cut</td><td class="traduccion">cortar</td></tr>
-                <tr><td class="infinitivo">deal</td><td class="pasado">dealt</td><td class="participio">dealt</td><td class="traduccion">tratar</td></tr>
-                <tr><td class="infinitivo">dig</td><td class="pasado">dug</td><td class="participio">dug</td><td class="traduccion">cavar</td></tr>
-                <tr><td class="infinitivo">do</td><td class="pasado">did</td><td class="participio">done</td><td class="traduccion">hacer</td></tr>
-                <tr><td class="infinitivo">eat</td><td class="pasado">ate</td><td class="participio">eaten</td><td class="traduccion">comer</td></tr>
-                <tr><td class="infinitivo">go</td><td class="pasado">went</td><td class="participio">gone</td><td class="traduccion">ir</td></tr>
-                <tr><td class="infinitivo">have</td><td class="pasado">had</td><td class="participio">had</td><td class="traduccion">tener / haber</td></tr>
-                <tr><td class="infinitivo">know</td><td class="pasado">knew</td><td class="participio">known</td><td class="traduccion">saber / conocer</td></tr>
-                <tr><td class="infinitivo">shut</td><td class="pasado">shut</td><td class="participio">shut</td><td class="traduccion">cerrar</td></tr>
-                <tr><td class="infinitivo">sing</td><td class="pasado">sang</td><td class="participio">sung</td><td class="traduccion">cantar</td></tr>
-                <tr><td class="infinitivo">sink</td><td class="pasado">sank</td><td class="participio">sunk</td><td class="traduccion">hundirse</td></tr>
-                <tr><td class="infinitivo">sit</td><td class="pasado">sat</td><td class="participio">sat</td><td class="traduccion">sentarse</td></tr>
-                <tr><td class="infinitivo">sleep</td><td class="pasado">slept</td><td class="participio">slept</td><td class="traduccion">dormir</td></tr>
-                <tr><td class="infinitivo">speak</td><td class="pasado">spoke</td><td class="participio">spoken</td><td class="traduccion">hablar</td></tr>
-                <tr><td class="infinitivo">write</td><td class="pasado">wrote</td><td class="participio">written</td><td class="traduccion">escribir</td></tr>
-                </tbody>
-        </table>
-    </div>
 </div>
-
-<script>
-    function filterVerbs() {
-        let input = document.getElementById("searchInput");
-        let filter = input.value.toLowerCase();
-        let table = document.getElementById("verbTable");
-        let tr = table.getElementsByTagName("tr");
-        let count = 0;
-
-        for (let i = 1; i < tr.length; i++) {
-            let text = tr[i].innerText.toLowerCase();
-            if (text.indexOf(filter) > -1) {
-                tr[i].style.display = "";
-                count++;
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-        document.getElementById("verbCount").innerText = count;
-    }
-    // Inicializar contador
-    window.onload = () => {
-        document.getElementById("verbCount").innerText = document.querySelectorAll("#verbTable tbody tr").length;
-    };
-</script>
 
 </body>
 </html>

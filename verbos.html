@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irregular Verbs - 1º ESO</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        /* Botón Volver */
+        .btn-back {
+            background-color: #34495e;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            text-decoration: none;
+        }
+        .btn-back:hover {
+            background-color: #2c3e50;
+            transform: translateX(-5px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 4px solid #9b59b6;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        /* Tabla de Verbos */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        th {
+            background-color: #9b59b6;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            position: sticky;
+            top: 0;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f0fb;
+        }
+        tr:hover {
+            background-color: #f1e6f7;
+        }
+
+        /* Etiquetas de ayuda visual */
+        .verb-bold {
+            font-weight: bold;
+            color: #8e44ad;
+        }
+        .translation {
+            color: #666;
+            font-style: italic;
+        }
+        .highlight-box {
+            background: #e8f4fd;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <button onclick="window.history.back()" class="btn-back">
+        ⬅ Volver
+    </button>
+
+    <h1>🇬🇧 Irregular Verbs List</h1>
+
+    <div class="highlight-box">
+        <strong>💡 Consejo de estudio:</strong> Intenta aprender los verbos de 5 en 5. ¡Recuerda que muchos se usan en el <i>Past Simple</i> que entra en tu examen!.
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Infinitive </th>
+                    <th>Past Simple </th>
+                    <th>Past Participle </th>
+                    <th>Spanish </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="verb-bold">be</td>
+                    <td>was / were</td>
+                    <td>been</td>
+                    <td class="translation">ser / estar</td>
+                </tr>
+                <tr>
+                    <td class="verb-bold">become</td>
+                    <td>became</td>
+                    <td>become</td>
+                    <td class="translation">llegar a ser</td>
+                </tr>
+                <tr>
+                    <td class="verb-bold">begin</td>
+                    <td>began</td>
+                    <td>begun</td>
+                    <td class="translation">empezar</td>
+                </tr>
+                <tr>
+                    <td class="verb-bold">break</td>
+                    <td>broke</td>
+                    <td>broken</td>
+                    <td class="translation">romper</td>
+                </tr>
+                <tr>
+                    <td class="verb-bold">bring</td>
+                    <td>brought</td>
+                    <td>brought</td>
+                    <td class="translation">traer</td>
+                </tr>
+                <tr>
+                    <td class="verb-bold">buy</td>
+                    <td>bought</td>
+                    <td>bought</td>
+                    <td class="translation">comprar</td>
+                </tr>
+                <tr>
+                    <td class="verb-bold">come</td>
+                    <td>came</td>
+                    <td>come</td>
+                    <td class="translation">venir</td>
+                </tr>
+                <tr>
+                    <td class="verb-bold">do</td>
+                    <td>did</td>
+                    <td>done</td>
+                    <td class="translation">hacer</td>
+                </tr>
+                <tr>
+                    <td class="verb-bold">eat</td>
+                    <td>ate</td>
+                    <td>eaten</td>
+                    <td class="translation">comer</td>
+                </tr>
+                <tr>
+                    <td class="verb-bold">go</td>
+                    <td>went</td>
+                    <td>gone</td>
+                    <td class="translation">ir</td>
+                </tr>
+                <tr>
+                    <td class="verb-bold">have</td>
+                    <td>had</td>
+                    <td>had</td>
+                    <td class="translation">tener / haber</td>
+                </tr>
+                <tr>
+                    <td class="verb-bold">know</td>
+                    <td>knew</td>
+                    <td>known</td>
+                    <td class="translation">saber / conocer</td>
+                </tr>
+                <tr>
+                    <td class="verb-bold">speak</td>
+                    <td>spoke</td>
+                    <td>spoken</td>
+                    <td class="translation">hablar</td>
+                </tr>
+                <tr>
+                    <td class="verb-bold">write</td>
+                    <td>wrote</td>
+                    <td>written</td>
+                    <td class="translation">escribir</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

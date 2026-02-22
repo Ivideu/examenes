@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafío Prehistoria - 1º ESO</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #eaddca; color: #2c1e11; line-height: 1.6; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: #fffaf0; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 2px solid #5d4037; }
+        h1 { color: #5d4037; text-align: center; border-bottom: 3px double #5d4037; padding-bottom: 10px; text-transform: uppercase; }
+        .question { margin-bottom: 25px; display: none; }
+        .question.active { display: block; }
+        .options { list-style: none; padding: 0; }
+        .options li { margin: 12px 0; }
+        button { background-color: #5d4037; color: #fdf5e6; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-size: 16px; transition: 0.3s; width: 100%; }
+        button:hover { background-color: #8d6e63; transform: scale(1.02); }
+        .feedback { margin-top: 15px; padding: 15px; border-radius: 8px; display: none; font-weight: bold; }
+        .correct { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .incorrect { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        #score-container { text-align: center; display: none; }
+        .progress-bar { height: 12px; background: #d7ccc8; border-radius: 6px; margin-bottom: 25px; }
+        .progress { height: 100%; background: #5d4037; width: 0%; border-radius: 6px; transition: width 0.4s; }
+        .reasoning { font-style: italic; font-weight: normal; margin-top: 8px; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🦴 Expedición a la Prehistoria 🦴</h1>
+    <div class="progress-bar"><div class="progress" id="progress"></div></div>
+    
+    <div id="quiz">
+        </div>
+
+    <div id="score-container">
+        <h2>📊 Informe de la Excavación</h2>
+        <p id="final-score" style="font-size: 1.2em;"></p>
+        <button onclick="location.reload()">Reiniciar Expedición</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    {
+        q: "¿Cuál es el evento que marca el final de la Prehistoria y el inicio de la Historia?",
+        a: ["El descubrimiento del fuego", "La invención de la escritura", "La aparición de la agricultura"],
+        c: 1,
+        e: "¡Exacto! La escritura aparece hacia el 3300 a.C. y separa ambos periodos."
+    },
+    {
+        q: "¿Cómo se llama el proceso biológico de evolución de los primeros antepasados hasta el ser humano actual?",
+        a: ["Sedentarización", "Hominización", "Paleolitización"],
+        c: 1,
+        e: "La hominización incluye cambios como el bipedismo, el aumento del cerebro y el lenguaje."
+    },
+    {
+        q: "Verdadero o Falso: ¿El Homo Habilis fue el primero en salir de África?",
+        a: ["Verdadero", "Falso"],
+        c: 1,
+        e: "Falso. Fue el Homo Erectus el primero en desplazarse fuera de África."
+    },
+    {
+        q: "¿Cuál fue el principal cambio físico que permitió al ser humano fabricar herramientas?",
+        a: ["Tener menos pelo", "La posición erguida y el pulgar oponible", "Correr más rápido"],
+        c: 1,
+        e: "Caminar sobre dos pies liberó las manos, y el pulgar permitió la pinza de precisión."
+    },
+    {
+        q: "En el Paleolítico, la economía se basaba en la recolección, la pesca y la caza. ¿Cómo se llama este tipo de economía?",
+        a: ["Economía productora", "Economía depredadora", "Economía de mercado"],
+        c: 1,
+        e: "Depredadora, porque los humanos consumían lo que la naturaleza ofrecía sin reponerlo."
+    },
+    {
+        q: "¿Qué significa que los grupos del Paleolítico fueran 'Nómadas'?",
+        a: ["Que vivían en ciudades de piedra", "Que no tenían un lugar fijo y se desplazaban buscando alimento", "Que solo comían carne"],
+        c: 1,
+        e: "Correcto. Seguían a las manadas de animales o buscaban frutos según la estación."
+    },
+    {
+        q: "Verdadero o Falso: ¿El descubrimiento del fuego permitió al ser humano mejorar su dieta y defenderse de depredadores?",
+        a: ["Verdadero", "Falso"],
+        c: 0,
+        e: "¡Verdadero! Cocinar alimentos facilitó la digestión y permitió un mayor desarrollo cerebral."
+    },
+    {
+        q: "¿Cómo se llama la técnica de golpear una piedra contra otra para fabricar herramientas?",
+        a: ["Talla", "Pulimento", "Fundición"],
+        c: 0,
+        e: "En el Paleolítico se usaba la talla. El pulido es característico del Neolítico."
+    },
+    {
+        q: "El Neolítico comenzó hace unos 10.000 años gracias a...",
+        a: ["La invención de la rueda", "La aparición de la agricultura y la ganadería", "La caída de un meteorito"],
+        c: 1,
+        e: "Esto permitió al ser humano pasar de depredador a productor de sus propios alimentos."
+    },
+    {
+        q: "¿Cuál fue la consecuencia directa de tener excedentes de comida en el Neolítico?",
+        a: ["La gente comía menos", "La aparición del comercio (trueque) y la especialización del trabajo", "Que desapareciera el arte"],
+        c: 1,
+        e: "Al sobrar comida, algunas personas pudieron dedicarse a otras tareas como la cerámica o la defensa."
+    },
+    {
+        q: "Verdadero o Falso: ¿El sedentarismo significa que los humanos empezaron a vivir en poblados permanentes?",
+        a: ["Verdadero", "Falso"],
+        c: 0,
+        e: "¡Verdadero! Al cultivar la tierra, ya no necesitaban desplazarse constantemente."
+    },
+    {
+        q: "¿Qué invento permitió guardar grano y cocinar líquidos en el Neolítico?",
+        a: ["La cerámica", "El hierro", "El plástico"],
+        c: 0,
+        e: "La cerámica fue clave para almacenar las cosechas y mejorar la higiene alimentaria."
+    },
+    {
+        q: "¿Cuál fue el primer metal que utilizó el ser humano?",
+        a: ["Hierro", "Bronce", "Cobre"],
+        c: 2,
+        e: "El cobre fue el primero, aunque era blando. Luego mezclaron cobre y estaño para crear el bronce."
+    },
+    {
+        q: "En la Edad de los Metales, la sociedad se volvió más desigual. ¿Por qué?",
+        a: ["Por sorteo", "Por la acumulación de riqueza y el poder militar", "Porque ya no hablaban"],
+        c: 1,
+        e: "Quienes controlaban los metales y el comercio se convirtieron en la élite o guerreros."
+    },
+    {
+        q: "¿Qué es un Dolmen?",
+        a: ["Una herramienta para segar", "Un monumento funerario formado por grandes piedras verticales cubiertas por una horizontal", "Una pintura en una cueva"],
+        c: 1,
+        e: "Forma parte del megalitismo, construcciones con grandes piedras (megalitos)."
+    },
+    {
+        q: "Verdadero o Falso: ¿Las pinturas rupestres del Paleolítico solían representar escenas de caza con gran realismo?",
+        a: ["Verdadero", "Falso"],
+        c: 0,
+        e: "Sí, se cree que tenían un fin mágico-ritual para favorecer la caza de animales."
+    },
+    {
+        q: "¿En qué etapa aparecen inventos como la rueda, el arado y la vela?",
+        a: ["Paleolítico", "Neolítico", "Edad de los Metales"],
+        c: 2,
+        e: "Estos inventos revolucionaron el transporte y la agricultura durante la Edad de los Metales."
+    },
+    {
+        q: "¿Cómo se llama el homínido que vivió en Europa y enterraba a sus muertos, pero terminó extinguiéndose?",
+        a: ["Homo Sapiens", "Hombre de Neandertal", "Australopithecus"],
+        c: 1,
+        e: "El Neandertal convivió con el Sapiens, pero se extinguió hace unos 40.000 años."
+    },
+    {
+        q: "¿Qué material define las herramientas del Neolítico?",
+        a: ["Piedra tallada", "Piedra pulimentada", "Plástico"],
+        c: 1,
+        e: "Neolítico significa 'piedra nueva' o pulida, mucho más afilada y eficaz."
+    },
+    {
+        q: "Razonamiento final: ¿Por qué la Prehistoria es el periodo más largo de la humanidad?",
+        a: ["Porque no pasaba nada", "Porque abarca millones de años desde los primeros homínidos hasta la escritura", "Porque los días eran más largos"],
+        c: 1,
+        e: "Exacto. Supone el 99% del tiempo que el ser humano lleva sobre la Tierra."
+    }
+];
+
+let currentIdx = 0;
+let score = 0;
+
+function loadQuestion() {
+    const q = quizData[currentIdx];
+    const quizDiv = document.getElementById('quiz');
+    const progress = (currentIdx / quizData.length) * 100;
+    document.getElementById('progress').style.width = progress + "%";
+
+    quizDiv.innerHTML = `
+        <div class="question active">
+            <h3 style="color:#5d4037;">Pregunta ${currentIdx + 1}: ${q.q}</h3>
+            <ul class="options">
+                ${q.a.map((opt, i) => `<li><button onclick="checkAnswer(${i})">${opt}</button></li>`).join('')}
+            </ul>
+            <div id="feedback" class="feedback"></div>
+            <button id="next-btn" style="display:none; margin-top:15px; background-color:#a1887f;" onclick="nextQuestion()">Avanzar en el tiempo ➔</button>
+        </div>
+    `;
+}
+
+function checkAnswer(selected) {
+    const q = quizData[currentIdx];
+    const feedback = document.getElementById('feedback');
+    const nextBtn = document.getElementById('next-btn');
+    const buttons = document.querySelectorAll('.options button');
+    
+    // Desactivar botones tras responder
+    buttons.forEach(btn => btn.disabled = true);
+
+    feedback.style.display = "block";
+    if (selected === q.c) {
+        score++;
+        feedback.innerHTML = "✅ ¡Bien pensado! <div class='reasoning'>" + q.e + "</div>";
+        feedback.className = "feedback correct";
+    } else {
+        feedback.innerHTML = "❌ ¡Casi lo tienes! <div class='reasoning'>" + q.e + "</div>";
+        feedback.className = "feedback incorrect";
+    }
+    nextBtn.style.display = "block";
+}
+
+function nextQuestion() {
+    currentIdx++;
+    if (currentIdx < quizData.length) {
+        loadQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function showResults() {
+    document.getElementById('quiz').style.display = "none";
+    document.getElementById('progress').style.width = "100%";
+    const container = document.getElementById('score-container');
+    container.style.display = "block";
+    
+    let mensaje = "";
+    if(score >= 18) mensaje = "🏆 ¡Eres un Chamán de la Tribu! Sabes todo sobre nuestros orígenes.";
+    else if(score >= 12) mensaje = "🏹 ¡Buen cazador! Tienes conocimientos sólidos de la Prehistoria.";
+    else mensaje = "🔥 ¡Aún estás descubriendo el fuego! Repasa el PDF y vuelve a intentarlo.";
+
+    document.getElementById('final-score').innerHTML = `Has conseguido <strong>${score} de ${quizData.length}</strong> puntos.<br><br>${mensaje}`;
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>

@@ -3,174 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MasterClass PRO: Biología de las Plantas</title>
+    <title>Enciclopedia Digital: El Reino Vegetal</title>
     <style>
         :root {
-            --bio-dark: #1b5e20;
-            --bio-leaf: #2ecc71;
-            --bio-sun: #f1c40f;
-            --bio-water: #3498db;
-            --bio-flower: #e74c3c;
-            --bio-wood: #8e44ad;
-            --bg: #f4f7f6;
+            --dark-green: #1b5e20;
+            --main-green: #2e7d32;
+            --soft-green: #e8f5e9;
+            --accent: #fbc02d;
+            --text: #263238;
         }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: #2c3e50; line-height: 1.6; margin: 0; padding: 20px; }
-        .container { max-width: 1200px; margin: auto; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f0;
+            color: var(--text);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        header {
+            text-align: center;
+            border-bottom: 6px solid var(--dark-green);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        h1 { color: var(--dark-green); font-size: 2.8rem; margin: 0; }
+        h2 { 
+            color: white; 
+            background: var(--main-green); 
+            padding: 15px 25px; 
+            border-radius: 10px; 
+            margin-top: 50px;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+        }
+        h3 { color: var(--main-green); border-bottom: 2px solid #c8e6c9; padding-bottom: 10px; margin-top: 30px; }
         
-        /* Botón de navegación */
-        .btn-back { background: #2c3e50; color: white; padding: 12px 25px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; margin-bottom: 30px; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .btn-back:hover { background: #1a252f; transform: scale(1.05); }
+        .deep-box {
+            background: var(--soft-green);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border-left: 10px solid var(--main-green);
+        }
 
-        header { text-align: center; margin-bottom: 50px; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-bottom: 5px solid var(--bio-dark); }
-        header h1 { color: var(--bio-dark); margin: 0; font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
-        header p { color: #7f8c8d; font-style: italic; margin-top: 10px; font-size: 1.1rem; }
+        /* Fichas Estilo "Expert" */
+        .flashcards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .card {
+            background: #ffffff;
+            border: 2px solid #e0e0e0;
+            padding: 25px;
+            border-radius: 15px;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        .card:hover {
+            transform: scale(1.03);
+            border-color: var(--main-green);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .card-label {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--accent);
+            color: #000;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 3px 12px;
+            border-radius: 5px;
+        }
+        .card-q { font-weight: bold; display: block; margin-top: 10px; color: var(--dark-green); font-size: 1.15rem; }
+        .card-a { color: #455a64; margin-top: 10px; font-size: 1rem; }
 
-        .fichas-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
-
-        /* Estilo de Ficha Nivel Examen */
-        .ficha { background: white; border-radius: 20px; padding: 30px; position: relative; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.06); border-top: 12px solid; transition: transform 0.3s ease; display: flex; flex-direction: column; }
-        .ficha:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
-
-        .ficha h2 { margin-top: 0; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid #eee; padding-bottom: 15px; color: #2c3e50; }
-        .ficha h3 { font-size: 1.1rem; color: #34495e; text-transform: uppercase; margin-top: 20px; margin-bottom: 5px; }
-        
-        .ficha ul { padding-left: 20px; margin: 10px 0; }
-        .ficha li { margin-bottom: 8px; font-size: 0.95rem; }
-        .ficha b { color: #111; }
-
-        .tag { display: inline-block; background: #ecf0f1; color: #34495e; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; margin-top: auto; align-self: flex-start; border: 1px solid #bdc3c7; }
-
-        /* Categorización para memoria fotográfica */
-        .f-general { border-top-color: var(--bio-dark); }
-        .f-nutricion { border-top-color: var(--bio-leaf); }
-        .f-relacion { border-top-color: var(--bio-water); }
-        .f-reproduccion { border-top-color: var(--bio-flower); }
-        .f-clasificacion { border-top-color: var(--bio-wood); }
-
-        /* Caja de "Pregunta de Examen" */
-        .examen-box { background: #fffcf5; padding: 15px; border-radius: 12px; border-left: 5px solid var(--bio-sun); margin-top: 15px; margin-bottom: 15px; font-size: 0.95rem; }
-        .examen-box strong { color: #d35400; display: block; margin-bottom: 5px; font-size: 0.9rem; text-transform: uppercase; }
-
-        @media (max-width: 600px) { .fichas-container { grid-template-columns: 1fr; } header h1 { font-size: 1.8rem; } }
+        .list-plus li { margin-bottom: 15px; }
+        .important-term { color: #d32f2f; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <button onclick="window.history.back()" class="btn-back">⬅ VOLVER AL TEMARIO</button>
-    
     <header>
-        <h1>Reino Plantae: Nivel Experto</h1>
-        <p>Estudio intensivo para máxima puntuación - Sin distracciones visuales</p>
+        <h1>ESTUDIO AVANZADO: REINO VEGETAL</h1>
+        <p>Lección completa basada en el análisis exhaustivo del material docente</p>
     </header>
 
-    <div class="fichas-container">
+    <section>
+        <h2>1. Nutrición y Procesos Metabólicos</h2>
+        <p>Las plantas son organismos <strong>autótrofos</strong> que sintetizan materia orgánica a partir de inorgánica.</p>
         
-        <div class="ficha f-general">
-            <h2>🌿 01. Base Biológica</h2>
-            <p>Características fundamentales de todas las plantas:</p>
-            <ul>
-                <li><b>Eucariotas:</b> Células con núcleo verdadero.</li>
-                <li><b>Pluricelulares:</b> Formadas por miles de millones de células organizadas en tejidos.</li>
-                <li><b>Autótrofas:</b> Fabrican su propia materia orgánica.</li>
-                <li><b>Pared Celular:</b> Sus células están rodeadas de una pared rígida de <b>celulosa</b>.</li>
-                <li><b>Sésiles:</b> Viven fijas al sustrato, no pueden desplazarse.</li>
-            </ul>
-            <span class="tag">CONCEPTOS CLAVE</span>
-        </div>
+        <div class="deep-box">
+            <h3>🍃 Fotosíntesis vs. Respiración (El Ciclo Vital)</h3>
+            <p>Es vital entender que son procesos opuestos que ocurren simultáneamente:</p>
+            
 
-        <div class="ficha f-nutricion">
-            <h2>🧪 02. Nutrición y Transporte</h2>
-            <h3>1. Absorción y Savia Bruta:</h3>
-            <ul>
-                <li>La raíz absorbe agua y sales minerales por los <b>pelos absorbentes</b>.</li>
-                <li>Esta mezcla (Savia Bruta) asciende por los vasos leñosos llamados <b>Xilema</b>.</li>
-            </ul>
-            <h3>2. Fotosíntesis:</h3>
-            <p>Ocurre en los <b>cloroplastos</b> (gracias a la clorofila). Usa la luz del sol para transformar la Savia Bruta + CO2 en materia orgánica y libera Oxígeno (O2).</p>
-            <h3>3. Distribución:</h3>
-            <ul>
-                <li>La materia orgánica creada forma la <b>Savia Elaborada</b>.</li>
-                <li>Se reparte por toda la planta a través de los vasos liberianos llamados <b>Floema</b>.</li>
-            </ul>
-            <div class="examen-box">
-                <strong>⚠️ ¡Ojo al examen!</strong>
-                No confundas Fotosíntesis con Respiración. Las plantas respiran día y noche (toman O2 y sueltan CO2), pero solo hacen fotosíntesis de día. El intercambio de gases se hace por los <b>estomas</b> de las hojas.
-            </div>
-            <span class="tag">METABOLISMO</span>
-        </div>
+[Image of photosynthesis and cellular respiration in plants]
 
-        <div class="ficha f-relacion">
-            <h2>☀️ 03. Función de Relación</h2>
-            <p>Respuestas de la planta a los estímulos del entorno.</p>
-            <h3>Tropismos (Permanentes y lentos):</h3>
-            <ul>
-                <li><b>Fototropismo:</b> Hacia la luz. Tallo (+), Raíz (-).</li>
-                <li><b>Geotropismo:</b> Hacia la gravedad. Raíz (+), Tallo (-).</li>
-                <li><b>Hidrotropismo:</b> La raíz crece buscando agua.</li>
-                <li><b>Tigmotropismo:</b> Respuesta al contacto (zarcillos de las enredaderas).</li>
+            <ul class="list-plus">
+                <li><strong>Fotosíntesis:</strong> Usa Agua + Sales + CO2 + Energía Solar → Produce Glúcidos + Oxígeno. Ocurre solo en células con <strong>clorofila</strong> (cloroplastos) durante el día.</li>
+                <li><strong>Respiración Celular:</strong> Usa Glúcidos + Oxígeno → Produce Energía + Agua + CO2. Ocurre en <strong>todas</strong> las células de la planta, las 24 horas del día.</li>
+                <li><strong>Intercambio Gaseoso:</strong> Realizado por los <strong>estomas</strong> (envés de la hoja) y pelos radicales (absorción del suelo).</li>
             </ul>
-            <h3>Nastias (Pasajeras y rápidas):</h3>
-            <ul>
-                <li><b>Fotonastias:</b> Flores que se abren o cierran con la luz (Dondiego de noche).</li>
-                <li><b>Sismonastias:</b> Hojas que se cierran al tacto (Mimosa púdica) o plantas carnívoras.</li>
-            </ul>
-            <span class="tag">INTERACCIÓN CON EL MEDIO</span>
         </div>
+    </section>
 
-        <div class="ficha f-reproduccion">
-            <h2>🌸 04. Reproducción Sexual I: La Flor</h2>
-            <p>Órgano reproductor de las Espermatofitas.</p>
-            <h3>Verticilos Protectores:</h3>
+    <section>
+        <h2>2. Función de Relación: Movimientos Vegetales</h2>
+        <div class="deep-box">
+            <p>Las plantas no tienen sistema nervioso, pero responden a estímulos como luz, gravedad o humedad.</p>
+            <h3>A. Tropismos (Permanentes)</h3>
+            <p>Crecimiento orientado hacia el estímulo. Si es hacia él es positivo, si se aleja es negativo.</p>
             <ul>
-                <li><b>Cáliz:</b> Formado por hojas verdes llamadas <b>sépalos</b>.</li>
-                <li><b>Corola:</b> Formada por hojas de colores llamadas <b>pétalos</b> (atraen polinizadores).</li>
+                <li><strong>Fototropismo:</strong> Respuesta a la luz (tallos + / raíces -).</li>
+                <li><strong>Geotropismo:</strong> Respuesta a la gravedad (raíces + / tallos -).</li>
+                <li><strong>Hidrotropismo:</strong> Respuesta a la presencia de agua.</li>
             </ul>
-            <h3>Verticilos Reproductores:</h3>
+            <h3>B. Nastias (Temporales)</h3>
+            <p>Movimientos rápidos y reversibles que no dependen de la dirección del estímulo.</p>
             <ul>
-                <li><b>Androceo (Masculino):</b> Son los <b>estambres</b>. Tienen un filamento y una antera (donde se fabrica el polen).</li>
-                <li><b>Gineceo o Pistilo (Femenino):</b> Forma de botella. Dividido en <b>Estigma</b> (boca), <b>Estilo</b> (cuello) y <b>Ovario</b> (contiene los óvulos).</li>
+                <li><strong>Fotonastias:</strong> Apertura/cierre de flores según la luz.</li>
+                <li><strong>Sismonastias:</strong> Reacción al contacto (plantas carnívoras o la <em>Mimosa pudica</em>).</li>
             </ul>
-            <span class="tag">ANATOMÍA VEGETAL</span>
         </div>
+    </section>
 
-        <div class="ficha f-reproduccion">
-            <h2>🔄 05. Ciclos Reproductivos</h2>
-            <h3>Fases de la Reprod. Sexual:</h3>
-            <ol>
-                <li><b>Polinización:</b> Viaje del polen a otra flor (por viento o insectos).</li>
-                <li><b>Fecundación:</b> El polen crea un tubo polínico, llega al ovario y se une al óvulo.</li>
-                <li><b>Formación:</b> El óvulo = Semilla. El ovario = Fruto.</li>
-                <li><b>Germinación:</b> La semilla cae al suelo y nace la planta.</li>
+    <section>
+        <h2>3. Reproducción Sexual en Espermafitas</h2>
+        <p>El ciclo de vida de una planta con flor incluye etapas complejas de transformación anatómica:</p>
+        
+        
+
+[Image of the life cycle of a flowering plant]
+
+
+        <div class="deep-box">
+            <h3>🌸 El Camino a la Semilla y al Fruto</h3>
+            <ol class="list-plus">
+                <li><strong>Polinización:</strong> El polen viaja de la antera al estigma. Puede ser anemógama (viento) o zoógama (animales).</li>
+                <li><strong>Fecundación:</strong> El grano de polen crea un <strong>tubo polínico</strong> que atraviesa el estilo hasta el óvulo. Se une el gameto masculino y femenino.</li>
+                <li><strong>La Semilla:</strong> El óvulo fecundado se convierte en semilla. Partes:
+                    <ul>
+                        <li><strong>Embrión:</strong> La futura planta.</li>
+                        <li><strong>Endospermo/Albumen:</strong> Reserva alimenticia.</li>
+                        <li><strong>Tegumento:</strong> Envoltura protectora.</li>
+                    </ul>
+                </li>
+                <li><strong>El Fruto:</strong> El ovario se engrosa formando el <strong>pericarpio</strong>, dividido en:
+                    <ul>
+                        <li><strong>Epicarpio:</strong> Piel exterior.</li>
+                        <li><strong>Mesocarpio:</strong> Parte carnosa (lo que comemos).</li>
+                        <li><strong>Endocarpio:</strong> Capa que rodea directamente a la semilla (el "hueso").</li>
+                    </ul>
+                </li>
             </ol>
-            <div class="examen-box">
-                <strong>✂️ Reproducción Asexual (Clonación natural):</strong>
-                <ul>
-                    <li><b>Estolones:</b> Tallos aéreos horizontales (Fresas).</li>
-                    <li><b>Rizomas:</b> Tallos subterráneos horizontales (Césped, Jengibre).</li>
-                    <li><b>Tubérculos:</b> Tallos subterráneos gruesos con reservas (Patata).</li>
-                    <li><b>Bulbos:</b> Tallos con hojas carnosas subterráneas (Cebolla).</li>
-                </ul>
+        </div>
+
+        <div class="deep-box">
+            <h3>🌱 La Germinación</h3>
+            <p>Cuando la semilla encuentra condiciones óptimas (humedad y temperatura):</p>
+            <p>La semilla absorbe agua, se hincha y rompe el tegumento. Sale la <strong>radícula</strong> (hacia abajo) y el <strong>ápice</strong> (hacia arriba). Los <strong>cotiledones</strong> alimentan a la plántula hasta que sus hojas hacen fotosíntesis.</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>🗂️ Fichas de Estudio Nivel Experto</h2>
+        <div class="flashcards-container">
+            
+            <div class="card">
+                <span class="card-label">Anatomía</span>
+                <span class="card-q">¿Cuál es la función del Floema?</span>
+                <span class="card-a">Transportar la <strong>savia elaborada</strong> (agua + azúcares de la fotosíntesis) desde las hojas a todas las células de la planta.</span>
             </div>
-            <span class="tag">PERPETUACIÓN DE LA ESPECIE</span>
-        </div>
 
-        <div class="ficha f-clasificacion">
-            <h2>🌲 06. Taxonomía (Clasificación)</h2>
-            <h3>Plantas Criptógamas (Sin flores ni semillas):</h3>
-            <ul>
-                <li><b>Briófitos (Musgos):</b> Muy simples. Sin verdaderas raíces ni vasos conductores. Absorben agua por todo el cuerpo.</li>
-                <li><b>Pteridófitos (Helechos):</b> Tienen raíz, tallo y hojas (frondes). Sí tienen vasos conductores. Se reproducen por esporas.</li>
-            </ul>
-            <h3>Plantas Espermatofitas (Con semillas):</h3>
-            <ul>
-                <li><b>Gimnospermas:</b> Semillas desnudas (no encerradas en un fruto). Flores agrupadas en <b>conos o piñas</b>. Hojas aciculares (aguja) o escamosas. Ej: Pino, abeto.</li>
-                <li><b>Angiospermas:</b> Semillas protegidas dentro de un <b>fruto</b>. Flores completas y vistosas. Grupo más abundante del planeta. Ej: Rosal, manzano, trigo.</li>
-            </ul>
-            <span class="tag">BIODIVERSIDAD</span>
-        </div>
+            <div class="card">
+                <span class="card-label">Reproducción</span>
+                <span class="card-q">¿Qué es un rizoma?</span>
+                <span class="card-a">Un tallo subterráneo horizontal que permite la reproducción asexual, creando nuevas plantas idénticas (Ej: jengibre).</span>
+            </div>
 
-    </div>
+            <div class="card">
+                <span class="card-label">Clasificación</span>
+                <span class="card-q">¿Qué define a las Criptógamas?</span>
+                <span class="card-a">Son plantas sin flores ni semillas (musgos y helechos). Se reproducen por <strong>esporas</strong>.</span>
+            </div>
+
+            <div class="card">
+                <span class="card-label">Fisiología</span>
+                <span class="card-q">¿Por qué las raíces tienen geotropismo positivo?</span>
+                <span class="card-a">Para asegurar que crezcan hacia el interior de la tierra en busca de agua y sales minerales para la nutrición.</span>
+            </div>
+
+            <div class="card">
+                <span class="card-label">Semilla</span>
+                <span class="card-q">¿Qué son los cotiledones?</span>
+                <span class="card-a">Hojitas carnosas iniciales que almacenan nutrientes tomados del endospermo para la primera etapa del crecimiento.</span>
+            </div>
+
+            <div class="card">
+                <span class="card-label">Fruto</span>
+                <span class="card-q">¿Cómo se forma el fruto?</span>
+                <span class="card-a">Tras la fecundación, los pétalos caen y las paredes del <strong>ovario</strong> se desarrollan y engrosan para proteger la semilla.</span>
+            </div>
+
+        </div>
+    </section>
+
+    <footer style="text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #ccc; color: #666;">
+        Guía Completa de Biología Vegetal - Basada en Screenshot_5.pdf - ¡Mucho éxito en tu examen!
+    </footer>
 </div>
 
 </body>

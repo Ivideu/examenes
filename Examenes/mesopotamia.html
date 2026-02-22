@@ -3,223 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desafío Mesopotamia - 1º ESO</title>
+    <title>RETO HISTORIA: MESOPOTAMIA - 1º ESO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4e1c1; color: #333; line-height: 1.6; padding: 20px; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
-        h1 { color: #8b4513; text-align: center; border-bottom: 2px solid #8b4513; padding-bottom: 10px; }
-        .question { margin-bottom: 25px; display: none; }
-        .question.active { display: block; }
-        .options { list-style: none; padding: 0; }
-        .options li { margin: 10px 0; }
-        button { background-color: #8b4513; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        button:hover { background-color: #a0522d; }
-        .feedback { margin-top: 15px; padding: 15px; border-radius: 5px; display: none; }
-        .correct { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .incorrect { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-        #score-container { text-align: center; display: none; }
-        .progress-bar { height: 10px; background: #e0e0e0; border-radius: 5px; margin-bottom: 20px; }
-        .progress { height: 100%; background: #8b4513; width: 0%; border-radius: 5px; transition: width 0.3s; }
+        :root {
+            --primary: #2f3640;
+            --secondary: #d35400; /* Color tierra/adobe */
+            --accent: #f1c40f;
+            --success: #44bd32;
+            --error: #c23616;
+            --bg: #f5f6fa;
+        }
+
+        body {
+            background: var(--bg);
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #game-container {
+            width: 100%;
+            max-width: 850px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-top: 10px solid var(--secondary);
+        }
+
+        .header { text-align: center; margin-bottom: 20px; }
+        .stats { display: flex; justify-content: space-between; font-weight: 800; color: var(--secondary); margin-bottom: 10px; }
+        
+        .progress-bar { height: 12px; background: #dcdde1; border-radius: 6px; overflow: hidden; margin-bottom: 30px; }
+        #fill { height: 100%; width: 0%; background: var(--secondary); transition: 0.3s; }
+
+        .question-box { font-size: 1.3rem; font-weight: 800; margin-bottom: 25px; color: var(--primary); }
+        .razonamiento-tag { background: var(--accent); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; vertical-align: middle; margin-right: 10px; }
+
+        .options { display: grid; gap: 12px; }
+        .btn {
+            background: white; border: 2px solid #dcdde1; padding: 15px;
+            border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: 600;
+            transition: 0.2s; text-align: left;
+        }
+        .btn:hover:not(:disabled) { border-color: var(--secondary); background: #f1f2f6; }
+
+        #feedback {
+            display: none; margin-top: 25px; padding: 20px; border-radius: 10px;
+            text-align: center; animation: slideIn 0.4s ease;
+        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } }
+        .correct { background: #dff9fb; color: var(--success); border: 2px solid var(--success); }
+        .wrong { background: #fab1a0; color: var(--error); border: 2px solid var(--error); }
+
+        .next-btn {
+            margin-top: 15px; background: var(--secondary); color: white;
+            border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer;
+            font-weight: 800; font-family: 'Montserrat';
+        }
+
+        #results { display: none; text-align: center; }
+        .score-big { font-size: 5rem; color: var(--secondary); font-weight: 800; }
+        .btn-back { background: #34495e; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; float: left; font-weight: bold; transition: 0.3s; margin-bottom: 10px; }
+        .btn-back:hover { background: #2c3e50; transform: translateX(-3px); }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>🏺 Operación Mesopotamia 🏺</h1>
-    <div class="progress-bar"><div class="progress" id="progress"></div></div>
-    
+<div id="game-container">
     <div id="quiz">
+        <div class="header">
+            <button onclick="window.history.back()" class="btn-back">⬅ VOLVER</button>
+            <h1>MESOPOTAMIA: CUNA DE CIVILIZACIONES</h1>
+            <div class="stats">
+                <span id="q-txt">Pregunta: 1 / 20</span>
+                <span id="s-txt">Nota: 0.0</span>
+            </div>
+            <div class="progress-bar"><div id="fill"></div></div>
         </div>
 
-    <div id="score-container">
-        <h2>¡Misión Cumplida, Escriba!</h2>
-        <p id="final-score"></p>
-        <button onclick="location.reload()">Reintentar Examen</button>
+        <div id="question-area"></div>
+
+        <div id="feedback">
+            <p id="f-text"></p>
+            <button class="next-btn" onclick="next()">CONTINUAR ➔</button>
+        </div>
+    </div>
+
+    <div id="results">
+        <h2>RESULTADO FINAL</h2>
+        <div class="score-big" id="final-mark">0</div>
+        <p id="rank-msg"></p>
+        <button class="next-btn" onclick="location.reload()">REPETIR EXAMEN</button>
     </div>
 </div>
 
 <script>
-const quizData = [
-    {
-        q: "Mesopotamia significa 'tierra entre dos ríos'. ¿Cuáles son?",
-        a: ["Nilo y Jordán", "Tigris y Éufrates", "Indo y Ganges"],
-        c: 1,
-        e: "Correcto. Los ríos Tigris y Éufrates nacen en Armenia y desembocan en el Golfo Pérsico."
-    },
-    {
-        q: "¿En qué etapa de la historia situamos a Mesopotamia?",
-        a: ["Prehistoria", "Edad Media", "Edad Antigua"],
-        c: 2,
-        e: "La Edad Antigua comienza con la invención de la escritura en Mesopotamia (3500 a.C.)."
-    },
-    {
-        q: "Verdadero o Falso: ¿La escritura mesopotámica se llama 'Jeroglífica'?",
-        a: ["Verdadero", "Falso"],
-        c: 1,
-        e: "Falso. Se llama escritura cuneiforme porque se hacía con una caña en forma de cuña."
-    },
-    {
-        q: "¿Cuál era la base de la economía mesopotámica?",
-        a: ["La minería de oro", "La agricultura y ganadería", "El turismo"],
-        c: 1,
-        e: "Aprovechaban las crecidas de los ríos para cultivar cereales y hortalizas."
-    },
-    {
-        q: "¿Qué nombre recibía el templo en forma de torre escalonada?",
-        a: ["Pirámide", "Zigurat", "Partenón"],
-        c: 1,
-        e: "El Zigurat era el centro religioso, económico y observatorio astronómico."
-    },
-    {
-        q: "¿Quiénes eran los únicos que sabían leer y escribir en esa época?",
-        a: ["Los campesinos", "Los esclavos", "Los escribas"],
-        c: 2,
-        e: "Los escribas eran funcionarios muy poderosos que controlaban los impuestos y el grano."
-    },
-    {
-        q: "¿Cómo era la religión en Mesopotamia?",
-        a: ["Monoteísta (un solo dios)", "Politeísta (muchos dioses)", "No tenían religión"],
-        c: 1,
-        e: "Eran politeístas. Cada ciudad tenía su propio dios protector como Marduk o Ishtar."
-    },
-    {
-        q: "¿Cuál fue el primer pueblo que se asentó en Mesopotamia?",
-        a: ["Sumerios", "Asirios", "Persas"],
-        c: 0,
-        e: "Los Sumerios (3500 a.C.) fundaron las primeras ciudades-estado como Ur y Uruk."
-    },
-    {
-        q: "Verdadero o Falso: ¿El Rey mesopotámico era considerado un Dios?",
-        a: ["Verdadero", "Falso"],
-        c: 1,
-        e: "Falso. A diferencia de Egipto, el rey era el representante de los dioses, pero no un dios en sí."
-    },
-    {
-        q: "¿Qué gran imperio mesopotámico era conocido por su crueldad y poder militar?",
-        a: ["Imperio Babilónico", "Imperio Asirio", "Imperio Acadio"],
-        c: 1,
-        e: "Los asirios dominaron toda la región gracias a su potente ejército y armas de hierro."
-    },
-    {
-        q: "¿Qué invento mesopotámico facilitó el transporte y el comercio?",
-        a: ["El motor", "La rueda", "El avión"],
-        c: 1,
-        e: "La rueda (3500 a.C.) es uno de los mayores legados de esta civilización."
-    },
-    {
-        q: "¿Por qué las ciudades estaban rodeadas de murallas?",
-        a: ["Para decorar", "Para evitar inundaciones", "Por las guerras frecuentes entre ciudades"],
-        c: 2,
-        e: "Las ciudades-estado solían luchar por el control de la tierra y el agua."
-    },
-    {
-        q: "¿De qué material estaban construidos los edificios?",
-        a: ["Piedra de mármol", "Madera de pino", "Ladrillo de adobe"],
-        c: 2,
-        e: "Como no tenían piedra en el valle, usaban barro mezclado con paja (adobe)."
-    },
-    {
-        q: "¿Qué sistema matemático usaban para medir el tiempo?",
-        a: ["Decimal (base 10)", "Sexagesimal (base 60)", "Binario"],
-        c: 1,
-        e: "De ellos heredamos la división del tiempo en 60 minutos y los círculos en 360 grados."
-    },
-    {
-        q: "¿Cómo se llamaba la zona fértil que unía Mesopotamia con Egipto?",
-        a: ["Creciente Fértil", "Desierto de Arabia", "Ruta de la Seda"],
-        c: 0,
-        e: "Se le llama Creciente Fértil por su forma de luna creciente y su riqueza agrícola."
-    },
-    {
-        q: "¿Cuál era la capa social más baja?",
-        a: ["Artesanos", "Esclavos", "Escribas"],
-        c: 1,
-        e: "Los esclavos eran prisioneros de guerra o personas con deudas."
-    },
-    {
-        q: "Verdadero o Falso: ¿Los mesopotámicos inventaron la moneda tal como la conocemos hoy?",
-        a: ["Verdadero", "Falso"],
-        c: 1,
-        e: "Falso. Usaban el trueque o lingotes de metal, pero las monedas aparecieron más tarde."
-    },
-    {
-        q: "¿Qué arco inventaron para su arquitectura?",
-        a: ["Arco de medio punto", "Arco apuntado", "Arco de herradura"],
-        c: 0,
-        e: "El arco de medio punto y la bóveda son grandes aportaciones mesopotámicas."
-    },
-    {
-        q: "¿Quién unificó las ciudades sumerias creando el primer gran imperio?",
-        a: ["Hammurabi", "Sargón I", "Nabucodonosor"],
-        c: 1,
-        e: "Sargón de Acad creó el primer imperio de la historia unificando Mesopotamia."
-    },
-    {
-        q: "¿Por qué es importante el Código de Hammurabi?",
-        a: ["Es el primer libro de cocina", "Es el primer conjunto de leyes escritas", "Es un mapa estelar"],
-        c: 1,
-        e: "Fijó las leyes por escrito para que todos las conocieran, famoso por la 'Ley del Talión'."
+    const bank = [
+        { q: "¿Qué significa la palabra 'Mesopotamia'?", opts: ["Tierra de reyes", "Tierra entre ríos", "Tierra fértil", "Tierra de desiertos"], ans: 1, info: "Significa 'tierra entre ríos' porque se situaba entre el Tigris y el Éufrates." },
+        { q: "¿Qué invento marca el inicio de la Historia en Mesopotamia?", opts: ["La rueda", "El arado", "La escritura cuneiforme", "La moneda"], ans: 2, info: "La escritura cuneiforme (aprox. 3300 a.C.) marca el paso a la Historia." },
+        { q: "[RAZONAMIENTO] Si un campesino necesitaba regar sus tierras lejos del río, ¿qué construcción utilizaba?", opts: ["Zigurats", "Diques y canales", "Murallas", "Palacios"], ans: 1, info: "Los canales permitían llevar el agua de los ríos a zonas más alejadas." },
+        { q: "¿Cómo se llama el templo mesopotámico en forma de pirámide escalonada?", opts: ["Pirámide", "Mastaba", "Zigurat", "Partenón"], ans: 2, info: "El zigurat era el centro religioso y económico de la ciudad." },
+        { q: "El Código de Hammurabi es famoso por contener la ley de:", opts: ["La hospitalidad", "El Talión (ojo por ojo)", "La democracia", "El perdón"], ans: 1, info: "Establecía castigos iguales al daño causado (Ley del Talión)." },
+        { q: "[RAZONAMIENTO] ¿Por qué los escribas eran tan importantes en la sociedad?", opts: ["Porque eran los guerreros más fuertes", "Porque eran los únicos que sabían escribir y leer", "Porque cultivaban la tierra", "Porque eran los reyes"], ans: 1, info: "Al saber escribir, controlaban la administración y la contabilidad del templo." },
+        { q: "Verdadero o Falso: Los mesopotámicos eran monoteístas.", opts: ["Verdadero", "Falso"], ans: 1, info: "Eran politeístas, lo que significa que adoraban a muchos dioses." },
+        { q: "¿Cuál de estos ríos bañaba las tierras de Mesopotamia?", opts: ["Nilo", "Éufrates", "Tíber", "Ganges"], ans: 1, info: "Mesopotamia creció gracias a los ríos Tigris y Éufrates." },
+        { q: "[RAZONAMIENTO] ¿Para qué se utilizaba principalmente la escritura al principio?", opts: ["Para escribir poemas", "Para registrar impuestos y mercancías", "Para enviar cartas de amor", "Para hacer mapas"], ans: 1, info: "Surgió por una necesidad económica de llevar cuentas en los templos." },
+        { q: "El grupo social que NO tenía libertad se llamaba:", opts: ["Hombres libres", "Sacerdotes", "Esclavos", "Escribas"], ans: 2, info: "Los esclavos solían ser prisioneros de guerra o personas con deudas." },
+        { q: "El material de construcción más usado en Mesopotamia era:", opts: ["Piedra de mármol", "Madera", "Adobe (barro y paja)", "Acero"], ans: 2, info: "Al no haber piedra, usaban barro secado al sol para hacer ladrillos." },
+        { q: "Verdadero o Falso: La rueda fue uno de los grandes inventos mesopotámicos.", opts: ["Verdadero", "Falso"], ans: 0, info: "La rueda mejoró el transporte y la alfarería." },
+        { q: "[RAZONAMIENTO] ¿Cuál era la función principal del Rey?", opts: ["Solo rezar", "Jefe militar, juez y representante de los dioses", "Limpiar la ciudad", "Escribir libros"], ans: 1, info: "Tenía el poder absoluto: político, militar y religioso." },
+        { q: "Las ciudades-estado en Mesopotamia eran:", opts: ["Ciudades que dependían de un país lejano", "Ciudades independientes con su propio gobierno", "Ciudades solo de agricultores", "Barrios de una gran capital"], ans: 1, info: "Cada ciudad era como un pequeño estado independiente." },
+        { q: "El estandarte de Ur es una obra de arte que nos enseña:", opts: ["Escenas de guerra y paz", "Cómo hacer pan", "Mapas de ríos", "Nombres de dioses"], ans: 0, info: "Muestra la organización social y militar de los sumerios." },
+        { q: "Verdadero o Falso: La mayoría de la población eran campesinos.", opts: ["Verdadero", "Falso"], ans: 0, info: "La base de la economía y la mayoría de la población era la agricultura." },
+        { q: "El torno de alfarero permitió fabricar:", opts: ["Carros de guerra", "Cerámica de forma más rápida", "Armas de hierro", "Barcos de vela"], ans: 1, info: "Revolucionó la creación de recipientes de barro." },
+        { q: "[RAZONAMIENTO] ¿Qué permitía el excedente agrícola?", opts: ["Que todos murieran de hambre", "El desarrollo del comercio y nuevos oficios", "Que no hubiera reyes", "Que los ríos se secaran"], ans: 1, info: "Al sobrar comida, algunas personas pudieron dedicarse a ser artesanos o escribas." },
+        { q: "La escritura cuneiforme se realizaba sobre:", opts: ["Papel", "Tablillas de arcilla húmeda", "Paredes de mármol", "Pieles de animales"], ans: 1, info: "Se usaba un punzón sobre barro que luego se dejaba secar." },
+        { q: "¿En qué zona se situaba Mesopotamia?", opts: ["Creciente Fértil", "Valle del Nilo", "Extremo Oriente", "Europa Central"], ans: 0, info: "Formaba parte del Creciente Fértil por sus tierras ricas para el cultivo." }
+    ];
+
+    let selectedQuestions = [];
+    let current = 0;
+    let score = 0;
+    const totalExamen = 20;
+
+    function shuffle() {
+        selectedQuestions = bank.sort(() => 0.5 - Math.random()).slice(0, totalExamen);
     }
-];
 
-let currentIdx = 0;
-let score = 0;
+    function render() {
+        const data = selectedQuestions[current];
+        const area = document.getElementById('question-area');
+        document.getElementById('q-txt').innerText = `Pregunta: ${current + 1} / ${totalExamen}`;
+        document.getElementById('fill').style.width = `${(current / totalExamen) * 100}%`;
+        document.getElementById('feedback').style.display = 'none';
 
-function loadQuestion() {
-    const q = quizData[currentIdx];
-    const quizDiv = document.getElementById('quiz');
-    const progress = (currentIdx / quizData.length) * 100;
-    document.getElementById('progress').style.width = progress + "%";
+        let qTitle = data.q.includes('[RAZONAMIENTO]') 
+            ? `<span class="razonamiento-tag">RAZONAMIENTO</span>` + data.q.replace('[RAZONAMIENTO]', '')
+            : data.q;
 
-    quizDiv.innerHTML = `
-        <div class="question active">
-            <h3>${currentIdx + 1}. ${q.q}</h3>
-            <ul class="options">
-                ${q.a.map((opt, i) => `<li><button onclick="checkAnswer(${i})">${opt}</button></li>`).join('')}
-            </ul>
-            <div id="feedback" class="feedback"></div>
-            <button id="next-btn" style="display:none; margin-top:10px;" onclick="nextQuestion()">Siguiente Pregunta</button>
-        </div>
-    `;
-}
-
-function checkAnswer(selected) {
-    const q = quizData[currentIdx];
-    const feedback = document.getElementById('feedback');
-    const nextBtn = document.getElementById('next-btn');
-    
-    feedback.style.display = "block";
-    if (selected === q.c) {
-        score++;
-        feedback.innerHTML = "<strong>✅ ¡Correcto!</strong> " + q.e;
-        feedback.className = "feedback correct";
-    } else {
-        feedback.innerHTML = "<strong>❌ ¡Incorrecto!</strong> " + q.e;
-        feedback.className = "feedback incorrect";
+        area.innerHTML = `<div class="question-box">${qTitle}</div><div class="options" id="opts"></div>`;
+        
+        data.opts.forEach((o, i) => {
+            const b = document.createElement('button');
+            b.className = 'btn';
+            b.innerText = o;
+            b.onclick = () => check(i);
+            document.getElementById('opts').appendChild(b);
+        });
     }
-    nextBtn.style.display = "block";
-}
 
-function nextQuestion() {
-    currentIdx++;
-    if (currentIdx < quizData.length) {
-        loadQuestion();
-    } else {
-        showResults();
+    function check(idx) {
+        const data = selectedQuestions[current];
+        const f = document.getElementById('feedback');
+        const ft = document.getElementById('f-text');
+        const btns = document.querySelectorAll('.btn');
+        btns.forEach(b => b.disabled = true);
+
+        if(idx === data.ans) {
+            score += (10 / totalExamen);
+            f.className = 'correct';
+            ft.innerHTML = `<b>¡CORRECTO!</b><br>${data.info}`;
+        } else {
+            f.className = 'wrong';
+            ft.innerHTML = `<b>INCORRECTO</b><br>La respuesta correcta era: ${data.opts[data.ans]}<br>${data.info}`;
+        }
+        f.style.display = 'block';
+        document.getElementById('s-txt').innerText = `Nota: ${score.toFixed(1)}`;
     }
-}
 
-function showResults() {
-    document.getElementById('quiz').style.display = "none";
-    document.getElementById('progress').style.width = "100%";
-    const container = document.getElementById('score-container');
-    container.style.display = "block";
-    document.getElementById('final-score').innerHTML = `Has obtenido <strong>${score} de ${quizData.length}</strong> puntos.<br>` + 
-        (score > 15 ? "🏆 ¡Eres un Gran Visir de Babilonia!" : "📜 ¡Sigue estudiando, aprendiz de escriba!");
-}
+    function next() {
+        current++;
+        if(current < totalExamen) render();
+        else {
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            let final = score.toFixed(1);
+            document.getElementById('final-mark').innerText = final;
+            document.getElementById('rank-msg').innerText = final >= 5 ? "¡Excelente! Has demostrado ser un experto en Mesopotamia." : "Debes repasar los conceptos de esta civilización.";
+        }
+    }
 
-loadQuestion();
+    shuffle();
+    render();
 </script>
-
 </body>
 </html>

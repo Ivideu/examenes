@@ -1,314 +1,195 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>History Challenge: La Prehistoria</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXAMEN HISTORIA 1º ESO - LA PREHISTORIA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2f3640;
+            --secondary: #e67e22; /* Color arcilla para Prehistoria */
+            --accent: #f1c40f;
+            --success: #44bd32;
+            --error: #c23616;
+            --bg: #f5f6fa;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+        body {
+            background: var(--bg);
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
 
-<style>
-body{
-    margin:0;
-    font-family:'Inter',sans-serif;
-    background:#f2f4f7;
-}
+        #game-container {
+            width: 100%;
+            max-width: 850px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-top: 10px solid var(--secondary);
+        }
 
-.container{
-    max-width:900px;
-    margin:auto;
-    padding:20px;
-}
+        .header { text-align: center; margin-bottom: 20px; }
+        .stats { display: flex; justify-content: space-between; font-weight: 800; color: var(--secondary); margin-bottom: 10px; }
+        
+        .progress-bar { height: 12px; background: #dcdde1; border-radius: 6px; overflow: hidden; margin-bottom: 30px; }
+        #fill { height: 100%; width: 0%; background: var(--secondary); transition: 0.3s; }
 
-.title{
-    text-align:center;
-    font-family:'Orbitron',sans-serif;
-    color:#4a86e8;
-    font-size:24px;
-}
+        .question-box { font-size: 1.3rem; font-weight: 800; margin-bottom: 25px; color: var(--primary); }
+        .razonamiento-tag { background: var(--accent); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; vertical-align: middle; margin-right: 10px; }
 
-.top{
-    display:flex;
-    justify-content:space-between;
-    margin:10px 0;
-    font-weight:600;
-    font-size:14px;
-}
+        .options { display: grid; gap: 12px; }
+        .btn {
+            background: white; border: 2px solid #dcdde1; padding: 15px;
+            border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: 600;
+            transition: 0.2s; text-align: left;
+        }
+        .btn:hover:not(:disabled) { border-color: var(--secondary); background: #f1f2f6; }
 
-.progress{
-    height:6px;
-    background:#ddd;
-    border-radius:5px;
-    overflow:hidden;
-}
+        #feedback {
+            display: none; margin-top: 25px; padding: 20px; border-radius: 10px;
+            text-align: center; animation: slideIn 0.4s ease;
+        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } }
+        .correct { background: #dff9fb; color: var(--success); border: 2px solid var(--success); }
+        .wrong { background: #fab1a0; color: var(--error); border: 2px solid var(--error); }
 
-.progress-bar{
-    height:100%;
-    width:0%;
-    background:#ff4d6d;
-    transition:0.3s;
-}
+        .next-btn {
+            margin-top: 15px; background: var(--secondary); color: white;
+            border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer;
+            font-weight: 800; font-family: 'Montserrat';
+        }
 
-.question{
-    margin-top:20px;
-    font-size:18px;
-    font-weight:600;
-}
-
-.option{
-    background:#f5f7fa;
-    padding:12px;
-    border-radius:10px;
-    margin:8px 0;
-    cursor:pointer;
-    border:2px solid transparent;
-}
-
-.option:hover{border-color:#4a86e8;}
-
-.correct{background:#d4edda;border-color:#28a745;}
-.incorrect{background:#f8d7da;border-color:#dc3545;}
-
-button{
-    margin-top:10px;
-    padding:8px 16px;
-    border:none;
-    border-radius:8px;
-    background:#4a86e8;
-    color:white;
-}
-
-.match-container{
-    display:flex;
-    flex-wrap:wrap;
-    gap:20px;
-}
-
-.column{
-    flex:1;
-    min-width:120px;
-}
-
-.draggable{
-    padding:8px;
-    background:#e8f0ff;
-    margin:5px 0;
-    border-radius:8px;
-    cursor:grab;
-}
-
-.dropzone{
-    padding:8px;
-    border:2px dashed #ccc;
-    margin:5px 0;
-    border-radius:8px;
-    min-height:30px;
-}
-
-@media(max-width:600px){
-    .match-container{flex-direction:column;}
-}
-</style>
+        #results { display: none; text-align: center; }
+        .score-big { font-size: 5rem; color: var(--secondary); font-weight: 800; }
+        .btn-back { background: #34495e; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; float: left; font-weight: bold; transition: 0.3s; margin-bottom: 10px; }
+        .btn-back:hover { background: #2c3e50; transform: translateX(-3px); }
+    </style>
 </head>
 <body>
 
-<div class="container">
+<div id="game-container">
+    <div id="quiz">
+        <div class="header">
+            <button onclick="window.history.back()" class="btn-back">⬅ VOLVER</button>
+            <h1>TEMA 5: LA PREHISTORIA</h1>
+            <div class="stats">
+                <span id="q-txt">Pregunta: 1 / 20</span>
+                <span id="s-txt">Nota: 0.0</span>
+            </div>
+            <div class="progress-bar"><div id="fill"></div></div>
+        </div>
 
-<div class="title">HISTORY CHALLENGE: LA PREHISTORIA</div>
+        <div id="question-area"></div>
 
-<div class="top">
-<div id="counter">Pregunta 1/20</div>
-<div id="score">Puntos: 0</div>
-</div>
+        <div id="feedback">
+            <p id="f-text"></p>
+            <button class="next-btn" onclick="next()">CONTINUAR ➔</button>
+        </div>
+    </div>
 
-<div class="progress">
-<div class="progress-bar" id="bar"></div>
-</div>
-
-<div id="quiz"></div>
-<div id="feedback"></div>
-
+    <div id="results">
+        <h2>RESULTADO FINAL</h2>
+        <div class="score-big" id="final-mark">0</div>
+        <p id="rank-msg"></p>
+        <button class="next-btn" onclick="location.reload()">REPETIR EXAMEN</button>
+    </div>
 </div>
 
 <script>
+    const bank = [
+        { q: "¿Qué invento marca la separación entre la Prehistoria y la Historia?", opts: ["La rueda", "El fuego", "La escritura", "La agricultura"], ans: 2, info: "La escritura apareció hacia el 3300 a.C. y separa ambas etapas." },
+        { q: "La Prehistoria se divide según dos criterios: materiales y...", opts: ["Idioma hablado", "Religión", "Organización socioeconómica", "Clima"], ans: 2, info: "Se divide por el material de los instrumentos y el modo de vida." },
+        { q: "[RAZONAMIENTO] Si un historiador estudia un hueso de hace 2 millones de años, ¿qué tipo de fuente es?", opts: ["Fuente primaria no escrita", "Fuente secundaria", "Fuente primaria escrita", "No es una fuente"], ans: 0, info: "Es primaria porque es contemporánea a los hechos (de la misma época)." },
+        { q: "La teoría que defiende que las especies no han cambiado desde su creación es:", opts: ["Evolucionismo", "Darwinismo", "Fijismo", "Hominización"], ans: 2, info: "El fijismo sostiene que las especies se mantienen igual que cuando fueron creadas." },
+        { q: "Verdadero o Falso: Charles Darwin planteó que la evolución ocurre por selección natural.", opts: ["Verdadero", "Falso"], ans: 0, info: "Darwin publicó esta teoría en su obra 'El origen de las especies' en 1859." },
+        { q: "¿En qué continente aparecieron los primeros homininos?", opts: ["Europa", "Asia", "América", "África"], ans: 3, info: "África es considerada la 'cuna de la humanidad'." },
+        { q: "[RAZONAMIENTO] ¿Qué ventaja principal aportó el bipedismo?", opts: ["Poder nadar mejor", "Liberar las manos para tareas y ampliar la visión", "Tener más fuerza", "Cazar animales más grandes"], ans: 1, info: "Caminar erguido permitió usar las manos para herramientas y vigilar el entorno." },
+        { q: "¿Qué característica favoreció la elaboración de herramientas de gran precisión?", opts: ["El bipedismo", "El pulgar oponible", "El lenguaje", "La dieta carnívora"], ans: 1, info: "El pulgar oponible funciona como una pinza de gran precisión." },
+        { q: "El incremento del tamaño del cerebro en los homininos posibilitó:", opts: ["Correr más rápido", "El desarrollo del lenguaje", "Vivir más años", "La aparición del pelo"], ans: 1, info: "El aumento de la complejidad cerebral permitió comunicarse mediante el lenguaje." },
+        { q: "Verdadero o Falso: Los primeros homininos aparecieron hace unos 4,4 millones de años.", opts: ["Verdadero", "Falso"], ans: 0, info: "La Prehistoria comienza con la aparición de los primeros humanos hace 4,4 m.a." },
+        { q: "Una fuente secundaria es aquella que es...", opts: ["Escrita a mano", "Posterior a los hechos", "De la misma época", "Un objeto de piedra"], ans: 1, info: "Ejemplos son los libros de historia o documentales hechos después." },
+        { q: "[RAZONAMIENTO] En la selección natural, ¿quiénes sobreviven?", opts: ["Los más fuertes", "Los más rápidos", "Los que mejor se adaptan al medio", "Los más grandes"], ans: 2, info: "Sobreviven quienes tienen características ventajosas para su entorno." },
+        { q: "La teoría que afirma que el hombre fue obra directa de Dios es:", opts: ["Evolucionismo", "Creacionismo", "Selección natural", "Darwinismo"], ans: 1, info: "El creacionismo se basa en la Biblia y fue la teoría predominante hasta el siglo XIX." },
+        { q: "Verdadero o Falso: Los humanos y los chimpancés tuvieron un antepasado común hace 7 millones de años.", opts: ["Verdadero", "Falso"], ans: 0, info: "En esa fecha se produjo la separación entre ambos linajes." },
+        { q: "¿Qué característica define al Paleolítico en cuanto al modo de vida?", opts: ["Eran sedentarios", "Eran agricultores", "Eran nómadas y cazadores-recolectores", "Usaban metales"], ans: 2, info: "Durante el Paleolítico los humanos se desplazaban para buscar alimento." },
+        { q: "[RAZONAMIENTO] ¿Por qué la evolución es un proceso gradual?", opts: ["Porque ocurre en un día", "Porque los cambios se acumulan generación tras generación", "Porque es mágica", "No es gradual"], ans: 1, info: "Las variaciones ventajosas se transmiten y acumulan a lo largo de millones de años." },
+        { q: "El Neolítico se diferencia del Paleolítico porque los humanos se volvieron:", opts: ["Cazadores", "Nómadas", "Sedentarios y agricultores", "Artistas"], ans: 2, info: "En el Neolítico aparece la agricultura y los poblados estables." },
+        { q: "La capacidad craneal de un hominino de hace 2 millones de años era de aproximadamente:", opts: ["400 cc", "600-850 cc", "1400 cc", "2000 cc"], ans: 1, info: "El tamaño del cerebro fue aumentando progresivamente desde los 600 cc." },
+        { q: "Verdadero o Falso: El libro de Darwin 'El origen de las especies' no causó polémica.", opts: ["Falso", "Verdadero"], ans: 0, info: "Causó una gran controversia al poner en duda el creacionismo religioso." },
+        { q: "¿Qué es la Historia según tus apuntes?", opts: ["Un cuento antiguo", "La ciencia que estudia la evolución humana hasta hoy", "El estudio de los dinosaurios", "Solo el estudio de las guerras"], ans: 1, info: "Es la ciencia que estudia el pasado de la humanidad desde sus orígenes." }
+    ];
 
-// ===== BANCO COMPLETO =====
+    let current = 0;
+    let score = 0;
+    let selectedQuestions = [];
+    const totalQ = 20;
 
-const questionBank = [
+    function init() {
+        // Mezclar el banco y elegir 20 preguntas cada vez
+        selectedQuestions = bank.sort(() => 0.5 - Math.random()).slice(0, totalQ);
+        render();
+    }
 
-{
-type:"multiple",
-q:"¿Qué cambio provocó la agricultura en el Neolítico?",
-o:["Nomadismo","Sedentarismo","Desaparición del comercio"],
-a:1,
-e:"La agricultura permitió asentarse y crear aldeas."
-},
+    function render() {
+        const data = selectedQuestions[current];
+        const area = document.getElementById('question-area');
+        document.getElementById('q-txt').innerText = `Pregunta: ${current + 1} / ${totalQ}`;
+        document.getElementById('fill').style.width = `${(current / totalQ) * 100}%`;
+        document.getElementById('feedback').style.display = 'none';
 
-{
-type:"truefalse",
-q:"En el Paleolítico la economía era productora.",
-a:false,
-e:"Era depredadora (caza y recolección)."
-},
+        let qTitle = data.q.includes('[RAZONAMIENTO]') 
+            ? `<span class="razonamiento-tag">RAZONAMIENTO</span>` + data.q.replace('[RAZONAMIENTO]', '')
+            : data.q;
 
-{
-type:"reasoning",
-q:"¿Por qué el dominio del fuego fue tan importante?",
-keywords:["calor","defensa","cocinar"],
-e:"Permitió cocinar, calentarse y protegerse."
-},
+        area.innerHTML = `<div class="question-box">${qTitle}</div><div class="options" id="opts"></div>`;
+        
+        data.opts.forEach((o, i) => {
+            const b = document.createElement('button');
+            b.className = 'btn';
+            b.innerText = o;
+            b.onclick = () => check(i);
+            document.getElementById('opts').appendChild(b);
+        });
+    }
 
-{
-type:"match",
-q:"Relaciona cada etapa con su característica",
-pairs:{
-"Paleolítico":"Nomadismo",
-"Neolítico":"Agricultura",
-"Edad de los Metales":"Metalurgia"
-},
-e:"Cada etapa tiene una característica principal."
-},
+    function check(idx) {
+        const data = selectedQuestions[current];
+        const f = document.getElementById('feedback');
+        const ft = document.getElementById('f-text');
+        const btns = document.querySelectorAll('.btn');
+        btns.forEach(b => b.disabled = true);
 
-{
-type:"multiple",
-q:"Primer metal utilizado por el ser humano",
-o:["Hierro","Cobre","Bronce"],
-a:1,
-e:"El cobre fue el primer metal."
-},
+        if(idx === data.ans) {
+            score += (10 / totalQ);
+            f.className = 'correct';
+            ft.innerHTML = `<b>¡CORRECTO!</b><br>${data.info}`;
+        } else {
+            f.className = 'wrong';
+            ft.innerHTML = `<b>INCORRECTO</b><br>La respuesta correcta era: ${data.opts[data.ans]}<br>${data.info}`;
+        }
+        f.style.display = 'block';
+        document.getElementById('s-txt').innerText = `Nota: ${score.toFixed(1)}`;
+    }
 
-{
-type:"truefalse",
-q:"El arte rupestre se realizaba en cuevas.",
-a:true,
-e:"Las pinturas rupestres están en cuevas."
-}
+    function next() {
+        current++;
+        if(current < totalQ) render();
+        else {
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            let final = score.toFixed(1);
+            document.getElementById('final-mark').innerText = final;
+            document.getElementById('rank-msg').innerText = final >= 5 ? "¡Enhorabuena! Has superado el reto de la Prehistoria." : "Repasa los apuntes sobre hominización y fuentes históricas.";
+        }
+    }
 
-];
-
-// duplicar variedad hasta 80
-while(questionBank.length < 80){
-    questionBank.push(...questionBank.slice(0,6));
-}
-
-// ===== LÓGICA =====
-
-function shuffle(arr){ return arr.sort(()=>Math.random()-0.5); }
-
-let questions = shuffle(questionBank).slice(0,20);
-let current=0;
-let score=0;
-
-function loadQuestion(){
-
-document.getElementById("feedback").innerHTML="";
-document.getElementById("counter").innerHTML=`Pregunta ${current+1}/20`;
-document.getElementById("score").innerHTML=`Puntos: ${score}`;
-document.getElementById("bar").style.width=((current)/20)*100+"%";
-
-let q=questions[current];
-let html=`<div class="question">${q.q}</div>`;
-
-if(q.type==="multiple"){
-    q.o.forEach((opt,i)=>{
-        html+=`<div class="option" onclick="check(${i})">${opt}</div>`;
-    });
-}
-
-if(q.type==="truefalse"){
-    html+=`<div class="option" onclick="check(true)">Verdadero</div>
-           <div class="option" onclick="check(false)">Falso</div>`;
-}
-
-if(q.type==="reasoning"){
-    html+=`<textarea id="textAnswer" style="width:100%;margin-top:10px;"></textarea>
-           <button onclick="checkText()">Responder</button>`;
-}
-
-if(q.type==="match"){
-    html+=`<div class="match-container">
-    <div class="column">`;
-
-    Object.keys(q.pairs).forEach(k=>{
-        html+=`<div>${k}</div>`;
-    });
-
-    html+=`</div><div class="column">`;
-
-    let values=shuffle(Object.values(q.pairs));
-    values.forEach(v=>{
-        html+=`<div class="draggable" draggable="true">${v}</div>`;
-    });
-
-    html+=`</div></div>
-    <button onclick="checkMatch()">Comprobar</button>`;
-}
-
-document.getElementById("quiz").innerHTML=html;
-
-}
-
-function check(i){
-let q=questions[current];
-let correct=false;
-
-if(q.type==="multiple") correct=(i===q.a);
-if(q.type==="truefalse") correct=(i===q.a);
-
-if(correct) score++;
-
-showFeedback(correct,q.e);
-}
-
-function checkText(){
-let q=questions[current];
-let text=document.getElementById("textAnswer").value.toLowerCase();
-let count=0;
-q.keywords.forEach(k=>{
-    if(text.includes(k)) count++;
-});
-let correct=count>=1;
-if(correct) score++;
-showFeedback(correct,q.e);
-}
-
-function checkMatch(){
-let q=questions[current];
-score++;
-showFeedback(true,q.e);
-}
-
-function showFeedback(correct,exp){
-document.getElementById("feedback").innerHTML=
-(correct?"✔ Correcto<br>":"✘ Incorrecto<br>")+exp+
-`<br><button onclick="next()">Siguiente</button>`;
-}
-
-function next(){
-current++;
-if(current>=20){ finish(); }
-else{ loadQuestion(); }
-}
-
-function finish(){
-document.getElementById("bar").style.width="100%";
-
-let max=localStorage.getItem("maxScore") || 0;
-if(score>max){
-    localStorage.setItem("maxScore",score);
-    max=score;
-}
-
-document.getElementById("quiz").innerHTML=
-`Examen terminado<br>
-Puntuación: ${score}/20<br>
-Nota: ${(score/20*10).toFixed(2)}<br>
-Máxima puntuación: ${max}/20<br>
-<button onclick="location.reload()">Repetir</button>`;
-}
-
-loadQuestion();
-
+    init();
 </script>
 </body>
 </html>

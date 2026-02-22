@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen Infinito: 116 Verbos Irregulares</title>
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --success: #27ae60;
+            --bg: #f0f3f7;
+        }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 20px; color: #2d3436; }
+        .container { max-width: 850px; margin: auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        
+        .btn-back { background: #34495e; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; float: left; font-weight: bold; }
+        .header { text-align: center; clear: both; margin-bottom: 20px; }
+        
+        .btn-main { width: 100%; padding: 15px; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px; transition: 0.3s; }
+        .btn-gen { background: var(--primary); box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3); }
+        .btn-gen:hover { background: #5b4cc4; transform: translateY(-2px); }
+        .btn-check { background: var(--success); display: none; }
+
+        .question-card { padding: 20px; border-radius: 15px; margin-bottom: 20px; border-left: 6px solid var(--primary); animation: fadeIn 0.5s; }
+        
+        /* Colores alternos para las preguntas */
+        .question-card:nth-child(1) { background: #f1f9ff; }
+        .question-card:nth-child(2) { background: #fff9f1; }
+        .question-card:nth-child(3) { background: #f5f1ff; }
+        .question-card:nth-child(4) { background: #f0fff4; }
+        .question-card:nth-child(5) { background: #fff1f1; }
+
+        .options label { display: block; margin: 10px 0; padding: 10px; background: rgba(255,255,255,0.5); border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .options label:hover { background: white; }
+        
+        input[type="text"] { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
+
+        .game-box { background: #2d3436; color: white; padding: 25px; border-radius: 20px; text-align: center; margin-top: 30px; border: 4px solid var(--secondary); }
+        .word-display { font-size: 32px; letter-spacing: 8px; margin: 20px 0; color: #ffeaa7; font-family: monospace; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <button onclick="window.history.back()" class="btn-back">⬅ VOLVER</button>
+    
+    <div class="header">
+        <h1>Super Reto de Verbos Irregulares</h1>
+        <p>Cada vez que pulses el botón, el examen será totalmente distinto.</p>
+        <button class="btn-main btn-gen" onclick="generarExamen()">🎲 GENERAR EXAMEN ALEATORIO</button>
+    </div>
+
+    <div id="examArea"></div>
+
+    <div id="gameArea" class="game-box" style="display:none;">
+        <h3>🎮 JUEGO: EL AHORCADO DEL PASADO</h3>
+        <p id="gameHint" style="color: #a29bfe; font-weight: bold;"></p>
+        <div class="word-display" id="wordGuess"></div>
+        <input type="text" id="letterInput" maxlength="1" style="width: 60px; text-align: center;" placeholder="?">
+        <button class="btn-main" style="background: var(--secondary); width: auto; padding: 10px 20px;" onclick="guessLetter()">Probar Letra</button>
+        <p id="gameStatus"></p>
+    </div>
+
+    <button id="finishBtn" class="btn-main btn-check" onclick="corregir()">FINALIZAR Y VER RESULTADOS</button>
+</div>
+
+<script>
+    const verbosCompletos = [
+        {inf:"be", pas:"was/were", par:"been", esp:"ser / estar"}, {inf:"beat", pas:"beat", par:"beat/beaten", esp:"golpear"}, {inf:"become", pas:"became", par:"become", esp:"llegar a ser"},
+        {inf:"begin", pas:"began", par:"begun", esp:"empezar"}, {inf:"bend", pas:"bent", par:"bent", esp:"doblar"}, {inf:"bet", pas:"bet", par:"bet", esp:"apostar"},
+        {inf:"bite", pas:"bit", par:"bitten", esp:"morder"}, {inf:"bleed", pas:"bled", par:"bled", esp:"sangrar"}, {inf:"blow", pas:"blew", par:"blown", esp:"soplar"},
+        {inf:"break", pas:"broke", par:"broken", esp:"romper"}, {inf:"bring", pas:"brought", par:"brought", esp:"traer"}, {inf:"build", pas:"built", par:"built", esp:"construir"},
+        {inf:"burn", pas:"burned/burnt", par:"burned/burnt", esp:"quemar"}, {inf:"burst", pas:"burst", par:"burst", esp:"estallar"}, {inf:"buy", pas:"bought", par:"bought", esp:"comprar"},
+        {inf:"catch", pas:"caught", par:"caught", esp:"coger"}, {inf:"choose", pas:"chose", par:"chosen", esp:"escoger"}, {inf:"come", pas:"came", par:"come", esp:"venir"},
+        {inf:"cost", pas:"cost", par:"cost", esp:"costar"}, {inf:"cut", pas:"cut", par:"cut", esp:"cortar"}, {inf:"deal", pas:"dealt", par:"dealt", esp:"tratar"},
+        {inf:"dig", pas:"dug", par:"dug", esp:"cavar"}, {inf:"do", pas:"did", par:"done", esp:"hacer"}, {inf:"draw", pas:"drew", par:"drawn", esp:"dibujar"},
+        {inf:"dream", pas:"dreamed/dreamt", par:"dreamed/dreamt", esp:"soñar"}, {inf:"drink", pas:"drank", par:"drunk", esp:"beber"}, {inf:"drive", pas:"drove", par:"driven", esp:"conducir"},
+        {inf:"eat", pas:"ate", par:"eaten", esp:"comer"}, {inf:"fall", pas:"fell", par:"fallen", esp:"caer"}, {inf:"feed", pas:"fed", par:"fed", esp:"alimentar"},
+        {inf:"feel", pas:"felt", par:"felt", esp:"sentir"}, {inf:"fight", pas:"fought", par:"fought", esp:"pelear"}, {inf:"find", pas:"found", par:"found", esp:"encontrar"},
+        {inf:"fly", pas:"flew", par:"flown", esp:"volar"}, {inf:"forget", pas:"forgot", par:"forgotten", esp:"olvidar"}, {inf:"forgive", pas:"forgave", par:"forgiven", esp:"perdonar"},
+        {inf:"freeze", pas:"froze", par:"frozen", esp:"congelar"}, {inf:"get", pas:"got", par:"got/gotten", esp:"conseguir"}, {inf:"give", pas:"gave", par:"given", esp:"dar"},
+        {inf:"go", pas:"went", par:"gone", esp:"ir"}, {inf:"grow", pas:"grew", par:"grown", esp:"crecer"}, {inf:"have", pas:"had", par:"had", esp:"tener"},
+        {inf:"hear", pas:"heard", par:"heard", esp:"oír"}, {inf:"hide", pas:"hid", par:"hidden", esp:"esconder"}, {inf:"hit", pas:"hit", par:"hit", esp:"golpear"},
+        {inf:"hold", pas:"held", par:"held", esp:"sujetar"}, {inf:"hurt", pas:"hurt", par:"hurt", esp:"herir"}, {inf:"keep", pas:"kept", par:"kept", esp:"mantener"},
+        {inf:"know", pas:"knew", par:"known", esp:"saber"}, {inf:"learn", pas:"learned/learnt", par:"learned/learnt", esp:"aprender"}, {inf:"leave", pas:"left", par:"left", esp:"dejar"},
+        {inf:"lend", pas:"lent", par:"lent", esp:"prestar"}, {inf:"let", pas:"let", par:"let", esp:"permitir"}, {inf:"lie", pas:"lay", par:"lain", esp:"tumbarse"},
+        {inf:"light", pas:"lit", par:"lit", esp:"encender"}, {inf:"lose", pas:"lost", par:"lost", esp:"perder"}, {inf:"make", pas:"made", par:"made", esp:"hacer"},
+        {inf:"mean", pas:"meant", par:"meant", esp:"significar"}, {inf:"meet", pas:"met", par:"met", esp:"conocer"}, {inf:"pay", pas:"paid", par:"paid", esp:"pagar"},
+        {inf:"put", pas:"put", par:"put", esp:"poner"}, {inf:"read", pas:"read", par:"read", esp:"leer"}, {inf:"ride", pas:"rode", par:"ridden", esp:"montar"},
+        {inf:"ring", pas:"rang", par:"rung", esp:"sonar"}, {inf:"rise", pas:"rose", par:"risen", esp:"subir"}, {inf:"run", pas:"ran", par:"run", esp:"correr"},
+        {inf:"say", pas:"said", par:"said", esp:"decir"}, {inf:"see", pas:"saw", par:"seen", esp:"ver"}, {inf:"sell", pas:"sold", par:"sold", esp:"vender"},
+        {inf:"send", pas:"sent", par:"sent", esp:"enviar"}, {inf:"set", pas:"set", par:"set", esp:"poner"}, {inf:"shake", pas:"shook", par:"shaken", esp:"sacudir"},
+        {inf:"shine", pas:"shone", par:"shone", esp:"brillar"}, {inf:"shoot", pas:"shot", par:"shot", esp:"disparar"}, {inf:"show", pas:"showed", par:"shown/showed", esp:"mostrar"},
+        {inf:"shut", pas:"shut", par:"shut", esp:"cerrar"}, {inf:"sing", pas:"sang", par:"sung", esp:"cantar"}, {inf:"sink", pas:"sank", par:"sunk", esp:"hundirse"},
+        {inf:"sit", pas:"sat", par:"sat", esp:"sentarse"}, {inf:"sleep", pas:"slept", par:"slept", esp:"dormir"}, {inf:"speak", pas:"spoke", par:"spoken", esp:"hablar"},
+        {inf:"spend", pas:"spent", par:"spent", esp:"gastar"}, {inf:"stand", pas:"stood", par:"stood", esp:"estar de pie"}, {inf:"steal", pas:"stole", par:"stolen", esp:"robar"},
+        {inf:"stick", pas:"stuck", par:"stuck", esp:"pegar"}, {inf:"swim", pas:"swam", par:"swum", esp:"nadar"}, {inf:"take", pas:"took", par:"taken", esp:"coger"},
+        {inf:"teach", pas:"taught", par:"taught", esp:"enseñar"}, {inf:"tell", pas:"told", par:"told", esp:"decir"}, {inf:"think", pas:"thought", par:"thought", esp:"pensar"},
+        {inf:"throw", pas:"threw", par:"thrown", esp:"lanzar"}, {inf:"understand", pas:"understood", par:"understood", esp:"entender"}, {inf:"wake", pas:"woke", par:"woken", esp:"despertar"},
+        {inf:"wear", pas:"wore", par:"worn", esp:"llevar puesto"}, {inf:"win", pas:"won", par:"won", esp:"ganar"}, {inf:"write", pas:"wrote", par:"written", esp:"escribir"},
+        // ... hasta completar los 116 del PDF
+    ];
+
+    let currentWord = "";
+    let displayWord = [];
+
+    function generarExamen() {
+        const area = document.getElementById('examArea');
+        area.innerHTML = "";
+        const seleccion = [...verbosCompletos].sort(() => 0.5 - Math.random()).slice(0, 5);
+
+        // Pregunta 1: Verdadero o Falso
+        area.innerHTML += `<div class="question-card">
+            <p><strong>1. ¿Es cierto?</strong> El pasado de <b>${seleccion[0].inf}</b> es <b>${seleccion[0].inf}ed</b>.</p>
+            <div class="options">
+                <label><input type="radio" name="q1"> Verdadero</label>
+                <label><input type="radio" name="q1"> Falso (es irregular)</label>
+            </div>
+        </div>`;
+
+        // Pregunta 2: Elección Múltiple
+        area.innerHTML += `<div class="question-card">
+            <p><strong>2. ¿Cuál es el participio (3ª columna) de <b>${seleccion[1].inf}</b>?</strong></p>
+            <div class="options">
+                <label><input type="radio" name="q2"> ${seleccion[1].pas}</label>
+                <label><input type="radio" name="q2"> ${seleccion[1].par}</label>
+                <label><input type="radio" name="q2"> ${seleccion[1].inf}en</label>
+            </div>
+        </div>`;
+
+        // Pregunta 3: Traducción
+        area.innerHTML += `<div class="question-card">
+            <p><strong>3. Escribe el significado en español de <b>${seleccion[2].inf}</b>:</strong></p>
+            <input type="text" placeholder="Respuesta...">
+        </div>`;
+
+        document.getElementById('finishBtn').style.display = "block";
+        iniciarJuego();
+    }
+
+    function iniciarJuego() {
+        document.getElementById('gameArea').style.display = "block";
+        let v = verbosCompletos[Math.floor(Math.random()*verbosCompletos.length)];
+        currentWord = v.pas.toLowerCase().split('/')[0].trim();
+        displayWord = Array(currentWord.length).fill("_");
+        document.getElementById('gameHint').innerText = `Adivina el PASADO de: "${v.inf.toUpperCase()}" (${v.esp})`;
+        document.getElementById('wordGuess').innerText = displayWord.join(" ");
+        document.getElementById('gameStatus').innerText = "";
+    }
+
+    function guessLetter() {
+        let letra = document.getElementById('letterInput').value.toLowerCase();
+        document.getElementById('letterInput').value = "";
+        if(!letra) return;
+
+        for(let i=0; i<currentWord.length; i++) {
+            if(currentWord[i] === letra) displayWord[i] = letra;
+        }
+        document.getElementById('wordGuess').innerText = displayWord.join(" ");
+        
+        if(!displayWord.includes("_")) {
+            document.getElementById('gameStatus').innerText = "¡EXCELENTE! Verbo dominado. 🏆";
+            document.getElementById('gameStatus').style.color = "#55efc4";
+        }
+    }
+
+    function corregir() {
+        alert("¡Examen completado! Comprueba tus respuestas y genera uno nuevo para seguir practicando.");
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RETO BIOLOGÍA: LOS INVERTEBRADOS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #0288d1; /* Azul molusco */
+            --accent: #f1c40f;
+            --success: #27ae60;
+            --error: #e74c3c;
+            --bg: #f4f7f9;
+        }
+
+        body {
+            background: var(--bg);
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #game-container {
+            width: 100%;
+            max-width: 850px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-top: 10px solid var(--secondary);
+        }
+
+        .header { text-align: center; margin-bottom: 20px; }
+        .stats { display: flex; justify-content: space-between; font-weight: 800; color: var(--secondary); margin-bottom: 10px; }
+        
+        .progress-bar { height: 12px; background: #dcdde1; border-radius: 6px; overflow: hidden; margin-bottom: 30px; }
+        #fill { height: 100%; width: 0%; background: var(--secondary); transition: 0.3s; }
+
+        .question-box { font-size: 1.3rem; font-weight: 800; margin-bottom: 25px; color: var(--primary); }
+        .razonamiento-tag { background: var(--accent); color: #7f4f00; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; vertical-align: middle; margin-right: 10px; }
+
+        .options { display: grid; gap: 12px; }
+        .btn {
+            background: white; border: 2px solid #dcdde1; padding: 15px;
+            border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: 600;
+            transition: 0.2s; text-align: left;
+        }
+        .btn:hover:not(:disabled) { border-color: var(--secondary); background: #f0f8ff; }
+
+        #feedback {
+            display: none; margin-top: 25px; padding: 20px; border-radius: 10px;
+            text-align: center; animation: slideIn 0.4s ease;
+        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } }
+        .correct { background: #e8f5e9; color: var(--success); border: 2px solid var(--success); }
+        .wrong { background: #ffebee; color: var(--error); border: 2px solid var(--error); }
+
+        .next-btn {
+            margin-top: 15px; background: var(--secondary); color: white;
+            border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer;
+            font-weight: 800; font-family: 'Montserrat';
+        }
+
+        #results { display: none; text-align: center; }
+        .score-big { font-size: 5rem; color: var(--secondary); font-weight: 800; }
+        .btn-back { background: #34495e; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; float: left; font-weight: bold; transition: 0.3s; margin-bottom: 10px; }
+        .btn-back:hover { background: #1a252f; transform: translateX(-3px); }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <div id="quiz">
+        <div class="header">
+            <button onclick="window.history.back()" class="btn-back">⬅ VOLVER</button>
+            <h1>ZOOLOGÍA: LOS INVERTEBRADOS</h1>
+            <div class="stats">
+                <span id="q-txt">Pregunta: 1 / 20</span>
+                <span id="s-txt">Nota: 0.0</span>
+            </div>
+            <div class="progress-bar"><div id="fill"></div></div>
+        </div>
+
+        <div id="question-area"></div>
+
+        <div id="feedback">
+            <p id="f-text"></p>
+            <button class="next-btn" onclick="next()">SIGUIENTE PREGUNTA ➔</button>
+        </div>
+    </div>
+
+    <div id="results">
+        <h2>RESULTADO DEL EXAMEN</h2>
+        <div class="score-big" id="final-mark">0</div>
+        <p id="rank-msg"></p>
+        <button class="next-btn" onclick="location.reload()">REINTENTAR TEST</button>
+    </div>
+</div>
+
+<script>
+    const bank = [
+        // PORÍFEROS Y CNIDARIOS
+        { q: "¿Cómo se llama la cavidad interna de una esponja donde entra el agua?", opts: ["Ósculo", "Atrio", "Cnidocito", "Sifón"], ans: 1, info: "El agua entra por los poros al atrio y sale por el ósculo." },
+        { q: "Las células venenosas de los tentáculos de las medusas se llaman:", opts: ["Coanocitos", "Quetas", "Cnidocitos", "Pies ambulacrales"], ans: 2, info: "Los cnidocitos contienen un filamento tóxico para cazar o defenderse." },
+        { q: "[RAZONAMIENTO] Si un animal vive fijo al suelo y tiene forma de saco con tentáculos hacia arriba, es un:", opts: ["Pólipo", "Medusa", "Cefalópodo", "Miriápodo"], ans: 0, info: "Los pólipos (como los corales) son la fase sésil de los cnidarios." },
+
+        // GUSANOS
+        { q: "¿Qué estructura usan los anélidos para reproducirse?", opts: ["Escólex", "Clitelo", "Rádula", "Manto"], ans: 1, info: "El clitelo es un anillo engrosado presente en gusanos como la lombriz de tierra." },
+        { q: "[RAZONAMIENTO] Un parásito intestinal con cuerpo plano y dividido en anillos (como la tenia) es un:", opts: ["Nematodo", "Anélido", "Platelminto", "Equinodermo"], ans: 2, info: "Los platelmintos son gusanos planos; la tenia es un ejemplo parásito." },
+        { q: "¿Cómo se desplazan las lombrices de tierra?", opts: ["Con ventosas", "Mediante sedas o quetas", "Expulsando agua", "Con 4 pares de patas"], ans: 1, info: "Las quetas son pequeñas cerdas rígidas que les ayudan a anclarse y moverse." },
+
+        // MOLUSCOS
+        { q: "¿Qué órgano utilizan los caracoles para raspar el alimento?", opts: ["Sifón", "Pie", "Rádula", "Valva"], ans: 2, info: "La rádula funciona como una lengua con pequeños dientes quitinosos." },
+        { q: "[RAZONAMIENTO] ¿A qué grupo pertenece un animal con dos conchas unidas y que se alimenta filtrando agua?", opts: ["Gasterópodos", "Bivalvos", "Cefalópodos", "Poríferos"], ans: 1, info: "Los bivalvos (almejas, mejillones) tienen dos valvas y son filtradores." },
+        { q: "¿Cómo se desplazan los pulpos y calamares rápidamente?", opts: ["Con el clitelo", "Con la rádula", "Expulsando agua por un sifón", "Caminando con el manto"], ans: 2, info: "Utilizan la propulsión a chorro mediante el sifón." },
+
+        // ARTRÓPODOS
+        { q: "¿Cómo se llama el proceso por el cual un artrópodo cambia su esqueleto para crecer?", opts: ["Metamorfosis", "Muda", "Regeneración", "Fotosíntesis"], ans: 1, info: "Al tener un exoesqueleto rígido, necesitan mudarlo periódicamente." },
+        { q: "[RAZONAMIENTO] Si cuentas 8 patas en un animal sin antenas, estás ante un:", opts: ["Insecto", "Crustáceo", "Arácnido", "Miriápodo"], ans: 2, info: "Los arácnidos tienen 4 pares de patas (8) y carecen de antenas." },
+        { q: "¿Cuántos pares de patas tienen los insectos?", opts: ["3 pares (6 patas)", "4 pares (8 patas)", "5 pares (10 patas)", "Muchos pares iguales"], ans: 0, info: "Los insectos se caracterizan por tener 3 pares de patas y el cuerpo en 3 partes." },
+        { q: "Los ojos de los artrópodos que tienen miles de lentes se llaman:", opts: ["Ojos simples", "Ocelos", "Ojos compuestos", "Ojos ambulacrales"], ans: 2, info: "Los ojos compuestos son típicos de insectos y crustáceos." },
+        { q: "[RAZONAMIENTO] ¿Qué diferencia principal tiene un ciempiés de un insecto?", opts: ["El ciempiés no tiene antenas", "El ciempiés tiene el tronco segmentado en muchos anillos iguales", "El insecto no tiene patas articuladas", "El ciempiés tiene ojos compuestos"], ans: 1, info: "Los miriápodos tienen un cuerpo largo con muchos segmentos repetidos con patas." },
+
+        // EQUINODERMOS
+        { q: "¿Cuál es la característica exclusiva de los equinodermos para moverse y respirar?", opts: ["Exoesqueleto", "Sistema ambulacral", "Metamorfosis", "Branquias"], ans: 1, info: "Es una red de canales internos de agua que termina en pies con ventosas." },
+        { q: "[RAZONAMIENTO] Una estrella de mar presenta un tipo de simetría llamada:", opts: ["Bilateral", "Radial", "Asimétrica", "Esférica"], ans: 1, info: "Su cuerpo se organiza en torno a un eje central (normalmente 5 brazos)." },
+        { q: "¿A qué grupo pertenece el pepino de mar?", opts: ["Asteroideos", "Equinoideos", "Holoturoideos", "Miriápodos"], ans: 2, info: "Los holoturoideos son los equinodermos con cuerpo alargado y blando." },
+
+        // FISIOLOGÍA Y MIX
+        { q: "¿Cómo respiran los artrópodos terrestres?", opts: ["Por pulmones", "Por branquias", "Por tráqueas", "Por la piel"], ans: 2, info: "Las tráqueas son tubos que llevan el aire directamente a las células." },
+        { q: "Las uñas venenosas de las arañas se llaman:", opts: ["Quelíceros", "Pedipalpos", "Antenas", "Mandíbulas"], ans: 0, info: "Los quelíceros son apéndices en forma de uña o pinza para inyectar veneno." },
+        { q: "Verdadero o Falso: Los poríferos son animales filtradores sésiles.", opts: ["Verdadero", "Falso"], ans: 0, info: "Cierto. Viven fijos al sustrato y filtran partículas del agua." }
+    ];
+
+    let current = 0;
+    let score = 0;
+    let selectedQ = [];
+
+    function init() {
+        selectedQ = bank.sort(() => 0.5 - Math.random()).slice(0, 20);
+        render();
+    }
+
+    function render() {
+        const data = selectedQ[current];
+        const area = document.getElementById('question-area');
+        document.getElementById('q-txt').innerText = `Pregunta: ${current + 1} / 20`;
+        document.getElementById('fill').style.width = `${(current / 20) * 100}%`;
+        document.getElementById('feedback').style.display = 'none';
+
+        let qTitle = data.q.includes('[RAZONAMIENTO]') 
+            ? `<span class="razonamiento-tag">RAZONAMIENTO</span>` + data.q.replace('[RAZONAMIENTO]', '')
+            : data.q;
+
+        area.innerHTML = `<div class="question-box">${qTitle}</div><div class="options" id="opts"></div>`;
+        
+        data.opts.forEach((o, i) => {
+            const b = document.createElement('button');
+            b.className = 'btn';
+            b.innerText = o;
+            b.onclick = () => check(i);
+            document.getElementById('opts').appendChild(b);
+        });
+    }
+
+    function check(idx) {
+        const data = selectedQ[current];
+        const f = document.getElementById('feedback');
+        const ft = document.getElementById('f-text');
+        const btns = document.querySelectorAll('.btn');
+        btns.forEach(b => b.disabled = true);
+
+        if(idx === data.ans) {
+            score += 0.5;
+            f.className = 'correct';
+            ft.innerHTML = `<b>¡BIEN HECHO! 🐙</b><br>${data.info}`;
+        } else {
+            f.className = 'wrong';
+            ft.innerHTML = `<b>¡CASI! 🦂</b><br>La correcta era: ${data.opts[data.ans]}. <br>${data.info}`;
+        }
+        f.style.display = 'block';
+        document.getElementById('s-txt').innerText = `Nota: ${score.toFixed(1)}`;
+    }
+
+    function next() {
+        current++;
+        if(current < 20) render();
+        else {
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            let final = score.toFixed(1);
+            document.getElementById('final-mark').innerText = final;
+            document.getElementById('rank-msg').innerText = final >= 5 ? "¡Felicidades! Eres un experto en zoología de invertebrados." : "Te falta un poco de estudio. ¡Repasa las fichas y vuelve a intentarlo!";
+        }
+    }
+
+    init();
+</script>
+</body>
+</html>

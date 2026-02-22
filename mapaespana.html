@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen: Mapa Mudo</title>
+    <style>
+        :root {
+            --primary: #2980b9;
+            --success: #27ae60;
+            --bg: #f4f7f6;
+        }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 20px; shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        
+        .btn-back { background: #34495e; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; float: left; font-weight: bold; }
+        
+        .header { text-align: center; clear: both; margin-bottom: 20px; }
+        h1 { color: var(--primary); }
+
+        .map-container {
+            text-align: center;
+            background: #eef2f3;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px dashed #bdc3c7;
+        }
+        
+        /* Simulación de mapa mudo */
+        .placeholder-map {
+            width: 100%;
+            max-width: 600px;
+            height: 350px;
+            background: #dff9fb;
+            margin: auto;
+            border: 1px solid #95a5a6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            font-weight: bold;
+            color: #7f8c8d;
+        }
+
+        /* Formulario de examen */
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .input-group {
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        /* Colores alternos para las preguntas */
+        .input-group:nth-child(4n+1) { background: #f1f9ff; }
+        .input-group:nth-child(4n+2) { background: #fff9f1; }
+        .input-group:nth-child(4n+3) { background: #f5f1ff; }
+        .input-group:nth-child(4n+4) { background: #f0fff4; }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn-check {
+            display: block;
+            width: 100%;
+            background: var(--success);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <button onclick="window.history.back()" class="btn-back">⬅ VOLVER</button>
+    
+    <div class="header">
+        <h1>Examen Geografía: Mapa Mudo</h1>
+        <p>Escribe el nombre de los accidentes geográficos correspondientes a cada número.</p>
+    </div>
+
+    <div class="map-container">
+        <div class="placeholder-map">
+            [ AQUÍ SE VISUALIZA TU MAPA ADJUNTO ]
+            <div style="position:absolute; top:20%; left:30%; background:red; color:white; border-radius:50%; width:25px;">1</div>
+            <div style="position:absolute; top:50%; left:60%; background:red; color:white; border-radius:50%; width:25px;">2</div>
+            <div style="position:absolute; top:70%; left:40%; background:red; color:white; border-radius:50%; width:25px;">3</div>
+        </div>
+    </div>
+
+    <form id="quizForm">
+        <div class="quiz-grid">
+            <div class="input-group">
+                <span><strong>1.</strong></span>
+                <input type="text" placeholder="Respuesta...">
+            </div>
+            <div class="input-group">
+                <span><strong>2.</strong></span>
+                <input type="text" placeholder="Respuesta...">
+            </div>
+            <div class="input-group">
+                <span><strong>3.</strong></span>
+                <input type="text" placeholder="Respuesta...">
+            </div>
+            <div class="input-group">
+                <span><strong>4.</strong></span>
+                <input type="text" placeholder="Respuesta...">
+            </div>
+            <div class="input-group">
+                <span><strong>5.</strong></span>
+                <input type="text" placeholder="Respuesta...">
+            </div>
+            <div class="input-group">
+                <span><strong>6.</strong></span>
+                <input type="text" placeholder="Respuesta...">
+            </div>
+        </div>
+
+        <button type="button" class="btn-check" onclick="alert('¡Examen enviado! Revisa tus respuestas con el libro.')">
+            FINALIZAR EXAMEN
+        </button>
+    </form>
+</div>
+
+</body>
+</html>

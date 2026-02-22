@@ -118,6 +118,30 @@
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
+            .btn-back {
+        background-color: #34495e; /* Color elegante a juego con las tablas */
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-back:hover {
+        background-color: #2c3e50;
+        transform: translateX(-5px); /* Efecto visual de ir hacia atrás */
+    }
+
+    .btn-back:active {
+        transform: scale(0.95);
+    }
+
     </style>
 </head>
 <body>
@@ -125,7 +149,11 @@
 <div class="container">
     <header>
         <h1>Tema 14: Gráficas y Estadística</h1>
-        <a href="#" class="btn-volver">← Volver</a>
+<div style="margin-bottom: 20px;">
+    <button onclick="window.history.back()" class="btn-back">
+        ⬅ Volver
+    </button>
+</div>
     </header>
 
     <section>

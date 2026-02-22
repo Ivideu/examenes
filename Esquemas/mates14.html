@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masterclass Matemáticas: Funciones y Estadística</title>
+    <style>
+        :root {
+            --math-blue: #2980b9;
+            --math-green: #27ae60;
+            --math-orange: #e67e22;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --text: #2c3e50;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        header {
+            border-bottom: 4px solid var(--math-blue);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1 { margin: 0; color: var(--math-blue); font-size: 2rem; }
+        .btn-volver {
+            background: var(--math-blue);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        h2 {
+            background: var(--math-blue);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 40px;
+        }
+        .concept-card {
+            background: #f1f7ff;
+            border-left: 5px solid var(--math-blue);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        .formula {
+            background: #fff;
+            border: 2px dashed var(--math-green);
+            padding: 15px;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 15px 0;
+        }
+        /* Fichas Dinámicas */
+        .grid-fichas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .ficha {
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 12px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .ficha:hover {
+            border-color: var(--math-orange);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .ficha-titulo {
+            font-size: 0.8rem;
+            color: #95a5a6;
+            text-transform: uppercase;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .ficha-q { font-weight: bold; display: block; margin-bottom: 8px; color: var(--math-blue); }
+        .ficha-a { color: var(--math-orange); font-weight: 500; }
+        
+        .badge {
+            background: var(--math-green);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Tema 14: Gráficas y Estadística</h1>
+        <a href="#" class="btn-volver">← Volver</a>
+    </header>
+
+    <section>
+        <h2>1. El Plano Cartesiano</h2>
+        <div class="concept-card">
+            <p>Los <strong>ejes coordenados</strong> son dos rectas perpendiculares que dividen el plano en 4 cuadrantes[cite: 5].</p>
+            <ul>
+                <li><strong>Eje X (Abscisas):</strong> Recta horizontal[cite: 7].</li>
+                <li><strong>Eje Y (Ordenadas):</strong> Recta vertical[cite: 7].</li>
+                <li><strong>Origen O(0,0):</strong> Punto donde se cortan ambos ejes[cite: 6, 9].</li>
+            </ul>
+        </div>
+        <p>Para localizar un punto <strong>P(x, y)</strong>: se busca la abscisa (X) y luego la ordenada (Y)[cite: 1, 8].</p>
+    </section>
+
+    <section>
+        <h2>2. Interpretación de Gráficas</h2>
+        <div class="concept-card">
+            <p><span class="badge">Crecimiento</span> Una gráfica es <strong>creciente</strong> si al ir de izquierda a derecha los valores de <em>y</em> aumentan[cite: 33].</p>
+            <p><span class="badge">Decrecimiento</span> Es <strong>decreciente</strong> si los valores de <em>y</em> disminuyen[cite: 34].</p>
+            <p><span class="badge">Extremos</span> Un <strong>máximo</strong> es un punto donde la gráfica pasa de crecer a decrecer. Un <strong>mínimo</strong> es donde pasa de decrecer a crecer[cite: 36, 37].</p>
+        </div>
+
+        <h3>Función Lineal</h3>
+        <p>Es una recta que pasa por el origen de coordenadas. Su ecuación es:</p>
+        <div class="formula">y = m · x</div>
+        <p>Donde <strong>m</strong> es la constante de proporcionalidad directa.</p>
+    </section>
+
+    <section>
+        <h2>3. Estadística: Tablas y Medidas</h2>
+        <div class="concept-card">
+            <p><strong>Población:</strong> Conjunto total de elementos a estudiar[cite: 83].</p>
+            <p><strong>Muestra:</strong> Parte de la población que sirve para obtener conclusiones[cite: 84].</p>
+            <p><strong>Carácter Estadístico:</strong> Puede ser <strong>Cualitativo</strong> (cualidad) o <strong>Cuantitativo</strong> (cantidad)[cite: 60].</p>
+        </div>
+
+        <h3>Medidas de Centralización</h3>
+        <ul>
+            <li><strong>Media (x̄):</strong> Suma de todos los datos dividida por el total (N)[cite: 64].</li>
+            <li><strong>Mediana:</strong> Valor central al ordenar los datos[cite: 65].</li>
+            <li><strong>Moda:</strong> Valor con mayor frecuencia absoluta[cite: 78].</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>🗂️ Fichas de Repaso Rápido</h2>
+        <div class="grid-fichas">
+            <div class="ficha">
+                <span class="ficha-titulo">Coordenadas</span>
+                <span class="ficha-q">¿Dónde está un punto con x=0?</span>
+                <span class="ficha-a">Se encuentra sobre el eje Y[cite: 9].</span>
+            </div>
+            <div class="ficha">
+                <span class="ficha-titulo">Gráficas</span>
+                <span class="ficha-q">¿Cómo se interpreta una gráfica?</span>
+                <span class="ficha-a">Siempre se recorre el eje X de izquierda a derecha[cite: 32].</span>
+            </div>
+            <div class="ficha">
+                <span class="ficha-titulo">Estadística</span>
+                <span class="ficha-q">¿Qué es la frecuencia absoluta (nᵢ)?</span>
+                <span class="ficha-a">Es el número de veces que se repite un valor[cite: 62].</span>
+            </div>
+            <div class="ficha">
+                <span class="ficha-titulo">Proporcionalidad</span>
+                <span class="ficha-q">¿Cómo se calcula la constante 'm'?</span>
+                <span class="ficha-a">Dividiendo cualquier valor de 'y' entre su correspondiente 'x'[cite: 28].</span>
+            </div>
+            <div class="ficha">
+                <span class="ficha-titulo">Gráficos Visuales</span>
+                <span class="ficha-q">¿Qué es un pictograma?</span>
+                <span class="ficha-a">Un gráfico que usa dibujos como unidades de medida[cite: 90].</span>
+            </div>
+            <div class="ficha">
+                <span class="ficha-titulo">Estadística Avanzada</span>
+                <span class="ficha-q">¿Qué es el gráfico de tallo y hojas?</span>
+                <span class="ficha-a">Usa las decenas como tallo y las unidades como hojas[cite: 96].</span>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; margin-top: 50px; color: #7f8c8d; font-size: 0.8rem;">
+        Basado en el contenido oficial del archivo Tema14.pdf • ¡Mucho éxito en el examen!
+    </footer>
+</div>
+
+</body>
+</html>

@@ -3,142 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enciclopedia de Fichas: Biología de las Plantas</title>
+    <title>MasterClass Biología: El Reino de las Plantas</title>
     <style>
         :root {
-            --primary: #1b5e20;
-            --secondary: #4caf50;
-            --accent: #ef6c00;
-            --blue: #0277bd;
-            --purple: #6a1b9a;
-            --bg: #f0f4f0;
+            --bio-dark: #1b5e20;
+            --bio-leaf: #4caf50;
+            --bio-sun: #ffc107;
+            --bio-water: #0277bd;
+            --bio-flower: #e91e63;
+            --bg: #f4f7f6;
         }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg); margin: 0; padding: 20px; color: #1a1a1a; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: #333; line-height: 1.6; margin: 0; padding: 20px; }
         .container { max-width: 1200px; margin: auto; }
         
-        .btn-back { background: #263238; color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; float: left; font-weight: bold; margin-bottom: 20px; transition: 0.3s; }
+        /* Botón de navegación */
+        .btn-back { background: #333; color: white; padding: 12px 25px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; margin-bottom: 30px; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .btn-back:hover { background: #000; transform: scale(1.05); }
+
+        header { text-align: center; margin-bottom: 50px; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        header h1 { color: var(--bio-dark); margin: 0; font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        header p { color: #666; font-style: italic; margin-top: 10px; }
+
+        .fichas-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 25px; }
+
+        /* Estilo de Ficha Maestra */
+        .ficha { background: white; border-radius: 20px; padding: 30px; position: relative; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-top: 15px solid; transition: transform 0.3s ease; }
+        .ficha:hover { transform: translateY(-10px); }
+
+        .ficha h2 { margin-top: 0; font-size: 1.6rem; display: flex; align-items: center; gap: 15px; }
+        .ficha h3 { font-size: 1.1rem; color: #555; text-transform: uppercase; border-bottom: 2px solid #eee; padding-bottom: 5px; margin-top: 20px; }
         
-        header { text-align: center; clear: both; margin-bottom: 40px; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        header h1 { color: var(--primary); margin: 0; font-size: 2.2rem; }
+        .ficha ul { padding-left: 20px; margin: 15px 0; }
+        .ficha li { margin-bottom: 10px; }
+        .ficha b { color: #000; }
 
-        .fichas-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 25px;
-        }
+        .tag { display: inline-block; background: #eee; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; margin-top: 10px; }
 
-        .ficha {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-            border-top: 12px solid;
-            display: flex;
-            flex-direction: column;
-        }
+        /* Categorización por colores */
+        .f-nutricion { border-top-color: var(--bio-leaf); }
+        .f-relacion { border-top-color: var(--bio-water); }
+        .f-reproduccion { border-top-color: var(--bio-flower); }
+        .f-clasificacion { border-top-color: var(--bio-sun); }
 
-        .ficha h2 { margin-top: 0; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
-        .ficha h3 { font-size: 1.1rem; margin: 15px 0 5px 0; color: #333; text-decoration: underline; }
-        .ficha p, .ficha li { font-size: 0.95rem; line-height: 1.6; color: #333; }
-        .ficha ul { padding-left: 20px; margin: 10px 0; }
-        
-        .info-box { background: #f9f9f9; padding: 10px; border-radius: 8px; border-left: 4px solid #ddd; margin: 10px 0; font-style: italic; }
-        .keyword { font-weight: bold; color: #000; }
+        .highlight-box { background: #f9f9f9; padding: 15px; border-radius: 12px; border-left: 5px solid #ccc; margin-top: 15px; font-size: 0.9rem; }
 
-        /* Colores Temáticos */
-        .f-nutricion { border-color: var(--secondary); }
-        .f-relacion { border-color: var(--blue); }
-        .f-reproduccion { border-color: var(--accent); }
-        .f-clasificacion { border-color: var(--purple); }
-
-        @media (max-width: 600px) { .fichas-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 600px) { .fichas-container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <button onclick="window.history.back()" class="btn-back">⬅ VOLVER AL MENÚ</button>
+    <button onclick="window.history.back()" class="btn-back">⬅ VOLVER AL CURSO</button>
     
     <header>
-        <h1>Guía Completa: El Reino de las Plantas</h1>
-        <p>Estudio detallado de estructuras, funciones y procesos biológicos</p>
+        <h1>Biología Vegetal: Fichas de Maestría</h1>
+        <p>Unidad Didáctica Completa - 1º ESO</p>
     </header>
 
-    <div class="fichas-grid">
+    <div class="fichas-container">
         
         <div class="ficha f-nutricion">
-            <h2>🌿 Nutrición y Transporte</h2>
-            <p>Las plantas realizan un proceso complejo de transformación de energía:</p>
+            <h2>🟢 01. Nutrición Autótrofa</h2>
+            <p>Las plantas transforman materia inorgánica en orgánica.</p>
+            <h3>El Transporte de Savia:</h3>
             <ul>
-                <li><span class="keyword">Entrada de sustancias:</span> Agua y sales minerales por los pelos absorbentes de la raíz (Savia Bruta).</li>
-                <li><span class="keyword">El Xilema:</span> Vasos leñosos que transportan la savia bruta hacia las hojas de forma ascendente.</li>
-                <li><span class="keyword">El Floema:</span> Vasos liberianos que reparten la <span class="keyword">Savia Elaborada</span> (azúcares) por toda la planta.</li>
-                <li><span class="keyword">Clorofila:</span> Pigmento verde en los cloroplastos que capta la energía lumínica.</li>
+                <li><b>Savia Bruta:</b> Agua + Sales minerales absorbidas por los pelos radiculares. Sube por el <b>Xilema</b> (vasos leñosos).</li>
+                <li><b>Savia Elaborada:</b> Mezcla de azúcares producidos en las hojas. Se reparte por toda la planta mediante el <b>Floema</b> (vasos liberianos).</li>
             </ul>
-            <div class="info-box">Dato: Durante la noche, las plantas solo respiran (absorben O2 y expulsan CO2), pero no hacen fotosíntesis.</div>
+            <div class="highlight-box">
+                <b>Fotosíntesis:</b> Ocurre en los cloroplastos. Usa Luz + CO2 + Savia Bruta para generar glucosa y expulsar O2.
+            </div>
+            <span class="tag">METABOLISMO VEGETAL</span>
         </div>
 
         <div class="ficha f-relacion">
-            <h2>📡 Función de Relación Detallada</h2>
-            <p>Capacidad de reaccionar a cambios ambientales mediante movimientos específicos:</p>
-            <h3>Tropismos (Crecimiento dirigido):</h3>
+            <h2>🔵 02. Función de Relación</h2>
+            <p>Mecanismos de respuesta ante estímulos externos.</p>
+            <h3>Tropismos (Respuestas lentas):</h3>
             <ul>
-                <li><span class="keyword">Fototropismo:</span> El tallo busca la luz (+) y la raíz huye de ella (-).</li>
-                <li><span class="keyword">Geotropismo:</span> La raíz crece hacia el centro de la Tierra (+) y el tallo en contra (-).</li>
-                <li><span class="keyword">Tigmotropismo:</span> Respuesta al contacto físico (como las plantas trepadoras).</li>
+                <li><b>Fototropismo:</b> Respuesta a la luz. El tallo crece hacia ella (+), la raíz huye (-).</li>
+                <li><b>Geotropismo:</b> Respuesta a la gravedad. Raíz (+), tallo (-).</li>
+                <li><b>Hidrotropismo:</b> Búsqueda de agua por las raíces.</li>
             </ul>
-            <h3>Nastias (Movimientos rápidos):</h3>
-            <ul>
-                <li><span class="keyword">Fotonastias:</span> Apertura/cierre según la luz (Dondiego de noche).</li>
-                <li><span class="keyword">Sismonastias:</span> Reacción al roce o golpe (Mimosa pudica).</li>
-            </ul>
+            <h3>Nastias (Respuestas rápidas):</h3>
+            <p>Movimientos que no dependen de la dirección del estímulo, como el cierre de hojas ante el contacto (Sismonastia).</p>
+            <span class="tag">ESTÍMULO-RESPUESTA</span>
         </div>
 
         <div class="ficha f-reproduccion">
-            <h2>🧬 Anatomía de la Flor</h2>
-            <p>Estructuras organizadas en verticilos (círculos):</p>
+            <h2>🔴 03. La Flor y su Ciclo</h2>
+            <p>Estructuras y fases de la reproducción sexual.</p>
+            <h3>Partes de la Flor:</h3>
             <ul>
-                <li><span class="keyword">Gineceo (Pistilo):</span> Parte femenina. Formado por el <span class="keyword">estigma</span> (recepción), <span class="keyword">estilo</span> (conducto) y <span class="keyword">ovario</span> (contiene óvulos).</li>
-                <li><span class="keyword">Androceo (Estambres):</span> Parte masculina. Formado por el filamento y la <span class="keyword">antera</span> (donde están los sacos polínicos).</li>
-                <li><span class="keyword">Envolturas:</span> Corola (pétalos para atraer polinizadores) y Cáliz (sépalos protectores).</li>
+                <li><b>Androceo:</b> Parte masculina (Estambres y granos de polen).</li>
+                <li><b>Gineceo:</b> Parte femenina (Pistilo: Estigma, Estilo y Ovario con óvulos).</li>
+                <li><b>Protección:</b> Cáliz (sépalos) y Corola (pétalos).</li>
             </ul>
+            <div class="highlight-box">
+                <b>Fases:</b> Polinización ➔ Fecundación ➔ Formación de Semilla/Fruto ➔ Germinación.
+            </div>
+            <span class="tag">GENÉTICA Y DESCENDENCIA</span>
         </div>
 
         <div class="ficha f-reproduccion">
-            <h2>🔄 Fases del Ciclo Vital</h2>
-            <p>Desde el polen hasta la nueva planta:</p>
-            <ol>
-                <li><span class="keyword">Polinización:</span> Puede ser anemógama (viento) o zoógama (animales).</li>
-                <li><span class="keyword">Fecundación:</span> El grano de polen desarrolla un <span class="keyword">tubo polínico</span> para llegar al óvulo.</li>
-                <li><span class="keyword">Transformación:</span> El óvulo se convierte en semilla (contiene el embrión y reservas) y el ovario suele carnosizarse formando el fruto.</li>
-                <li><span class="keyword">Dispersión:</span> El fruto protege y ayuda a esparcir las semillas lejos de la madre.</li>
-            </ol>
-        </div>
-
-        <div class="ficha f-reproduccion">
-            <h2>🌱 Reproducción Asexual</h2>
-            <p>Tipos de tallos especializados para la clonación natural:</p>
+            <h2>🟠 04. Reproducción Asexual</h2>
+            <p>Creación de nuevos individuos a partir de un solo progenitor.</p>
+            <h3>Tipos de Tallos:</h3>
             <ul>
-                <li><span class="keyword">Tubérculos:</span> Tallos subterráneos cortos y gruesos (Patata).</li>
-                <li><span class="keyword">Bulbos:</span> Tallos rodeados de hojas carnosas subterráneas (Cebolla, Tulipán).</li>
-                <li><span class="keyword">Rizomas:</span> Tallos subterráneos horizontales que crecen indefinidamente (Jengibre, Lirio).</li>
-                <li><span class="keyword">Estolones:</span> Tallos rastreros que enraízan en los nudos (Fresa).</li>
+                <li><b>Tubérculos:</b> Tallos subterráneos engrosados (Patata).</li>
+                <li><b>Bulbos:</b> Tallos con hojas carnosas subterráneas (Cebolla).</li>
+                <li><b>Rizomas:</b> Tallos horizontales bajo el suelo (Césped).</li>
+                <li><b>Estolones:</b> Tallos rastreros sobre la superficie (Fresa).</li>
             </ul>
+            <span class="tag">CLONACIÓN NATURAL</span>
         </div>
 
         <div class="ficha f-clasificacion">
-            <h2>🌲 Clasificación del Reino Plantae</h2>
-            <h3>Plantas sin Semillas (Criptógamas):</h3>
+            <h2>🟡 05. Clasificación General</h2>
+            <h3>Sin Semillas (Criptógamas):</h3>
             <ul>
-                <li><span class="keyword">Briófitos (Musgos):</span> Sin vasos conductores, necesitan mucha humedad.</li>
-                <li><span class="keyword">Pteridófitos (Helechos):</span> Con vasos conductores pero se reproducen por <span class="keyword">esporas</span>.</li>
+                <li><b>Briófitos (Musgos):</b> Sin vasos conductores, dependen de humedad extrema.</li>
+                <li><b>Pteridófitos (Helechos):</b> Con vasos conductores, se reproducen por esporas.</li>
             </ul>
-            <h3>Plantas con Semillas (Espermatofitas):</h3>
+            <h3>Con Semillas (Espermatofitas):</h3>
             <ul>
-                <li><span class="keyword">Gimnospermas:</span> Semilla desnuda. Flores en inflorescencias (piñas). Hoja acicular.</li>
-                <li><span class="keyword">Angiospermas:</span> Semilla protegida. Flores verdaderas y frutos. Pueden ser Monocotiledóneas o Dicotiledóneas.</li>
+                <li><b>Gimnospermas:</b> Semillas desnudas, hojas perennes/aciculares (Pinos).</li>
+                <li><b>Angiospermas:</b> Semillas protegidas por frutos y flores vistosas.</li>
             </ul>
+            <span class="tag">TAXONOMÍA</span>
         </div>
 
     </div>

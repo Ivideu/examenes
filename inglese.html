@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lengua 1º ESO - Repaso Gramática</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 4px solid #e67e22;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+        }
+        h2 {
+            color: #d35400;
+            background: #fff3e0;
+            padding: 12px;
+            border-left: 6px solid #e67e22;
+            border-radius: 0 8px 8px 0;
+            margin-top: 40px;
+        }
+        h3 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+        
+        /* Sistema de tarjetas */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .card {
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+            transition: transform 0.3s ease;
+        }
+        .card:hover { transform: translateY(-5px); }
+        
+        /* Colores por sección */
+        .det { background-color: #e8f5e9; border-top: 6px solid #4caf50; }
+        .pron { background-color: #e3f2fd; border-top: 6px solid #2196f3; }
+        .verb { background-color: #fffde7; border-top: 6px solid #fbc02d; }
+
+        /* Tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+        th { background-color: #34495e; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+
+        .example { font-style: italic; color: #666; font-size: 0.9em; }
+        .highlight { font-weight: bold; color: #e67e22; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📝 Gramática: Determinantes, Pronombres y Verbos</h1>
+
+    <h2>1. Los Determinantes (Det)</h2>
+    <p>Acompañan al sustantivo, concretan su significado y concuerdan en <b>género y número</b>[cite: 966, 967].</p>
+    
+    <div class="grid-cards">
+        <div class="card det">
+            <h3>📍 Demostrativos</h3>
+            <p>Indican distancia:</p>
+            <ul>
+                <li><b>Cercanía:</b> este, esta, estos, estas.</li>
+                <li><b>Distancia media:</b> ese, esa, esos, esas.</li>
+                <li><b>Lejanía:</b> aquel, aquella, aquellos, aquellas.</li>
+            </ul>
+        </div>
+        <div class="card det">
+            <h3>🏠 Posesivos</h3>
+            <p>Indican posesión:</p>
+            <ul>
+                <li><b>1 poseedor:</b> mi, tu, su, mis, tus, sus.</li>
+                <li><b>Varios poseedores:</b> nuestro/a, vuestro/a, su (y sus plurales).</li>
+            </ul>
+        </div>
+        <div class="card det">
+            <h3>🔢 Numerales e Indefinidos</h3>
+            <ul>
+                <li><b>Numerales:</b> Cardinales (dos, tres...) y Ordinales (primer, segundo...).</li>
+                <li><b>Indefinidos:</b> Cantidad no especificada (algo, mucho, varias, poco...).</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>2. Los Pronombres (Pron)</h2>
+    <p>Sustituyen al sustantivo y realizan sus mismas funciones[cite: 1022, 1023].</p>
+
+    <div class="card pron">
+        <h3>👥 Pronombres Personales</h3>
+        <table>
+            <tr>
+                <th>Persona</th>
+                <th>Singular (Tónicos / Átonos)</th>
+                <th>Plural (Tónicos / Átonos)</th>
+            </tr>
+            <tr>
+                <td><b>1ª Persona</b></td>
+                <td>yo, mí, conmigo / <b>me</b></td>
+                <td>nosotros, nosotras / <b>nos</b></td>
+            </tr>
+            <tr>
+                <td><b>2ª Persona</b></td>
+                <td>tú, usted, ti, contigo / <b>te</b></td>
+                <td>vosotros, vosotras, ustedes / <b>os</b></td>
+            </tr>
+            <tr>
+                <td><b>3ª Persona</b></td>
+                <td>él, ella, sí, consigo / <b>se, lo, la, le</b></td>
+                <td>ellos, ellas, sí, consigo / <b>se, los, las, les</b></td>
+            </tr>
+        </table>
+        <p class="example">* Nota: "Usted" y "Ustedes" son formas de cortesía[cite: 1033].</p>
+    </div>
+
+    <h2>3. El Verbo (V)</h2>
+    <p>Expresa acciones o estados y es el <b>núcleo del predicado</b>[cite: 971, 973].</p>
+
+    <div class="grid-cards">
+        <div class="card verb">
+            <h3>⚙️ Accidentes del Verbo</h3>
+            <ul>
+                <li><b>Persona y Número:</b> 1ª, 2ª, 3ª / Singular o Plural[cite: 978, 979].</li>
+                <li><b>Tiempo:</b> Pasado, Presente o Futuro[cite: 984].</li>
+                <li><b>Modo:</b> Indicativo (real), Subjuntivo (deseo/duda), Imperativo (orden)[cite: 988].</li>
+                <li><b>Aspecto:</b> Perfecto (terminada) o Imperfecto (no terminada)[cite: 992].</li>
+            </ul>
+        </div>
+        <div class="card verb">
+            <h3>🧩 Formas No Personales</h3>
+            <p>No indican persona, tiempo ni modo[cite: 999, 1000].</p>
+            <ul>
+                <li><b>Infinitivo:</b> -ar, -er, -ir (Cantar)[cite: 1002].</li>
+                <li><b>Gerundio:</b> -ando, -iendo (Amando)[cite: 1002].</li>
+                <li><b>Participio:</b> -ado, -ido (Cantado)[cite: 1002].</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>4. La Conjugación y Tiempos</h2>
+    <div class="card" style="border-left: 6px solid #34495e;">
+        <p>• <b>Tiempos Simples:</b> Constan del verbo principal (Ej: <i>Desapareció</i>)[cite: 1009, 1010].</p>
+        <p>• <b>Tiempos Compuestos:</b> Verbo auxiliar <b>haber + participio</b> (Ej: <i>Había desaparecido</i>)[cite: 1011, 1012].</p>
+        <p>• <b>Verbos Irregulares:</b> Cambian la raíz (<i>pedir -> pido</i>) o sus desinencias[cite: 1014, 1016].</p>
+    </div>
+
+    <h3>Ejemplo Modo Indicativo (Verbo Cantar) </h3>
+    <table>
+        <tr>
+            <th>Tiempos Simples</th>
+            <th>Tiempos Compuestos</th>
+        </tr>
+        <tr>
+            <td><b>Presente:</b> Canto</td>
+            <td><b>Pret. Perfecto Compuesto:</b> He cantado</td>
+        </tr>
+        <tr>
+            <td><b>Pret. Imperfecto:</b> Cantaba</td>
+            <td><b>Pret. Pluscuamperfecto:</b> Había cantado</td>
+        </tr>
+        <tr>
+            <td><b>Pret. Perfecto Simple:</b> Canté</td>
+            <td><b>Pret. Anterior:</b> Hube cantado</td>
+        </tr>
+        <tr>
+            <td><b>Futuro Simple:</b> Cantaré</td>
+            <td><b>Futuro Compuesto:</b> Habré cantado</td>
+        </tr>
+        <tr>
+            <td><b>Condicional Simple:</b> Cantaría</td>
+            <td><b>Condicional Compuesto:</b> Habría cantado</td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

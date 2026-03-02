@@ -2,201 +2,116 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EXAMEN BIOLOGÍA: REINO PLANTAE - 1º ESO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+    <title>UNIDAD 5: REINO PLANTAE - EXAMEN FINAL</title>
     <style>
-        :root {
-            --primary: #1b5e20;
-            --secondary: #2ecc71;
-            --accent: #f1c40f;
-            --success: #27ae60;
-            --error: #e74c3c;
-            --bg: #f0f4f1;
-        }
-
-        body {
-            background: var(--bg);
-            font-family: 'Nunito', sans-serif;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        #game-container {
-            width: 100%;
-            max-width: 850px;
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border-top: 10px solid var(--primary);
-        }
-
-        .header { text-align: center; margin-bottom: 20px; }
-        .stats { display: flex; justify-content: space-between; font-weight: 800; color: var(--primary); margin-bottom: 10px; }
-        
-        .progress-bar { height: 12px; background: #dcdde1; border-radius: 6px; overflow: hidden; margin-bottom: 30px; }
-        #fill { height: 100%; width: 0%; background: var(--secondary); transition: 0.3s; }
-
-        .question-box { font-size: 1.3rem; font-weight: 800; margin-bottom: 25px; color: var(--primary); }
-        .razonamiento-tag { background: var(--accent); color: #7f4f00; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; vertical-align: middle; margin-right: 10px; }
-
-        .options { display: grid; gap: 12px; }
-        .btn {
-            background: white; border: 2px solid #dcdde1; padding: 15px;
-            border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: 600;
-            transition: 0.2s; text-align: left;
-        }
-        .btn:hover:not(:disabled) { border-color: var(--secondary); background: #f1f9f5; }
-
-        #feedback {
-            display: none; margin-top: 25px; padding: 20px; border-radius: 10px;
-            text-align: center; animation: slideIn 0.4s ease;
-        }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } }
-        .correct { background: #e8f5e9; color: var(--success); border: 2px solid var(--success); }
-        .wrong { background: #ffebee; color: var(--error); border: 2px solid var(--error); }
-
-        .next-btn {
-            margin-top: 15px; background: var(--primary); color: white;
-            border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer;
-            font-weight: 800; font-family: 'Montserrat';
-        }
-
-        #results { display: none; text-align: center; }
-        .score-big { font-size: 5rem; color: var(--primary); font-weight: 800; }
-        .btn-back { background: #34495e; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; float: left; font-weight: bold; transition: 0.3s; margin-bottom: 10px; }
-        .btn-back:hover { background: #2c3e50; transform: translateX(-3px); }
+        :root { --p: #2e7d32; --s: #81c784; --bg: #f1f8e9; --txt: #1b5e20; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); display: flex; justify-content: center; padding: 20px; }
+        #container { background: white; width: 100%; max-width: 800px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-top: 8px solid var(--p); }
+        .q-card { margin-bottom: 20px; }
+        .tag { display: inline-block; background: #ffeb3b; color: #555; padding: 4px 8px; border-radius: 5px; font-size: 0.8em; font-weight: bold; margin-bottom: 10px; }
+        .btn { display: block; width: 100%; text-align: left; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; cursor: pointer; background: none; transition: 0.3s; font-size: 1.05em; font-weight: 500; }
+        .btn:hover { border-color: var(--s); background: #f9fdf9; }
+        #feedback { display: none; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center; font-weight: bold; font-size: 1.1em; }
+        .correct { background: #e8f5e9; color: #2e7d32; border: 2px solid #2e7d32; }
+        .wrong { background: #ffebee; color: #c62828; border: 2px solid #c62828; }
+        .next { background: var(--p); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; margin-top: 15px; font-size: 1.1em; font-weight: bold; }
+        h1 { color: var(--p); text-align: center; }
+        .progress { height: 12px; background: #eee; border-radius: 6px; margin-bottom: 20px; overflow: hidden; }
+        #bar { height: 100%; background: var(--p); width: 0%; transition: 0.5s; }
+        .stats { display: flex; justify-content: space-between; font-weight: bold; color: var(--p); margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
-<div id="game-container">
-    <div id="quiz">
-        <div class="header">
-            <button onclick="window.history.back()" class="btn-back">⬅ VOLVER</button>
-            <h1>EXAMEN: REINO PLANTAE</h1>
-            <div class="stats">
-                <span id="q-txt">Pregunta: 1 / 20</span>
-                <span id="s-txt">Nota: 0.0</span>
-            </div>
-            <div class="progress-bar"><div id="fill"></div></div>
-        </div>
-
+<div id="container">
+    <h1>🌱 Unidad 5: Las Plantas</h1>
+    <div class="stats">
+        <span id="q-count">Pregunta: 1 / 20</span>
+        <span id="score-count">Nota: 0.0</span>
+    </div>
+    <div class="progress"><div id="bar"></div></div>
+    
+    <div id="game">
         <div id="question-area"></div>
-
         <div id="feedback">
-            <p id="f-text"></p>
-            <button class="next-btn" onclick="next()">CONTINUAR ➔</button>
+            <p id="f-msg"></p>
+            <button class="next" onclick="next()">Siguiente Pregunta ➔</button>
         </div>
     </div>
-
-    <div id="results">
-        <h2>PUNTUACIÓN FINAL</h2>
-        <div class="score-big" id="final-mark">0</div>
-        <p id="rank-msg"></p>
-        <button class="next-btn" onclick="location.reload()">REINTENTAR EXAMEN</button>
+    
+    <div id="result" style="display:none; text-align: center;">
+        <h2 id="final-score" style="font-size: 2.5em; color: var(--p);"></h2>
+        <p id="final-msg" style="font-size: 1.2em;"></p>
+        <button class="next" onclick="location.reload()">Repasar de nuevo</button>
     </div>
 </div>
 
 <script>
     const bank = [
-        // NUTRICIÓN
-        { q: "¿Cómo se llama el tejido conductor que transporta la Savia Bruta?", opts: ["Floema", "Xilema", "Estoma", "Clorofila"], ans: 1, info: "El Xilema (o vasos leñosos) transporta agua y sales desde la raíz." },
-        { q: "[RAZONAMIENTO] Si una planta cierra sus estomas en un día muy caluroso, ¿qué proceso se detiene principalmente?", opts: ["La absorción de luz", "El intercambio de gases", "El crecimiento de la raíz", "La reproducción"], ans: 1, info: "Los estomas son los poros por donde entra CO2 y sale O2; si se cierran, no hay intercambio gaseoso." },
-        { q: "¿En qué orgánulo celular ocurre la fotosíntesis?", opts: ["Mitocondria", "Núcleo", "Cloroplasto", "Pared celular"], ans: 2, info: "Los cloroplastos contienen la clorofila necesaria para captar la luz solar." },
-        { q: "Verdadero o Falso: Las plantas realizan la respiración celular solo por la noche.", opts: ["Verdadero", "Falso"], ans: 1, info: "Falso. Las plantas respiran día y noche. La fotosíntesis es la que solo ocurre con luz." },
-
-        // RELACIÓN
-        { q: "¿Cómo se llama el tropismo donde la raíz crece buscando el centro de la Tierra?", opts: ["Fototropismo", "Hidrotropismo", "Geotropismo (+)", "Tigmotropismo"], ans: 2, info: "El geotropismo positivo es la respuesta a la gravedad." },
-        { q: "[RAZONAMIENTO] El cierre de las hojas de una planta carnívora al notar un insecto es:", opts: ["Un tropismo", "Una nastia", "Una fotosíntesis", "Un proceso de reproducción"], ans: 1, info: "Es una nastia (sismonastia) porque es una respuesta rápida y pasajera, no permanente." },
-        { q: "¿Qué tipo de respuesta es el crecimiento de un zarcillo al tocar una vara?", opts: ["Fotonastia", "Hidrotropismo", "Tigmotropismo", "Geotropismo (-)"], ans: 2, info: "El tigmotropismo es la respuesta al contacto físico." },
-
-        // REPRODUCCIÓN
-        { q: "¿Qué parte de la flor se transforma en el FRUTO después de la fecundación?", opts: ["El óvulo", "El estambre", "El ovario", "El pétalo"], ans: 2, info: "Tras la fecundación, el óvulo se convierte en semilla y el ovario en fruto." },
-        { q: "El órgano reproductor masculino de la flor se denomina:", opts: ["Gineceo", "Pistilo", "Androceo (Estambres)", "Cáliz"], ans: 2, info: "El androceo está formado por estambres que producen polen." },
-        { q: "[RAZONAMIENTO] Una planta que se reproduce por ESTOLONES (como la fresa) está realizando:", opts: ["Reproducción sexual", "Reproducción asexual", "Polinización", "Germinación"], ans: 1, info: "Los estolones son tallos aéreos para crear copias idénticas (clones)." },
-        { q: "El viaje del grano de polen desde la antera hasta el estigma se llama:", opts: ["Fecundación", "Polinización", "Germinación", "Fotosíntesis"], ans: 1, info: "La polinización es el transporte del polen, ya sea por viento o insectos." },
-
-        // CLASIFICACIÓN
-        { q: "¿Qué grupo de plantas carece de vasos conductores y raíces verdaderas?", opts: ["Angiospermas", "Helechos", "Briófitos (Musgos)", "Pinos"], ans: 2, info: "Los musgos son plantas muy simples que absorben agua por todo su cuerpo." },
-        { q: "Las plantas con semillas desnudas (sin fruto) y flores en forma de piña son:", opts: ["Angiospermas", "Gimnospermas", "Pteridófitos", "Briófitos"], ans: 1, info: "Ejemplos de gimnospermas son los pinos y abetos." },
-        { q: "[RAZONAMIENTO] Si encuentras una planta con flores vistosas y un fruto carnoso, es una:", opts: ["Criptógama", "Gimnosperma", "Angiosperma", "Pteridófito"], ans: 2, info: "Las angiospermas son las únicas que protegen sus semillas dentro de un fruto." },
-        { q: "¿Cómo se reproducen los helechos y los musgos?", opts: ["Por semillas", "Por polen", "Por esporas", "Por bulbos"], ans: 2, info: "Ambos son plantas criptógamas que utilizan esporas en lugar de semillas." },
-
-        // GENERAL Y OTROS
-        { q: "¿Cuál es el componente principal de la pared celular de las plantas?", opts: ["Proteína", "Almidón", "Celulosa", "Quitina"], ans: 2, info: "La celulosa es el azúcar complejo que da rigidez a la célula vegetal." },
-        { q: "Verdadero o Falso: La savia elaborada circula por el Floema.", opts: ["Verdadero", "Falso"], ans: 0, info: "Verdadero. El floema reparte el alimento fabricado por toda la planta." },
-        { q: "[RAZONAMIENTO] ¿Por qué las plantas son organismos autótrofos?", opts: ["Porque se mueven solas", "Porque fabrican su propia materia orgánica", "Porque comen insectos", "Porque tienen flores"], ans: 1, info: "Mediante la fotosíntesis producen su propio alimento a partir de luz y minerales." },
-        { q: "La parte del pistilo que recibe el polen (la boca) se llama:", opts: ["Estilo", "Ovario", "Estigma", "Antera"], ans: 2, info: "El estigma es la parte pegajosa superior del pistilo diseñada para atrapar polen." },
-        { q: "¿Qué tipo de tallo subterráneo es una patata?", opts: ["Bulbo", "Rizoma", "Tubérculo", "Estolón"], ans: 2, info: "Los tubérculos son tallos subterráneos engrosados que almacenan reservas." }
+        { q: "<span class='tag'>CLASIFICACIÓN</span> Un Pino silvestre es:", opts: ["Reino Plantae. Angiosperma dicotiledónea.", "Reino Plantae. Gimnosperma.", "Reino Plantae. Angiosperma monocotiledónea.", "Reino Plantae. Briófito."], ans: 1, info: "Los pinos tienen semillas desnudas agrupadas en piñas, son Gimnospermas." },
+        { q: "<span class='tag'>CLASIFICACIÓN</span> Una planta de Trigo (cereal) es:", opts: ["Reino Plantae. Angiosperma monocotiledónea.", "Reino Plantae. Gimnosperma.", "Reino Plantae. Angiosperma dicotiledónea.", "Reino Plantae. Pteridófito."], ans: 0, info: "Los cereales y pastos son angiospermas monocotiledóneas (un solo cotiledón)." },
+        { q: "<span class='tag'>CLASIFICACIÓN</span> Un Manzano es:", opts: ["Reino Plantae. Gimnosperma.", "Reino Plantae. Angiosperma monocotiledónea.", "Reino Plantae. Angiosperma dicotiledónea.", "Reino Plantae. Briófito."], ans: 2, info: "Tienen fruto carnoso y semillas con dos cotiledones." },
+        { q: "<span class='tag'>RAZONAMIENTO</span> Si observas una hoja y ves que sus nervios son paralelos entre sí (como en una cinta), deduces que es:", opts: ["Gimnosperma", "Angiosperma Dicotiledónea", "Angiosperma Monocotiledónea", "Un helecho"], ans: 2, info: "Las nerviaciones paralelas son típicas de las monocotiledóneas." },
+        { q: "<span class='tag'>COMPLETAR TEXTO</span> Las plantas con flores cuyas piezas florales se agrupan en múltiplos de 4 o 5 son las ____________.", opts: ["Gimnospermas", "Dicotiledóneas", "Monocotiledóneas", "Criptógamas"], ans: 1, info: "Las dicotiledóneas suelen tener 4 o 5 pétalos, mientras que las monocotiledóneas tienen 3 o múltiplos de 3." },
+        { q: "<span class='tag'>TEORÍA</span> ¿Qué diferencia principal hay entre Gimnospermas y Angiospermas?", opts: ["Las gimnospermas no hacen fotosíntesis.", "Las angiospermas tienen la semilla protegida por un fruto.", "Las gimnospermas tienen fruto carnoso.", "Las angiospermas no tienen vasos conductores."], ans: 1, info: "Angiosperma significa 'semilla envasada' (dentro del ovario que formará el fruto)." },
+        { q: "<span class='tag'>COMPLETAR TEXTO</span> Los falsos frutos de las gimnospermas (donde se alojan los piñones) se denominan ____________.", opts: ["Estróbilos o piñas", "Cápsulas", "Bulbos", "Esporangios"], ans: 0, info: "Son agrupaciones de brácteas que protegen la semilla desnuda." },
+        { q: "<span class='tag'>RAZONAMIENTO</span> ¿Por qué decimos que los musgos (Briófitos) necesitan vivir en lugares muy húmedos?", opts: ["Porque sus raíces son muy profundas.", "Porque carecen de verdaderos vasos conductores para transportar el agua.", "Porque no pueden hacer la fotosíntesis con sol directo.", "Porque se alimentan de algas."], ans: 1, info: "Al no tener xilema ni floema desarrollados, absorben la humedad directamente por todo su cuerpo." },
+        { q: "<span class='tag'>TEORÍA</span> ¿Cómo se llaman los pequeños bultos en el envés de las hojas de los helechos donde se guardan las esporas?", opts: ["Soros", "Estomas", "Cotiledones", "Ovarios"], ans: 0, info: "Los soros agrupan los esporangios que liberan las esporas para la reproducción." },
+        { q: "<span class='tag'>TEORÍA</span> El tejido conductor que transporta la Savia Bruta (agua y sales) desde la raíz a las hojas es el:", opts: ["Floema", "Xilema", "Cloroplasto", "Estoma"], ans: 1, info: "El xilema (o vasos leñosos) transporta en sentido ascendente." },
+        { q: "<span class='tag'>TEORÍA</span> El tejido conductor que reparte la Savia Elaborada (materia orgánica) por toda la planta es el:", opts: ["Xilema", "Floema", "Tubérculo", "Estambre"], ans: 1, info: "El floema (o vasos liberianos) distribuye el alimento tras la fotosíntesis." },
+        { q: "<span class='tag'>RAZONAMIENTO</span> Si una planta cierra sus estomas, ¿qué proceso se ve directamente interrumpido?", opts: ["La absorción de agua por la raíz.", "El intercambio de gases (CO2 y O2) con el exterior.", "El crecimiento del tallo.", "La producción de savia bruta."], ans: 1, info: "Los estomas son los poros de las hojas por donde la planta 'respira' y transpira." },
+        { q: "<span class='tag'>COMPLETAR TEXTO</span> La fotosíntesis se realiza principalmente en unos orgánulos celulares llamados ____________, que contienen clorofila.", opts: ["Mitocondrias", "Vacuolas", "Cloroplastos", "Núcleos"], ans: 2, info: "La clorofila es el pigmento verde que capta la energía solar." },
+        { q: "<span class='tag'>RAZONAMIENTO</span> El crecimiento del tallo de una planta hacia la luz de una ventana es un ejemplo de:", opts: ["Geotropismo positivo", "Fototropismo positivo", "Tigmotropismo", "Fotonastia"], ans: 1, info: "Es un tropismo (movimiento permanente de crecimiento) provocado por la luz (foto)." },
+        { q: "<span class='tag'>RAZONAMIENTO</span> El cierre rápido de las hojas de una planta atrapamoscas al ser tocada es:", opts: ["Un tropismo", "Una sismonastia", "Una polinización", "Un geotropismo"], ans: 1, info: "Las nastias son movimientos rápidos, temporales y reversibles." },
+        { q: "<span class='tag'>TEORÍA</span> El órgano reproductor masculino de la flor (Androceo) está formado por:", opts: ["El pistilo y el ovario", "Los pétalos y sépalos", "Los estambres (filamento y antera)", "El estigma y el estilo"], ans: 2, info: "En las anteras de los estambres es donde se producen los granos de polen." },
+        { q: "<span class='tag'>TEORÍA</span> Tras la fecundación de la flor, ¿en qué se transforma el OVARIO?", opts: ["En la semilla", "En el tallo", "En el fruto", "En el polen"], ans: 2, info: "El ovario engrosa y se convierte en fruto, mientras que los óvulos de su interior se convierten en semillas." },
+        { q: "<span class='tag'>COMPLETAR TEXTO</span> El transporte del grano de polen desde la antera hasta el estigma del pistilo se llama ____________.", opts: ["Germinación", "Polinización", "Fecundación", "Dispersión"], ans: 1, info: "Puede ser anemógama (por viento) o entomógama (por insectos)." },
+        { q: "<span class='tag'>RAZONAMIENTO</span> Una patata es un tallo subterráneo engrosado lleno de reservas que puede generar una nueva planta. Es un:", opts: ["Bulbo", "Tubérculo", "Estolón", "Rizoma"], ans: 1, info: "Es un tubérculo, una forma de reproducción asexual de las plantas." },
+        { q: "<span class='tag'>TEORÍA</span> La parte exterior de la flor que protege el capullo, formada por hojitas verdes llamadas sépalos, es el:", opts: ["Cáliz", "Corola", "Androceo", "Gineceo"], ans: 0, info: "El cáliz protege la flor antes de abrirse; la corola está formada por los pétalos." }
     ];
 
-    let current = 0;
-    let score = 0;
-    let selectedQ = [];
-
-    function init() {
-        selectedQ = bank.sort(() => 0.5 - Math.random()).slice(0, 20);
-        render();
-    }
-
+    let cur = 0, score = 0;
+    
     function render() {
-        const data = selectedQ[current];
-        const area = document.getElementById('question-area');
-        document.getElementById('q-txt').innerText = `Pregunta: ${current + 1} / 20`;
-        document.getElementById('fill').style.width = `${(current / 20) * 100}%`;
-        document.getElementById('feedback').style.display = 'none';
-
-        let qTitle = data.q.includes('[RAZONAMIENTO]') 
-            ? `<span class="razonamiento-tag">RAZONAMIENTO</span>` + data.q.replace('[RAZONAMIENTO]', '')
-            : data.q;
-
-        area.innerHTML = `<div class="question-box">${qTitle}</div><div class="options" id="opts"></div>`;
+        const d = bank[cur];
+        document.getElementById('q-count').innerText = `Pregunta: ${cur + 1} / 20`;
+        document.getElementById('bar').style.width = ((cur)/bank.length)*100 + "%";
         
-        data.opts.forEach((o, i) => {
-            const b = document.createElement('button');
-            b.className = 'btn';
-            b.innerText = o;
-            b.onclick = () => check(i);
-            document.getElementById('opts').appendChild(b);
-        });
+        let html = `<div class="q-card"><h3>${d.q}</h3>`;
+        d.opts.forEach((o, i) => html += `<button class="btn" onclick="check(${i})">${o}</button>`);
+        document.getElementById('question-area').innerHTML = html;
+        document.getElementById('feedback').style.display = 'none';
     }
-
-    function check(idx) {
-        const data = selectedQ[current];
+    
+    window.check = (i) => {
+        const d = bank[cur];
         const f = document.getElementById('feedback');
-        const ft = document.getElementById('f-text');
-        const btns = document.querySelectorAll('.btn');
-        btns.forEach(b => b.disabled = true);
-
-        if(idx === data.ans) {
-            score += 0.5;
-            f.className = 'correct';
-            ft.innerHTML = `<b>¡CORRECTO! 🌿</b><br>${data.info}`;
-        } else {
-            f.className = 'wrong';
-            ft.innerHTML = `<b>INCORRECTO 🍂</b><br>La respuesta era: ${data.opts[data.ans]}. <br>${data.info}`;
+        if(i === d.ans) { 
+            score += 0.5; 
+            f.className = "correct"; 
+            f.innerHTML = "¡CORRECTO! 🌿<br><br><span style='font-weight:normal'>" + d.info + "</span>"; 
+        } else { 
+            f.className = "wrong"; 
+            f.innerHTML = "INCORRECTO 🍂<br><br>La respuesta correcta era: <b>" + d.opts[d.ans] + "</b>.<br><span style='font-weight:normal'>" + d.info + "</span>"; 
         }
-        f.style.display = 'block';
-        document.getElementById('s-txt').innerText = `Nota: ${score.toFixed(1)}`;
-    }
-
-    function next() {
-        current++;
-        if(current < 20) render();
+        f.style.display = "block";
+        document.getElementById('score-count').innerText = `Nota: ${score.toFixed(1)}`;
+        Array.from(document.getElementsByClassName('btn')).forEach(b => b.disabled = true);
+    };
+    
+    window.next = () => {
+        cur++;
+        if(cur < bank.length) render();
         else {
-            document.getElementById('quiz').style.display = 'none';
-            document.getElementById('results').style.display = 'block';
+            document.getElementById('game').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('bar').style.width = "100%";
             let final = score.toFixed(1);
-            document.getElementById('final-mark').innerText = final;
-            document.getElementById('rank-msg').innerText = final >= 5 ? "¡Excelente botánico! Has superado el examen." : "Sigue repasando las fichas del Reino Plantae.";
+            document.getElementById('final-score').innerText = final;
+            document.getElementById('final-msg').innerText = final >= 5 ? "¡Enhorabuena! Tienes el Reino Plantae dominado." : "Hay que repasar un poco más. ¡Vuelve a intentarlo!";
         }
-    }
-
-    init();
+    };
+    render();
 </script>
 </body>
 </html>

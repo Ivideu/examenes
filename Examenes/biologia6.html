@@ -10,11 +10,16 @@
         .q-card { margin-bottom: 20px; }
         .tag { display: inline-block; background: #ffcc80; color: #e65100; padding: 4px 8px; border-radius: 5px; font-size: 0.8em; font-weight: bold; margin-bottom: 10px; }
         .btn { display: block; width: 100%; text-align: left; padding: 15px; margin: 10px 0; border: 2px solid #eee; border-radius: 10px; cursor: pointer; background: none; transition: 0.3s; font-size: 1.05em; font-weight: 500; }
-        .btn:hover { border-color: var(--s); background: #f0faff; }
-        #feedback { display: none; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center; font-weight: bold; font-size: 1.1em; }
-        .correct { background: #e8f5e9; color: #2e7d32; border: 2px solid #2e7d32; }
-        .wrong { background: #ffebee; color: #c62828; border: 2px solid #c62828; }
-        .next { background: var(--p); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; margin-top: 15px; font-size: 1.1em; font-weight: bold; }
+        .btn:hover:not(:disabled) { border-color: var(--s); background: #f0faff; }
+        .btn:disabled { cursor: default; opacity: 0.7; }
+        
+        #feedback { display: none; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center; }
+        .correct-box { background: #e8f5e9; color: #2e7d32; border: 2px solid #2e7d32; }
+        .wrong-box { background: #ffebee; color: #c62828; border: 2px solid #c62828; }
+        
+        .next-btn { background: var(--p); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; margin-top: 15px; font-size: 1.1em; font-weight: bold; width: 100%; }
+        .next-btn:hover { background: #01579b; }
+        
         h1 { color: var(--p); text-align: center; }
         .progress { height: 12px; background: #eee; border-radius: 6px; margin-bottom: 20px; overflow: hidden; }
         #bar { height: 100%; background: var(--p); width: 0%; transition: 0.5s; }
@@ -34,15 +39,15 @@
     <div id="game">
         <div id="question-area"></div>
         <div id="feedback">
-            <p id="f-msg"></p>
-            <button class="next" onclick="next()">Siguiente Pregunta ➔</button>
+            <div id="f-msg"></div>
+            <button class="next-btn" onclick="nextQuestion()">Siguiente Pregunta ➔</button>
         </div>
     </div>
     
     <div id="result" style="display:none; text-align: center;">
-        <h2 id="final-score" style="font-size: 2.5em; color: var(--p);"></h2>
+        <h2 id="final-score-title" style="font-size: 2.5em; color: var(--p); margin-bottom:10px;"></h2>
         <p id="final-msg" style="font-size: 1.2em;"></p>
-        <button class="next" onclick="location.reload()">Repasar de nuevo</button>
+        <button class="next-btn" onclick="location.reload()">Repasar de nuevo</button>
     </div>
 </div>
 
@@ -74,43 +79,61 @@
     
     function render() {
         const d = bank[cur];
-        document.getElementById('q-count').innerText = `Pregunta: ${cur + 1} / 20`;
-        document.getElementById('bar').style.width = ((cur)/bank.length)*100 + "%";
+        document.getElementById('q-count').innerText = `Pregunta: ${cur + 1} / ${bank.length}`;
+        document.getElementById('bar').style.width = ((cur) / bank.length) * 100 + "%";
         
         let html = `<div class="q-card"><h3>${d.q}</h3>`;
-        d.opts.forEach((o, i) => html += `<button class="btn" onclick="check(${i})">${o}</button>`);
+        d.opts.forEach((o, i) => {
+            html += `<button class="btn" onclick="checkAnswer(${i})">${o}</button>`;
+        });
+        html += `</div>`;
+        
         document.getElementById('question-area').innerHTML = html;
         document.getElementById('feedback').style.display = 'none';
     }
     
-    window.check = (i) => {
+    window.checkAnswer = (i) => {
         const d = bank[cur];
-        const f = document.getElementById('feedback');
+        const feedbackDiv = document.getElementById('feedback');
+        const msgDiv = document.getElementById('f-msg');
+        
         if(i === d.ans) { 
             score += 0.5; 
-            f.className = "correct"; 
-            f.innerHTML = "¡CORRECTO! 🦐<br><br><span style='font-weight:normal'>" + d.info + "</span>"; 
+            feedbackDiv.className = "correct-box"; 
+            msgDiv.innerHTML = "<strong>¡CORRECTO! 🦐</strong><br><p style='font-weight:normal; margin-top:10px;'>" + d.info + "</p>"; 
         } else { 
-            f.className = "wrong"; 
-            f.innerHTML = "INCORRECTO 🦂<br><br>La respuesta correcta era: <b>" + d.opts[d.ans] + "</b>.<br><span style='font-weight:normal'>" + d.info + "</span>"; 
+            feedbackDiv.className = "wrong-box"; 
+            msgDiv.innerHTML = "<strong>INCORRECTO 🦂</strong><br><p style='font-weight:normal; margin-top:10px;'>La respuesta correcta era: <b>" + d.opts[d.ans] + "</b>.<br>" + d.info + "</p>"; 
         }
-        f.style.display = "block";
+        
+        feedbackDiv.style.display = "block";
         document.getElementById('score-count').innerText = `Nota: ${score.toFixed(1)}`;
-        Array.from(document.getElementsByClassName('btn')).forEach(b => b.disabled = true);
+        
+        // Deshabilitar botones para evitar múltiples clics
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(b => b.disabled = true);
     };
     
-    window.next = () => {
+    window.nextQuestion = () => {
         cur++;
-        if(cur < bank.length) render();
-        else {
-            document.getElementById('game').style.display = 'none';
-            document.getElementById('result').style.display = 'block';
-            document.getElementById('bar').style.width = "100%";
-            let final = score.toFixed(1);
-            document.getElementById('final-score').innerText = final;
-            document.getElementById('final-msg').innerText = final >= 5 ? "¡Excelente! Has dominado los invertebrados." : "Aún quedan algunos conceptos por afianzar. Revisa los apuntes y vuelve a intentar el test.";
+        if(cur < bank.length) {
+            render();
+        } else {
+            showResults();
         }
     };
+
+    function showResults() {
+        document.getElementById('game').style.display = 'none';
+        document.getElementById('result').style.display = 'block';
+        document.getElementById('bar').style.width = "100%";
+        
+        let final = score.toFixed(1);
+        document.getElementById('final-score-title').innerText = "Nota Final: " + final;
+        document.getElementById('final-msg').innerText = final >= 5 ? "¡Excelente! Has dominado los invertebrados." : "Aún quedan algunos conceptos por afianzar. Revisa los apuntes y vuelve a intentar el test.";
+    }
+
+    // Iniciar
     render();
 </script>
 </body>

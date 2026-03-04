@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENGLISH EXAM - 1º ESO (Second Term)</title>
+    <title>ENGLISH EXAM - 1º ESO (Full Practice)</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -67,7 +67,6 @@
 
         #final-screen { display: none; text-align: center; }
         .score-circle { font-size: 4rem; color: var(--english-red); font-weight: 800; margin: 20px 0; }
-         /* Botón Volver */
         .btn-back { background: #34495e; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; float: left; font-weight: bold; transition: 0.3s; margin-bottom: 10px; }
         .btn-back:hover { background: #2c3e50; transform: translateX(-3px); }
     </style>
@@ -104,61 +103,49 @@
 
 <script>
     const questions = [
-        // Unit 1: Food & Quantifiers
-        { q: "Complete: 'There _____ some milk in the fridge.'", opts: ["is", "are", "isn't any", "are many"], ans: 0, info: "Milk is uncountable, so we use 'there is' (singular)." },
-        { q: "[RAZONAMIENTO] 'How _____ oranges do you eat?'", opts: ["much", "many", "any", "some"], ans: 1, info: "Oranges are countable plural, so we use 'How many'." },
-        { q: "Which is a vegetable?", opts: ["Chicken", "Lettuce", "Rice", "Apple"], ans: 1, info: "Lettuce (lechuga) is a vegetable." },
-        { q: "Complete: 'I don't have _____ bread for the sandwich.'", opts: ["some", "a", "any", "many"], ans: 2, info: "We use 'any' for negative sentences with uncountable nouns." },
-        { q: "[RAZONAMIENTO] 'How _____ sugar do you want in your coffee?'", opts: ["many", "much", "any", "a lot"], ans: 1, info: "Sugar is uncountable, so we use 'How much'." },
+        // BLOQUE 1
+        { q: "There ____ a supermarket near my house.", opts: ["is", "are"], ans: 0, info: "Use 'is' for singular (a supermarket)." },
+        { q: "There ____ three apples on the table.", opts: ["is", "are"], ans: 1, info: "Use 'are' for plural (three apples)." },
+        { q: "I have ___ orange and ___ bananas.", opts: ["a / any", "an / some", "some / an"], ans: 1, info: "'An' for vowels (orange) and 'some' for plural affirmative." },
+        { q: "There isn’t ___ milk in the fridge.", opts: ["some", "a", "any"], ans: 2, info: "Use 'any' for negative sentences with uncountable nouns." },
+        { q: "__________ students are there in your class?", opts: ["How much", "How many", "How any"], ans: 1, info: "'How many' is used for countable nouns (students)." },
+        { q: "My brother ______ (play) football every Saturday.", opts: ["play", "plays", "playing"], ans: 1, info: "Third person singular (he/she/it) adds -s in Present Simple." },
+        { q: "We ______ (not like) fast food.", opts: ["not like", "doesn't like", "don't like"], ans: 2, info: "We use 'don't' for I/You/We/They." },
+        { q: "[RAZONAMIENTO] Choose the correct rewrite: I am late for school. (never)", opts: ["I am late never for school.", "I never am late for school.", "I am never late for school."], ans: 2, info: "Adverbs of frequency go AFTER the verb 'to be'." },
+        { q: "Look! She ____ a photo.", opts: ["takes", "is taking"], ans: 1, info: "The word 'Look!' indicates the action is happening now (Present Continuous)." },
+        { q: "I usually ____ breakfast at 7:30.", opts: ["am having", "have"], ans: 1, info: "'Usually' indicates a habit (Present Simple)." },
+        { q: "Yesterday we ______ (visit) our grandparents.", opts: ["visited", "visit", "visiting"], ans: 0, info: "Past Simple of a regular verb adds -ed." },
+        { q: "He ______ (buy) a new jacket.", opts: ["buyed", "bought", "buy"], ans: 1, info: "'Buy' is an irregular verb: buy -> bought." },
+        { q: "While I ______ (study), my phone rang.", opts: ["studied", "am studying", "was studying"], ans: 2, info: "Past Continuous for an action in progress interrupted by another." },
+        { q: "They ______ (watch) TV when the lights went out.", opts: ["were watching", "was watching", "watched"], ans: 0, info: "Use 'were' for 'They' in Past Continuous." },
+        { q: "We ______ (finish) the exam at 11.", opts: ["finished", "finishing", "was finish"], ans: 0, info: "Completed action in the past (Past Simple)." },
+        { q: "I’m going to ______ (study) English.", opts: ["study", "studying", "studied"], ans: 0, info: "After 'going to', we use the infinitive verb." },
+        { q: "Don’t worry, I ____ help you.", opts: ["will", "won’t"], ans: 0, info: "'Will' is used for offers and promises." },
+        { q: "If it rains, we ______ (stay) at home.", opts: ["stay", "will stay", "stayed"], ans: 1, info: "First Conditional: If + Present, Will + Infinitive." },
+        { q: "A very big animal that lives in the sea is a ______.", opts: ["Lion", "Whale", "Elephant"], ans: 1, info: "Whale (ballena) lives in the sea." },
+        { q: "You can borrow books at the ______.", opts: ["Library", "Bookshop", "Museum"], ans: 0, info: "Library is where you borrow books, bookshop is where you buy them." },
 
-        // Unit 2: Present Simple & Animals
-        { q: "Third person singular: 'She _____ (go) to the park every day.'", opts: ["go", "gos", "goes", "going"], ans: 2, info: "Verbs ending in -o add -es (goes)." },
-        { q: "Which animal has a very long neck?", opts: ["Elephant", "Giraffe", "Lion", "Shark"], ans: 1, info: "Giraffes have long necks to reach tall trees." },
-        { q: "[RAZONAMIENTO] Choose the correct order:", opts: ["I always am happy", "Always I am happy", "I am always happy", "I am happy always"], ans: 2, info: "The Adverb of Frequency goes AFTER the verb 'To Be'." },
-        { q: "Negative form: 'They _____ like spiders.'", opts: ["doesn't", "don't", "not", "aren't"], ans: 1, info: "For 'They', the auxiliary is 'don't'." },
-        { q: "An animal that lives in the ocean is a...", opts: ["Whale", "Tiger", "Eagle", "Cow"], ans: 0, info: "A whale (ballena) lives in the ocean." },
-
-        // Unit 3: Present Continuous vs Simple
-        { q: "[RAZONAMIENTO] 'Look! It _____ (rain) right now.'", opts: ["rains", "is raining", "raining", "rain"], ans: 1, info: "Key word: 'right now' indicates Present Continuous (am/is/are + -ing)." },
-        { q: "Where do you borrow books?", opts: ["Museum", "Library", "Supermarket", "Bakery"], ans: 1, info: "Library = Biblioteca." },
-        { q: "'I usually _____ coffee, but today I _____ tea.'", opts: ["drink / am drinking", "am drinking / drink", "drinks / drinking", "drink / drink"], ans: 0, info: "Usually = habit (Simple). Today = exception (Continuous)." },
-        { q: "Which place is for buying bread?", opts: ["Newsagent's", "Bakery", "Pharmacy", "Cinema"], ans: 1, info: "Bakery = Panadería." },
-        { q: "Question form: '_____ you doing your homework now?'", opts: ["Do", "Are", "Is", "Does"], ans: 1, info: "Present Continuous questions start with the verb To Be." },
-
-        // Unit 4: Past Simple & Jobs
-        { q: "Past Simple of 'WATCH':", opts: ["watchied", "watching", "watched", "watch"], ans: 2, info: "Regular verb: add -ed." },
-        { q: "[RAZONAMIENTO] 'I _____ (go) to the cinema yesterday.'", opts: ["goed", "was", "went", "gone"], ans: 2, info: "Go is irregular: go -> went." },
-        { q: "A person who puts out fires is a...", opts: ["Doctor", "Teacher", "Firefighter", "Lawyer"], ans: 2, info: "Firefighter = Bombero." },
-        { q: "Negative past: 'We _____ see the film.'", opts: ["don't", "didn't", "weren't", "no"], ans: 1, info: "Past negative uses 'didn't' + infinitive." },
-        { q: "Question form: '_____ you finish the exam?'", opts: ["Do", "Was", "Did", "Were"], ans: 2, info: "Past Simple questions start with 'Did'." },
-
-        // Unit 5: Comparison of Adjectives
-        { q: "Comparative of 'FAST':", opts: ["fastest", "faster", "more fast", "fastier"], ans: 1, info: "Short adjective: add -er." },
-        { q: "[RAZONAMIENTO] 'This car is _____ expensive than that one.'", opts: ["more", "most", "er", "the"], ans: 0, info: "Long adjective (expensive): use 'more'." },
-        { q: "Superlative of 'GOOD':", opts: ["the goodest", "the better", "the best", "the most good"], ans: 2, info: "Good -> Better (comp) -> Best (super)." },
-        { q: "'Elephants are _____ (big) than dogs.'", opts: ["bigger", "biger", "more big", "the biggest"], ans: 0, info: "Big: ends in CVC, so we double the last letter (bigger)." },
-        { q: "Which is the superlative of 'dangerous'?", opts: ["dangerouser", "the most dangerous", "more dangerous", "the dangerousest"], ans: 1, info: "Long adjective: use 'the most'." },
-
-        // Unit 6: Past Continuous & House
-        { q: "[RAZONAMIENTO] 'I _____ (sleep) when the phone rang.'", opts: ["slept", "was sleeping", "am sleeping", "were sleeping"], ans: 1, info: "Past Continuous (was/were + -ing) for a long action interrupted by a short one." },
-        { q: "Where do you cook in a house?", opts: ["Bathroom", "Kitchen", "Garage", "Bedroom"], ans: 1, info: "Kitchen = Cocina." },
-        { q: "Plural of 'was' in Past Continuous:", opts: ["was", "were", "are", "been"], ans: 1, info: "We use 'were' for You, We, They." },
-        { q: "Which part of the house is underground?", opts: ["Attic", "Balcony", "Basement", "Garden"], ans: 2, info: "Basement = Sótano." },
-        { q: "Negative: 'They _____ playing tennis at 5:00.'", opts: ["wasn't", "weren't", "didn't", "not"], ans: 1, info: "Negative of 'were' is 'weren't'." },
-
-        // Unit 7: Future (Going to / Present Continuous)
-        { q: "'I _____ (visit) my grandparents next Saturday.' (Plan)", opts: ["am going to visit", "visit", "visiting", "goes to visit"], ans: 0, info: "We use 'be going to' for intentions and plans." },
-        { q: "Which is a geographical feature?", opts: ["Table", "Mountain", "Car", "Pencil"], ans: 1, info: "Mountain (montaña) is a geographical feature." },
-        { q: "A large body of salt water is a...", opts: ["River", "Lake", "Ocean", "Forest"], ans: 2, info: "Ocean = Océano." },
-        { q: "Question: '_____ she going to travel to London?'", opts: ["Is", "Are", "Does", "Am"], ans: 0, info: "'She' uses 'Is'." },
-        { q: "[RAZONAMIENTO] 'We _____ (have) a party tonight!' (Arrangement)", opts: ["have", "are having", "going to have", "had"], ans: 1, info: "Present Continuous can be used for fixed future arrangements." },
-
-        // Unit 8: Will & First Conditional
-        { q: "Future prediction: 'I think it _____ rain tomorrow.'", opts: ["is", "will", "going to", "shall"], ans: 1, info: "We use 'will' for predictions based on what we think." },
-        { q: "[RAZONAMIENTO] First Conditional: 'If it rains, we _____ stay at home.'", opts: ["stay", "will stay", "stayed", "are stay"], ans: 1, info: "Structure: If + Present Simple, Will + Infinitive." },
-        { q: "A person who is happy and smiles is...", opts: ["Sad", "Cheerful", "Angry", "Lazy"], ans: 1, info: "Cheerful = Alegre." },
-        { q: "First Conditional: 'If you _____ (study), you will pass.'", opts: ["study", "studies", "will study", "studied"], ans: 0, info: "The 'If' clause takes Present Simple." },
-        { q: "Opposite of 'Hard-working' (trabajador):", opts: ["Shy", "Lazy", "Kind", "Brave"], ans: 1, info: "Lazy = Perezoso/vago." }
+        // BLOQUE 2
+        { q: "There ____ two parks in my town.", opts: ["is", "are"], ans: 1, info: "Plural nouns (two parks) use 'are'." },
+        { q: "There ____ a cinema near here.", opts: ["is", "are"], ans: 0, info: "Singular nouns (a cinema) use 'is'." },
+        { q: "She has ___ apple and ___ biscuits.", opts: ["an / some", "a / any", "some / an"], ans: 0, info: "'An' before vowel sounds, 'some' for plural affirmative." },
+        { q: "There aren’t ___ eggs.", opts: ["some", "any", "a"], ans: 1, info: "Use 'any' for plural negative sentences." },
+        { q: "__________ milk is there?", opts: ["How many", "How much", "How any"], ans: 1, info: "'How much' is used for uncountable nouns like milk." },
+        { q: "She ______ (play) the piano.", opts: ["play", "plays", "playing"], ans: 1, info: "Third person singular adds -s." },
+        { q: "He ______ (not go) to school on Sunday.", opts: ["don't go", "doesn't go", "not goes"], ans: 1, info: "He/She/It uses 'doesn't' for negatives." },
+        { q: "[RAZONAMIENTO] Rewrite: She is tired. (always)", opts: ["She always is tired.", "She is always tired.", "Always she is tired."], ans: 1, info: "Frequency adverbs go after 'to be'." },
+        { q: "Listen! They ____ music.", opts: ["listen", "are listening"], ans: 1, info: "'Listen!' means it's happening now (Continuous)." },
+        { q: "He usually ____ to bed at 10.", opts: ["goes", "is going"], ans: 0, info: "Routine (Present Simple)." },
+        { q: "Last week we ______ (travel) to Madrid.", opts: ["traveled", "travelled", "travel"], ans: 1, info: "Double 'l' in British English (travelled)." },
+        { q: "She ______ (see) a film.", opts: ["seed", "saw", "seen"], ans: 1, info: "Irregular verb: see -> saw." },
+        { q: "I ______ (do) homework when you called.", opts: ["was doing", "did", "am doing"], ans: 0, info: "Past Continuous (was + -ing)." },
+        { q: "They ______ (sleep) when the alarm rang.", opts: ["was sleeping", "were sleeping", "slept"], ans: 1, info: "They + were + -ing." },
+        { q: "We ______ (arrive) late.", opts: ["arrived", "arrive", "was arrive"], ans: 0, info: "Regular past verb." },
+        { q: "She is going to ______ (visit) her cousin.", opts: ["visits", "visit", "visiting"], ans: 1, info: "Infinitive after 'going to'." },
+        { q: "I think it ____ rain tomorrow.", opts: ["will", "won’t"], ans: 0, info: "Predictions with 'I think' use 'will'." },
+        { q: "If I study, I ______ (pass) the exam.", opts: ["pass", "will pass", "passed"], ans: 1, info: "First Conditional: If + Present, Future (will)." },
+        { q: "A person who works in a hospital is a ______.", opts: ["Teacher", "Doctor", "Firefighter"], ans: 1, info: "Doctors work in hospitals." },
+        { q: "You sleep in the ______.", opts: ["Kitchen", "Bathroom", "Bedroom"], ans: 2, info: "Bedroom (dormitorio) is where you sleep." }
     ];
 
     let current = 0;

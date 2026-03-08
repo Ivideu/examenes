@@ -3,226 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RETO LINGÜÍSTICO 50 - 1º ESO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+    <title>Panel de Exámenes - Menú Principal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2f3640;
-            --secondary: #8c7ae6;
-            --accent: #e1b12c;
-            --success: #44bd32;
-            --error: #c23616;
-            --bg: #f5f6fa;
+            --primary-blue: #4a90e2;
+            --primary-teal: #4ecdc4;
+            --primary-green: #45b649;
+            --accent-pink: #ff4081;
+            --bg-light: #f5f7fa;
+            --card-white: #ffffff;
+            --text-dark: #2c3e50;
         }
 
         body {
-            background: var(--bg);
-            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-family: 'Rajdhani', sans-serif;
             margin: 0;
             display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            padding: 20px;
+            height: 100vh;
         }
 
-        #game-container {
-            width: 100%;
-            max-width: 850px;
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border-top: 10px solid var(--secondary);
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            color: var(--primary-blue);
+            font-size: 2rem;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        .header { text-align: center; margin-bottom: 20px; }
-        .stats { display: flex; justify-content: space-between; font-weight: 800; color: var(--secondary); margin-bottom: 10px; }
-        
-        .progress-bar { height: 12px; background: #dcdde1; border-radius: 6px; overflow: hidden; margin-bottom: 30px; }
-        #fill { height: 100%; width: 0%; background: var(--secondary); transition: 0.3s; }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 90%;
+            max-width: 400px;
+            background: var(--card-white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #e1e8ed;
+        }
 
-        .question-box { font-size: 1.3rem; font-weight: 800; margin-bottom: 25px; color: var(--primary); }
-        .razonamiento-tag { background: var(--accent); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; vertical-align: middle; margin-right: 10px; }
-
-        .options { display: grid; gap: 12px; }
         .btn {
-            background: white; border: 2px solid #dcdde1; padding: 15px;
-            border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: 600;
-            transition: 0.2s; text-align: left;
-        }
-        .btn:hover:not(:disabled) { border-color: var(--secondary); background: #f1f2f6; }
-
-        #feedback {
-            display: none; margin-top: 25px; padding: 20px; border-radius: 10px;
-            text-align: center; animation: slideIn 0.4s ease;
-        }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } }
-        .correct { background: #dff9fb; color: var(--success); border: 2px solid var(--success); }
-        .wrong { background: #fab1a0; color: var(--error); border: 2px solid var(--error); }
-
-        .next-btn {
-            margin-top: 15px; background: var(--secondary); color: white;
-            border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer;
-            font-weight: 800; font-family: 'Montserrat';
+            display: block;
+            padding: 18px 25px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            border: 2px solid #e1e8ed;
+            transition: all 0.3s ease;
+            background: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        #results { display: none; text-align: center; }
-        .score-big { font-size: 5rem; color: var(--secondary); font-weight: 800; }
-         /* Botón Volver */
-        .btn-back { background: #34495e; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; float: left; font-weight: bold; transition: 0.3s; margin-bottom: 10px; }
-        .btn-back:hover { background: #2c3e50; transform: translateX(-3px); }
+        /* Efectos específicos por materia */
+        .musica:hover {
+            border-color: var(--accent-pink);
+            background: #fff0f5;
+            color: var(--accent-pink);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 64, 129, 0.2);
+        }
+
+        .sociales:hover {
+            border-color: var(--primary-teal);
+            background: #f0fdfc;
+            color: var(--primary-teal);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
+        }
+
+        .biologia:hover {
+            border-color: var(--primary-green);
+            background: #f1f8f1;
+            color: var(--primary-green);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(69, 182, 73, 0.2);
+        }
+
+        /* Pie de página decorativo */
+        .footer-note {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #95a5a6;
+            font-weight: 500;
+        }
+        
+              .btn-back {
+        background-color: #34495e; /* Color elegante a juego con las tablas */
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+        .btn-back:hover {
+            background-color: #2c3e50;
+            transform: translateX(-5px); /* Efecto visual de ir hacia atrás */
+    }
+
+        .btn-back:active {
+            transform: scale(0.95);
+    }
     </style>
 </head>
 <body>
-
-<div id="game-container">
-    <div id="quiz">
-        <div class="header">
-             <button onclick="window.history.back()" class="btn-back">⬅ VOLVER</button>
-            <h1>EXAMEN FINAL DE LENGUA</h1>
-            <div class="stats">
-                <span id="q-txt">Pregunta: 1 / 50</span>
-                <span id="s-txt">Nota: 0.0</span>
-            </div>
-            <div class="progress-bar"><div id="fill"></div></div>
-        </div>
-
-        <div id="question-area"></div>
-
-        <div id="feedback">
-            <p id="f-text"></p>
-            <button class="next-btn" onclick="next()">CONTINUAR ➔</button>
-        </div>
-    </div>
-
-    <div id="results">
-        <h2>RESULTADO FINAL</h2>
-        <div class="score-big" id="final-mark">0</div>
-        <p id="rank-msg"></p>
-        <button class="next-btn" onclick="location.reload()">REPETIR EXAMEN</button>
-    </div>
+    <div style="margin-bottom: 20px;">
+    <p><button onclick="window.history.back()" class="btn-back">
+        ⬅ Volver
+    </button></p>
 </div>
+    <h1>CIENCIAS SOCILES</h1>
 
-<script>
-    const bank = [
-        // 1-10: COMUNICACIÓN Y LENGUAJE
-        { q: "En la comunicación, ¿qué elemento es el sistema de signos utilizado (ej: el idioma)?", opts: ["Canal", "Código", "Mensaje", "Referente"], ans: 1, info: "El código es el conjunto de signos y reglas (como el español o el morse)." },
-        { q: "Diferencia entre lengua oral y escrita:", opts: ["La oral es planificada, la escrita espontánea", "La oral es efímera (vuela), la escrita es duradera", "No hay diferencias", "La oral solo usa palabras"], ans: 1, info: "La lengua oral suele ser espontánea y fugaz, mientras que la escrita permanece en el tiempo." },
-        { q: "[RAZONAMIENTO] Si ves una señal de STOP, ¿qué tipo de comunicación es?", opts: ["Verbal", "No verbal (Icónica)", "Auditiva", "Gestual"], ans: 1, info: "Es no verbal porque utiliza una imagen/símbolo para transmitir el mensaje." },
-        { q: "¿Qué es la diglosia?", opts: ["Hablar dos lenguas igual de bien", "Convivencia de dos lenguas donde una tiene menos prestigio", "Aprender una lengua extranjera", "Hablar solo un dialecto"], ans: 1, info: "La diglosia implica una situación de desigualdad social entre dos lenguas." },
-        { q: "Un dialecto es:", opts: ["Una lengua mal hablada", "Una variedad geográfica de una lengua", "Un idioma sin gramática", "Una lengua antigua"], ans: 1, info: "Es una variedad física/territorial (como el andaluz respecto al castellano)." },
-        { q: "[RAZONAMIENTO] ¿Cuál es el canal en una conversación por WhatsApp?", opts: ["El teléfono y la red", "El lenguaje escrito", "El receptor", "Los emojis"], ans: 0, info: "El canal es el soporte físico que permite que el mensaje llegue." },
-        { q: "Las palabras simples están formadas por:", opts: ["Dos raíces", "Una sola raíz (y prefijos)", "Una sola raíz (y morfemas flexivos)", "Varios sufijos"], ans: 2, info: "Ejemplo: 'Pan' o 'Gatos' (Raíz + flexivo de plural)." },
-        { q: "La palabra 'Sacacorchos' es:", opts: ["Simple", "Derivada", "Compuesta", "Parasintética"], ans: 2, info: "Compuesta: une Saca + Corchos." },
-        { q: "[RAZONAMIENTO] Identifica la palabra derivada:", opts: ["Balón", "Librería", "Coche", "Abrelatas"], ans: 1, info: "Librería viene de Libro + sufijo -ería." },
-        { q: "¿Qué es un signo lingüístico?", opts: ["Un dibujo", "La unión de un significante y un significado", "Una letra suelta", "Un gesto con la mano"], ans: 1, info: "Concepto de Saussure: la palabra escrita/hablada asociada a una idea." },
-
-        // 11-20: SUSTANTIVOS Y ADJETIVOS
-        { q: "Sustantivo que nombra a un conjunto de seres en singular (ej: jauría):", opts: ["Propio", "Abstracto", "Colectivo", "Contable"], ans: 2, info: "Los colectivos designan grupos (ejército, enjambre)." },
-        { q: "Género del sustantivo 'Pianista':", opts: ["Masculino", "Femenino", "Común en cuanto al género", "Epiceno"], ans: 2, info: "Se dice 'el pianista' o 'la pianista', la palabra no cambia." },
-        { q: "[RAZONAMIENTO] ¿Cuál es un sustantivo abstracto?", opts: ["Aire", "Piedra", "Justicia", "Agua"], ans: 2, info: "La justicia no se puede tocar ni ver físicamente; es una idea." },
-        { q: "El grado superlativo de 'bueno' es:", opts: ["Buenísimo", "Óptimo", "El mejor", "Todas son correctas"], ans: 3, info: "Tanto el sintético, el absoluto como el irregular son válidos." },
-        { q: "[RAZONAMIENTO] En 'La blanca nieve', el adjetivo es:", opts: ["Especificativo", "Explicativo (Epíteto)", "Numeral", "Relativo"], ans: 1, info: "Es un epíteto porque resalta una cualidad intrínseca." },
-        { q: "El grado comparativo de superioridad de 'grande' es:", opts: ["Más grande", "Mayor", "A y B son correctas", "Grandísimo"], ans: 2, info: "Podemos decir 'más grande' o el irregular 'mayor'." },
-        { q: "¿Qué es una familia léxica?", opts: ["Palabras que significan lo mismo", "Palabras con la misma raíz", "Palabras del mismo tema", "Sinónimos"], ans: 1, info: "Ej: Flor, florero, florista comparten la raíz 'flor'." },
-        { q: "Indica el sustantivo epiceno (necesita añadir 'macho/hembra'):", opts: ["Gato", "Perro", "Tortuga", "Actor"], ans: 2, info: "Se dice 'la tortuga macho' o 'la tortuga hembra'." },
-        { q: "[RAZONAMIENTO] ¿Qué grado tiene: 'Este examen es facilísimo'?", opts: ["Positivo", "Comparativo", "Superlativo absoluto", "Superlativo relativo"], ans: 2, info: "El sufijo -ísimo indica grado máximo sin comparar con otros." },
-        { q: "Sustantivo propio de lugar:", opts: ["Río", "Montaña", "Tajo", "Ciudad"], ans: 2, info: "Tajo es el nombre concreto de un río." },
-
-        // 21-35: EL VERBO (Uso de PDFs)
-        { q: "El verbo funciona siempre como:", opts: ["Sujeto", "Núcleo del Predicado", "Adyacente", "Determinante"], ans: 1, info: "Según tus apuntes, es el núcleo de la acción." },
-        { q: "¿Qué indica el modo Subjuntivo?", opts: ["Hecho real", "Orden", "Deseo, duda o posibilidad", "Pregunta"], ans: 2, info: "Ej: 'Ojalá llueva'." },
-        { q: "[RAZONAMIENTO] Tiempo de: 'Haya cantado'", opts: ["Pretérito Perfecto Compuesto Subjuntivo", "Presente Indicativo", "Pretérito Pluscuamperfecto", "Futuro"], ans: 0, info: "Es un tiempo compuesto del modo subjuntivo." },
-        { q: "Forma no personal: 'Cantando'", opts: ["Infinitivo", "Gerundio", "Participio", "Presente"], ans: 1, info: "Terminación en -ando/-iendo." },
-        { q: "Los verbos de la 2ª conjugación terminan en:", opts: ["-ar", "-er", "-ir", "-or"], ans: 1, info: "Ej: Comer, beber, temer." },
-        { q: "El aspecto 'Perfecto' significa:", opts: ["Que la acción es muy buena", "Que la acción ha terminado", "Que la acción es presente", "Que la acción no ha terminado"], ans: 1, info: "Perfecto = terminado." },
-        { q: "[RAZONAMIENTO] Indica el verbo defectivo (solo se usa en 3ª pers.):", opts: ["Cantar", "Llover", "Ir", "Ser"], ans: 1, info: "No decimos 'Yo lluevo'." },
-        { q: "Voz pasiva de 'Juan lee un libro':", opts: ["Un libro es leído por Juan", "Juan ha leído un libro", "El libro lee a Juan", "Juan leyó el libro"], ans: 0, info: "Sujeto paciente + verbo SER + participio." },
-        { q: "¿Qué tiempo es 'Cantara o cantase'?", opts: ["Pretérito Imperfecto Subjuntivo", "Condicional", "Futuro", "Presente"], ans: 0, info: "Forma simple del pasado de subjuntivo." },
-        { q: "El verbo 'Haber' en los tiempos compuestos es un verbo:", opts: ["Principal", "Auxiliar", "Defectivo", "Irregular"], ans: 1, info: "Ayuda a formar el tiempo compuesto." },
-        { q: "Tercera persona del plural del Pretérito Perfecto Simple (Cantar):", opts: ["Cantaron", "Cantaban", "Habían cantado", "Cantarían"], ans: 0, info: "Acción puntual terminada: Ellos cantaron." },
-        { q: "[RAZONAMIENTO] ¿Cuál es la raíz de 'Cantaréis'?", opts: ["Cantar-", "Cant-", "Cantaré-", "C-"], ans: 1, info: "La raíz se obtiene quitando -ar, -er, -ir al infinitivo." },
-        { q: "Tiempo: 'Había cantado'", opts: ["P. Perfecto", "P. Pluscuamperfecto Indicativo", "P. Anterior", "Futuro"], ans: 1, info: "Pasado de un pasado." },
-        { q: "El imperativo sirve para:", opts: ["Contar historias", "Dar órdenes o ruegos", "Expresar dudas", "Describir"], ans: 1, info: "Ej: '¡Canta tú!'." },
-        { q: "[RAZONAMIENTO] ¿Qué forma es 'Hube cantado'?", opts: ["P. Anterior", "P. Perfecto Simple", "P. Pluscuamperfecto", "Condicional"], ans: 0, info: "Tiempo compuesto casi en desuso." },
-
-        // 36-45: DETERMINANTES Y PRONOMBRES (Uso de PDFs)
-        { q: "En 'Esta casa', la palabra 'Esta' es:", opts: ["Pronombre", "Determinante Demostrativo", "Adjetivo", "Verbo"], ans: 1, info: "Es determinante porque acompaña al sustantivo 'casa'." },
-        { q: "[RAZONAMIENTO] En 'Esta es mi casa', la palabra 'Esta' es:", opts: ["Determinante", "Pronombre Demostrativo", "Adverbio", "Preposición"], ans: 1, info: "Es pronombre porque va sola, sustituye al sustantivo." },
-        { q: "¿Qué indica un determinante posesivo?", opts: ["Distancia", "Cantidad", "Pertenencia (posesión)", "Orden"], ans: 2, info: "Ej: mi, tu, su, nuestro." },
-        { q: "Pronombre personal de 1ª persona plural tónico:", opts: ["Yo", "Mí", "Nosotros", "Me"], ans: 2, info: "Nosotros/as." },
-        { q: "Los determinantes numerales ordinales indican:", opts: ["Cantidad (uno, dos)", "Orden (primero, segundo)", "Duda", "Posesión"], ans: 1, info: "Viene de 'orden'." },
-        { q: "[RAZONAMIENTO] En 'Tengo muchos cromos', 'muchos' es:", opts: ["Determinante indefinido", "Pronombre", "Adverbio", "Sustantivo"], ans: 0, info: "Acompaña a 'cromos'." },
-        { q: "Los pronombres relativos (que, cual, quien):", opts: ["Hacen preguntas", "Se refieren a un nombre ya dicho", "Indican orden", "Expresan sorpresa"], ans: 1, info: "Se refieren al antecedente." },
-        { q: "Determinante demostrativo de lejanía:", opts: ["Este", "Ese", "Aquel", "Cerca"], ans: 2, info: "Aquel/Aquella indica que está lejos." },
-        { q: "Los pronombres 'me, te, se, nos, os, les' son:", opts: ["Tónicos", "Átonos", "Demostrativos", "Posesivos"], ans: 1, info: "No pueden ir solos, necesitan al verbo." },
-        { q: "[RAZONAMIENTO] ¿Cuál es un pronombre interrogativo?", opts: ["Ese", "Nuestro", "Quién", "Varios"], ans: 2, info: "¿Quién viene?." },
-
-        // 46-50: ADVERBIOS, PREPOSICIONES Y TEXTOS
-        { q: "El adverbio es una palabra:", opts: ["Variable", "Invariable", "Que siempre es sujeto", "Un tipo de verbo"], ans: 1, info: "No tiene género ni número." },
-        { q: "La denotación es el significado:", opts: ["Subjetivo", "Objetivo (del diccionario)", "Emocional", "Oculto"], ans: 1, info: "Lo que significa para todo el mundo igual." },
-        { q: "[RAZONAMIENTO] Significado connotativo de 'Ser un lince':", opts: ["Ser un animal salvaje", "Ser muy astuto/listo", "Tener mucho pelo", "Vivir en el bosque"], ans: 1, info: "Es el valor figurado que le damos." },
-        { q: "La noticia pertenece al género:", opts: ["Literario", "Periodístico informativo", "De opinión", "Teatral"], ans: 1, info: "Busca informar de hechos reales." },
-        { q: "Las preposiciones (a, ante, bajo...) sirven para:", opts: ["Sustituir nombres", "Unir palabras estableciendo relación", "Expresar sentimientos", "Indicar acciones"], ans: 1, info: "Son nexos o enlaces." }
-    ];
-
-    let current = 0;
-    let score = 0;
-    const totalQ = bank.length;
-
-    function render() {
-        const data = bank[current];
-        const area = document.getElementById('question-area');
-        document.getElementById('q-txt').innerText = `Pregunta: ${current + 1} / ${totalQ}`;
-        document.getElementById('fill').style.width = `${(current / totalQ) * 100}%`;
-        document.getElementById('feedback').style.display = 'none';
-
-        let qTitle = data.q.includes('[RAZONAMIENTO]') 
-            ? `<span class="razonamiento-tag">RAZONAMIENTO</span>` + data.q.replace('[RAZONAMIENTO]', '')
-            : data.q;
-
-        area.innerHTML = `<div class="question-box">${qTitle}</div><div class="options" id="opts"></div>`;
+    <div class="container">
         
-        data.opts.forEach((o, i) => {
-            const b = document.createElement('button');
-            b.className = 'btn';
-            b.innerText = o;
-            b.onclick = () => check(i);
-            document.getElementById('opts').appendChild(b);
-        });
-    }
+        <a href="https://ivideu.github.io/examenes/Examenes/lengua5y6.html" class="btn sociales">TEMA 5 y 6</a>
+        <a href="https://ivideu.github.io/examenes/Examenes/lengua7y8.html" class="btn musica">TEMA 7 y 8</a>
+    </div>
 
-    function check(idx) {
-        const data = bank[current];
-        const f = document.getElementById('feedback');
-        const ft = document.getElementById('f-text');
-        const btns = document.querySelectorAll('.btn');
-        btns.forEach(b => b.disabled = true);
+    <div class="footer-note">Selecciona un examen para comenzar</div>
 
-        if(idx === data.ans) {
-            score += (10 / totalQ);
-            f.className = 'correct';
-            ft.innerHTML = `<b>¡CORRECTO!</b><br>${data.info}`;
-        } else {
-            f.className = 'wrong';
-            ft.innerHTML = `<b>INCORRECTO</b><br>${data.info}`;
-        }
-        f.style.display = 'block';
-        document.getElementById('s-txt').innerText = `Nota: ${score.toFixed(1)}`;
-    }
-
-    function next() {
-        current++;
-        if(current < totalQ) render();
-        else {
-            document.getElementById('quiz').style.display = 'none';
-            document.getElementById('results').style.display = 'block';
-            let final = score.toFixed(1);
-            document.getElementById('final-mark').innerText = final;
-            document.getElementById('rank-msg').innerText = final >= 5 ? "¡Aprobado! Buen trabajo." : "Debes repasar más el temario.";
-        }
-    }
-
-    render();
-</script>
 </body>
 </html>

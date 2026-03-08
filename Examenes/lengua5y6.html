@@ -3,110 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MasterClass Lengua 1º ESO: Unidades 5 y 6</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+    <title>Examen Final Lengua 1º ESO - Unidades 5 y 6</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
+            --primary: #4a90e2;
+            --secondary: #2c3e50;
             --success: #27ae60;
             --error: #e74c3c;
-            --accent: #f1c40f;
-            --bg: #f4f7f6;
+            --warning: #f1c40f;
+            --light: #f8f9fa;
         }
 
         body {
-            font-family: 'Nunito', sans-serif;
-            background-color: var(--bg);
+            font-family: 'Poppins', sans-serif;
+            background-color: #e9ecef;
             margin: 0;
-            display: flex;
-            justify-content: center;
             padding: 20px;
+            color: var(--secondary);
         }
 
-        #quiz-container {
-            background: white;
-            width: 100%;
+        .container {
             max-width: 800px;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         header {
             text-align: center;
-            border-bottom: 3px solid var(--secondary);
+            border-bottom: 4px solid var(--primary);
             margin-bottom: 30px;
-            padding-bottom: 10px;
+            padding-bottom: 20px;
         }
 
-        h1 { color: var(--primary); font-family: 'Montserrat', sans-serif; }
-
-        .stats {
+        .stats-bar {
             display: flex;
             justify-content: space-between;
-            font-weight: bold;
-            color: var(--secondary);
-            margin-bottom: 20px;
+            background: var(--light);
+            padding: 15px 25px;
+            border-radius: 50px;
+            margin-bottom: 30px;
+            font-weight: 700;
         }
 
-        .question-box {
-            display: none;
-            animation: fadeIn 0.5s;
+        .question-container {
+            min-height: 300px;
         }
-
-        .active { display: block; }
 
         .question-text {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
         }
 
         .options-grid {
             display: grid;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .btn {
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
+        .option-btn {
             background: white;
+            border: 2px solid #dee2e6;
+            padding: 18px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.2s;
             font-size: 1rem;
             text-align: left;
-            font-family: inherit;
+            font-weight: 500;
         }
 
-        .btn:hover:not(:disabled) {
-            background: #eef7ff;
-            border-color: var(--secondary);
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background-color: #f0f7ff;
         }
 
-        .correct { background: var(--success) !important; color: white; border-color: var(--success); }
-        .wrong { background: var(--error) !important; color: white; border-color: var(--error); }
+        .option-btn.correct {
+            background-color: var(--success) !important;
+            color: white;
+            border-color: var(--success);
+        }
 
-        #feedback {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
+        .option-btn.wrong {
+            background-color: var(--error) !important;
+            color: white;
+            border-color: var(--error);
+        }
+
+        #feedback-area {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
             display: none;
-            line-height: 1.5;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .next-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
             margin-top: 20px;
-            padding: 12px 25px;
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
             cursor: pointer;
-            float: right;
-            display: none;
         }
 
         #results-screen {
@@ -114,122 +125,166 @@
             display: none;
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .final-score {
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>
 
-<div id="quiz-container">
-    <header>
-        <h1>RETO DE LENGUA: UNIDADES 5 Y 6</h1>
-        <p>Verbos, Adjetivos y Narración</p>
-    </header>
+<div class="container">
+    <div id="quiz-screen">
+        <header>
+            <h1>🎓 Examen de Lengua Española</h1>
+            <p>1º ESO - Unidades 5 y 6</p>
+        </header>
 
-    <div id="game-info" class="stats">
-        <span>Pregunta: <span id="current-q">1</span>/40</span>
-        <span>Puntuación: <span id="score">0</span></span>
-    </div>
+        <div class="stats-bar">
+            <span>Pregunta: <span id="current-q-num">1</span> / 40</span>
+            <span id="score-display">Puntos: 0</span>
+        </div>
 
-    <div id="quiz-area">
-        <div id="question-text" class="question-text"></div>
-        <div id="options" class="options-grid"></div>
-        <div id="feedback"></div>
-        <button id="next-button" class="next-btn" onclick="loadNextQuestion()">Continuar ➔</button>
+        <div class="question-container">
+            <div id="question-text" class="question-text"> Cargando pregunta...</div>
+            <div id="options-grid" class="options-grid"></div>
+            
+            <div id="feedback-area">
+                <strong id="feedback-title"></strong>
+                <p id="feedback-text"></p>
+                <button onclick="nextQuestion()" class="next-btn">Siguiente pregunta ➔</button>
+            </div>
+        </div>
     </div>
 
     <div id="results-screen">
-        <h2>¡Examen Finalizado!</h2>
-        <p style="font-size: 1.5rem">Tu nota final es: <span id="final-score"></span>/40</p>
-        <button class="btn" style="text-align: center" onclick="location.reload()">Reintentar Examen</button>
+        <h2>¡Examen Completado!</h2>
+        <div class="final-score" id="final-score-val">0</div>
+        <p id="performance-msg"></p>
+        <button onclick="location.reload()" class="next-btn">Repetir examen (Nuevas preguntas)</button>
     </div>
 </div>
 
 <script>
-    // BANCO DE PREGUNTAS (Resumen para el ejemplo, expandible a 40+)
-    const questionBank = [
-        // UNIDAD 5: VERBOS
-        { q: "¿Cuál de estas formas verbales es un participio?", opts: ["Cantando", "Cantado", "Cantar", "Cante"], ans: 1, type: "test", info: "El participio termina en -ado/-ido. 'Cantando' es gerundio y 'Cantar' infinitivo." },
-        { q: "El verbo 'llover' es un verbo defectivo porque solo se conjuga en 3ª persona del singular.", opts: ["Verdadero", "Falso"], ans: 0, type: "vf", info: "Correcto. Los verbos referidos a fenómenos de la naturaleza son defectivos o impersonales." },
-        { q: "¿Cuál es la voz pasiva de 'Juan lee un libro'?", opts: ["Un libro fue leído por Juan", "Juan ha leído un libro", "El libro es leído por Juan", "Juan leyó un libro"], ans: 2, info: "La voz pasiva se forma con el verbo 'ser' en el mismo tiempo que el original (presente) + participio." },
-        { q: "Los verbos irregulares son aquellos que mantienen la raíz igual en todas sus formas.", opts: ["Verdadero", "Falso"], ans: 1, type: "vf", info: "Falso. Los irregulares son los que presentan cambios en la raíz o en las desinencias." },
-        { q: "¿Qué forma no personal funciona a veces como un adjetivo?", opts: ["Infinitivo", "Gerundio", "Participio", "Ninguna"], ans: 2, info: "El participio puede funcionar como adjetivo (ej: 'puerta cerrada')." },
+    // BANCO DE PREGUNTAS (50 preguntas para seleccionar 40)
+    const masterBank = [
+        // Unidad 5: Verbos
+        { q: "¿Cuál es el infinitivo del verbo 'yendo'?", opts: ["Yender", "Ir", "Iendo", "Yendo"], ans: 1, info: "Ir es un verbo altamente irregular; su gerundio es 'yendo'." },
+        { q: "En la oración 'La cena fue preparada por mi abuelo', el verbo está en:", opts: ["Voz activa", "Voz pasiva", "Voz reflexiva", "Voz media"], ans: 1, info: "Es voz pasiva porque el sujeto (la cena) recibe la acción y aparece el verbo 'ser' + participio." },
+        { q: "¿Cuál de estos verbos es defectivo?", opts: ["Comer", "Llover", "Cantar", "Sentir"], ans: 1, info: "Llover es defectivo porque solo se puede conjugar en 3ª persona del singular (fenómeno natural)." },
+        { q: "Identifica la forma no personal: 'Amado'", opts: ["Infinitivo", "Gerundio", "Participio", "Presente"], ans: 2, info: "Los participios terminan en -ado o -ido." },
+        { q: "Los verbos irregulares son aquellos que...", opts: ["Cambian la raíz o las desinencias respecto al modelo", "No tienen infinitivo", "Solo tienen formas en plural", "Terminan siempre en -er"], ans: 0, info: "La irregularidad se nota cuando la raíz cambia (ej: volar -> vuelo) o la terminación no sigue al modelo." },
+        { q: "¿Cuál es el participio del verbo 'escribir'?", opts: ["Escribido", "Escrito", "Escribiendo", "Escriba"], ans: 1, info: "Es un participio irregular. No se dice 'escribido', sino 'escrito'." },
+        { q: "El gerundio expresa...", opts: ["Una acción terminada", "El nombre de la acción", "Una acción en desarrollo", "Un ruego"], ans: 2, info: "El gerundio (-ando, -endo) indica que la acción está ocurriendo." },
+        { q: "Vuelve esta frase a voz activa: 'El gol fue marcado por Messi'.", opts: ["Messi marcará un gol", "Messi marca el gol", "Messi marcó el gol", "Messi había marcado el gol"], ans: 2, info: "El complemento agente (Messi) pasa a ser sujeto y el verbo pasa de pasivo a activo manteniendo el tiempo (pasado)." },
+        { q: "¿Qué caracteriza a una narración no literaria?", opts: ["El uso de mucha fantasía", "Su objetivo es informar de hechos reales", "Siempre rima", "No tiene autor"], ans: 1, info: "Las narraciones no literarias (noticias, crónicas) buscan la objetividad y la información real." },
+        { q: "Verdadero o Falso: 'Haber' es un verbo impersonal cuando indica existencia.", opts: ["Verdadero", "Falso"], ans: 0, info: "Cierto. Se dice 'Había muchas personas', nunca 'Habían muchas personas'." },
         
-        // UNIDAD 6: ADJETIVOS
-        { q: "¿Cuál es el grado superlativo absoluto de 'bueno'?", opts: ["Buenísimo", "Óptimo", "Mejor que", "Muy bueno"], ans: 1, info: "'Óptimo' es el superlativo irregular de bueno." },
-        { q: "En la frase 'El niño es muy alto', ¿en qué grado está el adjetivo?", opts: ["Positivo", "Comparativo", "Superlativo absoluto", "Superlativo relativo"], ans: 2, info: "El uso de 'muy' o el sufijo '-ísimo' indica grado superlativo absoluto." },
-        { q: "El adjetivo concuerda siempre con el sustantivo en:", opts: ["Género y número", "Persona y número", "Tiempo y modo", "Solo género"], ans: 0, info: "La concordancia básica es en género (masc/fem) y número (sing/plur)." },
-        { q: "En 'la casa de madera', 'de madera' funciona como:", opts: ["Adjetivo calificativo", "Complemento preposicional", "Oración de relativo", "Participio"], ans: 1, info: "Se introduce por una preposición ('de'), aportando una característica al sustantivo." },
-        { q: "¿Cuál es el comparativo irregular de 'pequeño'?", opts: ["Más pequeño", "Pequeñísimo", "Menor", "Mínimo"], ans: 2, info: "Pequeño -> Menor (Comparativo) -> Mínimo (Superlativo)." },
-        
-        // NARRACIÓN Y DESCRIPCIÓN
-        { q: "Una noticia es un ejemplo de narración literaria.", opts: ["Verdadero", "Falso"], ans: 1, type: "vf", info: "Falso. La noticia es una narración NO literaria, porque busca informar de hechos reales." },
-        { q: "La descripción objetiva es aquella en la que el autor no da su opinión.", opts: ["Verdadero", "Falso"], ans: 0, type: "vf", info: "Correcto. Es propia de textos científicos o técnicos." }
-        // ... (Añadir hasta 40 preguntas siguiendo el mismo formato)
+        // Unidad 6: Adjetivos y otros
+        { q: "¿Cuál es el grado del adjetivo en: 'Este libro es divertidísimo'?", opts: ["Positivo", "Comparativo de superioridad", "Superlativo absoluto", "Superlativo relativo"], ans: 2, info: "El sufijo -ísimo indica grado superlativo absoluto (máximo nivel)." },
+        { q: "Señala el adjetivo en grado comparativo de inferioridad:", opts: ["Menos alto que", "Tan alto como", "Más alto que", "Altísimo"], ans: 0, info: "Se usa la estructura 'menos + adjetivo + que'." },
+        { q: "¿Cuál es el comparativo irregular de 'bueno'?", opts: ["Buenísimo", "Más bueno", "Mejor", "Óptimo"], ans: 2, info: "Bueno -> Mejor (comparativo) -> Óptimo (superlativo)." },
+        { q: "¿A qué sustantivo complementa 'que lleva gafas' en 'El chico que lleva gafas es mi primo'?", opts: ["Chico", "Gafas", "Primo", "Lleva"], ans: 0, info: "Es una oración de relativo que aporta información sobre el sustantivo 'chico'." },
+        { q: "En la descripción objetiva...", opts: ["El autor da su opinión", "Se usan muchos sentimientos", "Se reflejan las cosas como son en realidad", "Se usa mucho el lenguaje poético"], ans: 2, info: "La descripción objetiva busca la precisión y la realidad, sin valoraciones personales." },
+        { q: "El adjetivo 'paupérrimo' es el superlativo de:", opts: ["Pobre", "Pequeño", "Malo", "Bueno"], ans: 0, info: "Pobre tiene el superlativo irregular paupérrimo." },
+        { q: "Un adjetivo calificativo sirve para:", opts: ["Indicar cantidad", "Expresar una cualidad del sustantivo", "Sustituir al nombre", "Unir oraciones"], ans: 1, info: "Su función principal es decir cómo es o cómo está el sustantivo." },
+        { q: "¿Cuál es el género y número de 'felices'?", opts: ["Masculino plural", "Femenino plural", "Neutro singular", "Género común, plural"], ans: 3, info: "Feliz es un adjetivo de una sola terminación para el género (el niño feliz / la niña feliz)." },
+        { q: "En 'la mesa de madera', 'de madera' es:", opts: ["Un adjetivo calificativo", "Un complemento preposicional", "Un relativo", "Un determinante"], ans: 1, info: "Es un grupo de palabras introducido por una preposición que complementa al nombre." },
+        { q: "El grado superlativo de 'malo' es:", opts: ["Malísimo", "Peor", "Pésimo", "Las opciones A y C son correctas"], ans: 3, info: "Tanto malísimo (regular) como pésimo (irregular) son grados superlativos." },
+
+        // Más preguntas para llegar al banco amplio...
+        { q: "¿Qué modo verbal usamos para dar órdenes?", opts: ["Indicativo", "Subjuntivo", "Imperativo", "Gerundio"], ans: 2, info: "El imperativo sirve para mandatos, ruegos o deseos directos." },
+        { q: "¿Cuál es la raíz del verbo 'Cantaremos'?", opts: ["Cantar", "Cant", "Cantare", "Canta"], ans: 1, info: "La raíz se obtiene quitando la terminación -ar, -er, -ir al infinitivo." },
+        { q: "Identifica la oración en voz activa:", opts: ["El fuego fue apagado", "Los bomberos apagaron el fuego", "El fuego se apagó", "El fuego había sido apagado"], ans: 1, info: "El sujeto (bomberos) realiza la acción directamente." },
+        { q: "¿Cómo se llama la descripción de una persona por sus rasgos físicos?", opts: ["Etopeya", "Retrato", "Prosopografía", "Caricatura"], ans: 2, info: "La prosopografía se centra exclusivamente en el aspecto físico." },
+        { q: "El grado positivo del adjetivo...", opts: ["Compara dos cosas", "Indica la cualidad sin intensidad", "Indica la cualidad máxima", "No existe"], ans: 1, info: "El grado positivo simplemente nombra la cualidad (ej: casa grande)." },
+        { q: "Identifica el participio que funciona como adjetivo:", opts: ["He comido", "La puerta abierta", "Estoy saltando", "Quiero salir"], ans: 1, info: "'Abierta' es un participio que aquí funciona como adjetivo de 'puerta'." },
+        { q: "¿Qué es un verbo defectivo?", opts: ["Un verbo que no se usa", "Un verbo que carece de algunas formas en su conjugación", "Un verbo que siempre es irregular", "Un verbo que termina en -ir"], ans: 1, info: "Les faltan tiempos o personas (como 'acaecer' o 'soler')." },
+        { q: "En 'Ese coche es más rápido que el mío', el grado es:", opts: ["Superioridad", "Igualdad", "Inferioridad", "Absoluto"], ans: 0, info: "Estructura 'más... que'." },
+        { q: "La descripción de los rasgos psicológicos de una persona es:", opts: ["Prosopografía", "Etopeya", "Retrato", "Paisaje"], ans: 1, info: "La etopeya describe el carácter, valores y forma de ser." },
+        { q: "Señala la forma personal (conjugada):", opts: ["Vivir", "Viviendo", "Vivía", "Vivido"], ans: 2, info: "Vivía tiene persona (yo/él), tiempo y modo. Las otras son formas no personales." },
+        { q: "El superlativo de 'célebre' es:", opts: ["Celebrísimo", "Celebérrimo", "Muy célebre", "B y C son correctas"], ans: 3, info: "Celebérrimo es la forma culta e irregular." },
+        { q: "En 'El hombre que fuma es mi tío', ¿cuál es el relativo?", opts: ["El", "que", "fuma", "mi"], ans: 1, info: "'que' es el pronombre relativo que introduce la oración." },
+        { q: "Un adjetivo de dos terminaciones es aquel que...", opts: ["Tiene forma distinta para masculino y femenino", "Termina siempre en -e", "Sirve para plural y singular", "No existe"], ans: 0, info: "Ej: blanco / blanca. Cambian según el género." },
+        { q: "¿Cuál es el infinitivo de 'supuesto'?", opts: ["Suponer", "Suponiendo", "Supuestar", "Saber"], ans: 0, info: "Supuesto es el participio irregular de suponer." },
+        { q: "Los textos descriptivos en 1º de ESO suelen usar muchos:", opts: ["Verbos de acción", "Adjetivos", "Adverbios de tiempo", "Interjecciones"], ans: 1, info: "Los adjetivos son la herramienta principal para pintar con palabras." },
+        { q: "La voz pasiva se construye con el verbo auxiliar:", opts: ["Haber", "Estar", "Ser", "Tener"], ans: 2, info: "Siempre se usa el verbo SER (ej: Es amado, fue visto)." },
+        { q: "Verdadero o Falso: 'Soler' solo se usa en presente y pretérito imperfecto.", opts: ["Verdadero", "Falso"], ans: 0, info: "Correcto, es un verbo defectivo por su uso temporal." },
+        { q: "El superlativo absoluto de 'fiel' es:", opts: ["Fielísimo", "Fidelísimo", "Muy fiel", "B y C son correctas"], ans: 3, info: "Fidelísimo es la forma irregular correcta del latín fidelis." },
+        { q: "¿Qué aporta el complemento preposicional?", opts: ["Una acción", "Una característica del sustantivo mediante preposición", "Indica el tiempo", "Sustituye al nombre"], ans: 1, info: "Ej: 'Café con leche'. 'Con leche' especifica el tipo de café." },
+        { q: "El grado comparativo de igualdad usa la estructura:", opts: ["Más... que", "Menos... que", "Tan... como", "Muy..."], ans: 2, info: "Ej: Tan alto como tú." },
+        { q: "¿Cuál es el gerundio de 'leer'?", opts: ["Leido", "Leendo", "Leyendo", "Leerá"], ans: 2, info: "Al estar entre vocales, la 'i' se convierte en 'y': leyendo." },
+        { q: "La narración literaria busca...", opts: ["Solo informar", "Entretener y crear arte con el lenguaje", "Vender un producto", "Dar instrucciones"], ans: 1, info: "Usa recursos expresivos para emocionar o entretener." },
+        { q: "Grado superlativo absoluto de 'antiguo':", opts: ["Antigüísimo", "Antiquísimo", "Muy antiguo", "B y C son correctas"], ans: 3, info: "Antiquísimo es la forma culta." },
+        { q: "En 'libro cerrado', 'cerrado' es un:", opts: ["Gerundio", "Participio", "Infinitivo", "Adverbio"], ans: 1, info: "Funciona como adjetivo." },
+        { q: "Los adjetivos 'comparativos sintéticos' son:", opts: ["Más grande, más pequeño", "Mayor, menor, mejor, peor", "Grande, pequeño", "Máximo, mínimo"], ans: 1, info: "Se llaman sintéticos porque en una sola palabra incluyen el significado de 'más bueno' o 'más malo'." },
+        { q: "En la descripción de un paisaje usamos el orden:", opts: ["De lo general a lo particular", "De arriba a abajo", "De izquierda a derecha", "Cualquiera de los anteriores"], ans: 3, info: "Lo importante es seguir un orden lógico para que el lector lo imagine." },
+        { q: "Un verbo es una palabra que expresa...", opts: ["Cualidades", "Nombres", "Acciones, estados o procesos", "Cantidades"], ans: 2, info: "Definición básica del verbo." },
+        { q: "El adjetivo 'mísero' tiene como superlativo:", opts: ["Miserísimo", "Misérrimo", "Muy mísero", "Las opciones B y C son correctas"], ans: 3, info: "Como paupérrimo o celebérrimo, usa la terminación -érrimo." },
+        { q: "¿Qué es un retrato?", opts: ["Descripción de un animal", "Descripción física y psicológica de una persona", "Un cuadro sin texto", "Descripción de un objeto"], ans: 1, info: "Combina prosopografía y etopeya." },
+        { q: "Para que un adjetivo concuerde con el sustantivo debe tener igual:", opts: ["Género y número", "Persona y tiempo", "Significado", "Longitud"], ans: 0, info: "Si el sustantivo es femenino plural, el adjetivo también (ej: niñas altas)." }
     ];
 
-    // Para que el examen sea de 40 reales, rellenamos el banco automáticamente para el ejemplo
-    while(questionBank.length < 40) {
-        questionBank.push({
-            q: "Pregunta de refuerzo: ¿El infinitivo es una forma personal?",
-            opts: ["Sí", "No"],
-            ans: 1,
-            info: "No, las formas no personales son infinitivo, gerundio y participio."
-        });
-    }
-
-    let shuffledQuestions = [];
+    let currentQuestions = [];
     let currentIdx = 0;
     let score = 0;
 
     function initQuiz() {
-        shuffledQuestions = questionBank.sort(() => 0.5 - Math.random()).slice(0, 40);
+        // Mezclamos el banco y tomamos 40
+        currentQuestions = masterBank.sort(() => Math.random() - 0.5).slice(0, 40);
         showQuestion();
     }
 
     function showQuestion() {
-        const q = shuffledQuestions[currentIdx];
-        document.getElementById('current-q').innerText = currentIdx + 1;
+        const q = currentQuestions[currentIdx];
+        document.getElementById('current-q-num').innerText = currentIdx + 1;
         document.getElementById('question-text').innerText = q.q;
-        const optionsDiv = document.getElementById('options');
-        optionsDiv.innerHTML = '';
-        document.getElementById('feedback').style.display = 'none';
-        document.getElementById('next-button').style.display = 'none';
+        
+        const grid = document.getElementById('options-grid');
+        grid.innerHTML = '';
+        
+        document.getElementById('feedback-area').style.display = 'none';
 
         q.opts.forEach((opt, index) => {
             const btn = document.createElement('button');
-            btn.className = 'btn';
+            btn.className = 'option-btn';
             btn.innerText = opt;
-            btn.onclick = () => checkAnswer(index, btn);
-            optionsDiv.appendChild(btn);
+            btn.onclick = () => selectOption(index, btn);
+            grid.appendChild(btn);
         });
     }
 
-    function checkAnswer(selected, btn) {
-        const q = shuffledQuestions[currentIdx];
-        const allBtns = document.querySelectorAll('.btn');
+    function selectOption(index, btn) {
+        const q = currentQuestions[currentIdx];
+        const allBtns = document.querySelectorAll('.option-btn');
         allBtns.forEach(b => b.disabled = true);
 
-        const feedback = document.getElementById('feedback');
-        feedback.style.display = 'block';
+        const feedbackArea = document.getElementById('feedback-area');
+        const fTitle = document.getElementById('feedback-title');
+        const fText = document.getElementById('feedback-text');
 
-        if(selected === q.ans) {
+        if(index === q.ans) {
             btn.classList.add('correct');
             score++;
-            document.getElementById('score').innerText = score;
-            feedback.innerHTML = `<strong>¡Correcto!</strong><br>${q.info}`;
-            feedback.style.backgroundColor = "#e8f5e9";
-            feedback.style.color = "#2e7d32";
+            fTitle.innerText = "¡CORRECTO! ✨";
+            fTitle.style.color = "var(--success)";
+            feedbackArea.style.borderLeft = "6px solid var(--success)";
+            document.getElementById('score-display').innerText = "Puntos: " + score;
         } else {
             btn.classList.add('wrong');
             allBtns[q.ans].classList.add('correct');
-            feedback.innerHTML = `<strong>Incorrecto</strong><br>${q.info}`;
-            feedback.style.backgroundColor = "#ffebee";
-            feedback.style.color = "#c62828";
+            fTitle.innerText = "INCORRECTO ❌";
+            fTitle.style.color = "var(--error)";
+            feedbackArea.style.borderLeft = "6px solid var(--error)";
         }
-        document.getElementById('next-button').style.display = 'block';
+
+        fText.innerText = q.info;
+        feedbackArea.style.display = 'block';
+        feedbackArea.style.backgroundColor = "#fdfdfd";
     }
 
-    function loadNextQuestion() {
+    function nextQuestion() {
         currentIdx++;
         if(currentIdx < 40) {
             showQuestion();
@@ -239,10 +294,21 @@
     }
 
     function showResults() {
-        document.getElementById('quiz-area').style.display = 'none';
-        document.getElementById('game-info').style.display = 'none';
+        document.getElementById('quiz-screen').style.display = 'none';
+        const resultScreen = document.getElementById('results-screen');
+        resultScreen.display = 'block';
         document.getElementById('results-screen').style.display = 'block';
-        document.getElementById('final-score').innerText = score;
+        
+        const finalVal = document.getElementById('final-score-val');
+        finalVal.innerText = score + " / 40";
+        
+        const msg = document.getElementById('performance-msg');
+        const nota = (score / 40) * 10;
+        
+        if(nota >= 9) msg.innerText = "¡Excelente! Eres un maestro de la lengua.";
+        else if(nota >= 7) msg.innerText = "¡Muy bien! Tienes un gran dominio del temario.";
+        else if(nota >= 5) msg.innerText = "Aprobado. Repasa los fallos para mejorar.";
+        else msg.innerText = "Debes estudiar más. ¡Inténtalo de nuevo!";
     }
 
     initQuiz();

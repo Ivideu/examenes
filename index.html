@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LEVELUP · Estudia 2º ESO</title>
+<style>
+:root{--bg:#090912;--tx:#f2f2ff;--mu:#9b9bc4;--ok:#2ee59d;--ko:#ff4d6d;--ac:#8b5cf6;--ac2:#22d3ee;--glass:rgba(255,255,255,.06);--bd:rgba(255,255,255,.13)}
+*{box-sizing:border-box}
+body{margin:0;color:var(--tx);font:16px/1.55 "Inter","SF Pro Display","Segoe UI",system-ui,sans-serif;min-height:100vh;background:radial-gradient(600px 420px at 10% -5%,rgba(139,92,246,.35),transparent),radial-gradient(560px 420px at 95% 10%,rgba(34,211,238,.22),transparent),radial-gradient(500px 400px at 50% 110%,rgba(255,77,109,.18),transparent),var(--bg);background-attachment:fixed}
+main{max-width:880px;margin:0 auto;padding:0 16px 60px}
+header{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:16px;max-width:880px;margin:0 auto}
+.logo{font-size:22px;font-weight:900;letter-spacing:2px;cursor:pointer;user-select:none}.logo span{background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.pill{background:var(--glass);border:1px solid var(--bd);backdrop-filter:blur(10px);border-radius:99px;padding:4px 13px;font-weight:700;font-size:14px;display:inline-block}
+.bar{flex:1;min-width:110px;height:10px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden}.bar b{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--ac),var(--ac2));box-shadow:0 0 14px var(--ac2);transition:width .6s}
+.box{background:var(--glass);border:1px solid var(--bd);backdrop-filter:blur(14px);border-radius:22px;padding:18px;margin:14px 0}
+.tip{border-color:rgba(34,211,238,.4);background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(34,211,238,.12))}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+.subj{cursor:pointer;font-weight:800;color:#fff;border-radius:24px;padding:22px 16px;min-height:150px;position:relative;overflow:hidden;transition:.2s;border:1px solid rgba(255,255,255,.25)}
+.subj span{font-size:46px;display:block;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+.subj:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 14px 40px -8px var(--g)}
+button{font:inherit;font-weight:700;border:0;border-radius:99px;background:linear-gradient(90deg,var(--ac),#6366f1);color:#fff;padding:10px 20px;cursor:pointer;transition:.15s;margin:3px 0}
+button:hover{filter:brightness(1.15);box-shadow:0 0 22px rgba(139,92,246,.55)}button:active{transform:scale(.96)}
+button.w{background:var(--glass);border:1px solid var(--bd);color:var(--tx)}button:disabled{opacity:.45}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.tabs button.on{background:linear-gradient(90deg,var(--ac),var(--ac2))}
+.opt{display:block;width:100%;text-align:left;border-radius:16px;background:var(--glass);border:1px solid var(--bd);color:var(--tx);margin:9px 0;padding:13px 16px}
+.opt:hover:not(:disabled){border-color:var(--ac2);box-shadow:0 0 18px rgba(34,211,238,.35)}
+.opt.ok{background:rgba(46,229,157,.2);border-color:var(--ok);color:var(--tx)}.opt.ko{background:rgba(255,77,109,.2);border-color:var(--ko);color:var(--tx)}
+h2{margin:18px 0 6px;font-size:26px;letter-spacing:-.5px}h3{margin:0 0 4px}.mu{color:var(--mu);font-size:14px}
+.fc{perspective:900px;height:230px;cursor:pointer;margin:16px 0}.fc div{position:relative;width:100%;height:100%;transition:.55s;transform-style:preserve-3d}.fc.f div{transform:rotateY(180deg)}
+.fc p{position:absolute;inset:0;margin:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:22px;font-size:21px;font-weight:700;border-radius:26px;backface-visibility:hidden;border:1px solid var(--bd)}
+.fc .a{background:linear-gradient(135deg,#4c1d95,#1e3a8a)}.fc .b{background:linear-gradient(135deg,#065f46,#0e7490);transform:rotateY(180deg)}
+input,select{font:inherit;width:100%;padding:11px 14px;border:1px solid var(--bd);border-radius:14px;margin:5px 0;background:rgba(255,255,255,.07);color:var(--tx)}select option{color:#000}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:7px;border-bottom:1px solid var(--bd);text-align:left}
+.term{display:grid;grid-template-columns:32% 1fr;gap:8px;padding:7px 0;border-bottom:1px solid var(--bd)}.term b{color:var(--ac2)}
+.big{font-size:60px;font-weight:900;text-align:center;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.fb{font-weight:800;margin:10px 0}
+.hbar{height:8px;background:rgba(255,255,255,.1);border-radius:9px;overflow:hidden}.hbar b{display:block;height:100%;border-radius:9px}
+.cf{position:fixed;top:-30px;font-size:26px;z-index:99;pointer-events:none;animation:fall 2.4s ease-in forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:.2}}
+</style></head><body>
+<header><div class="logo" id="logo">LEVEL<span>UP</span></div><span class="pill" id="p1"></span><span class="pill" id="p2"></span><div class="bar"><b id="xb"></b></div></header>
+<main id="app"></main>
+<script>
+const $=s=>document.querySelector(s),app=$("#app");
+const LS={g:(k,d)=>{try{return JSON.parse(localStorage.getItem("e2_"+k))??d}catch{return d}},s:(k,v)=>localStorage.setItem("e2_"+k,JSON.stringify(v))};
+const SUBJ=[["mat","Matemáticas","🧮","#ff6b6b"],["geo","Geografía e Historia","🌍","#12b5a6"],["fyq","Física y Química","⚗️","#7c5cff"],["len","Lengua","📖","#ff9f1c"],["ing","Inglés","🇬🇧","#3a86ff"]];
+const sj=k=>SUBJ.find(s=>s[0]==k)||SUBJ[0];
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuf=a=>[...a].sort(()=>Math.random()-.5);
+let remote={topics:[],adminHash:null},S={v:"home"},P=LS.g("prog",{xp:0,streak:0,last:""}),admin=false,logoN=0;
+const topics=()=>{const m=new Map();[...remote.topics,...LS.g("topics",[])].forEach(t=>m.set(t.id,t));return[...m.values()]};
+const getHash=()=>remote.adminHash||LS.g("hash",null);
+const T=id=>topics().find(t=>t.id==id);
+async function sha(s){if(crypto.subtle){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("e2:"+s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}let h=0;for(const c of"e2:"+s)h=(h*31+c.charCodeAt(0))|0;return"f"+h}
+const day=d=>new Date(d).toISOString().slice(0,10);
+function boom(){for(let i=0;i<36;i++){const e=document.createElement("span");e.className="cf";e.textContent=["⚡","✨","🔥","💎","⭐"][i%5];e.style.left=Math.random()*100+"vw";e.style.animationDelay=Math.random()*.6+"s";document.body.appendChild(e);setTimeout(()=>e.remove(),3200)}}
+function quest(){const t=day(Date.now());if(P.q!=t){P.q=t;award(25);return true}return false}
+function award(xp){const t=day(Date.now());if(P.last!=t){P.streak=P.last==day(Date.now()-864e5)?P.streak+1:1;P.last=t}P.xp+=xp;LS.s("prog",P);hdr()}
+const TIT=["Bronce","Plata","Oro","Platino","Diamante","Élite","Mítico","Leyenda"];
+function hdr(){const l=Math.floor(P.xp/100);$("#p1").textContent="⚡ "+TIT[Math.min(l,7)]+" · Nv "+(l+1);$("#p2").textContent="🔥 "+P.streak+" día"+(P.streak==1?"":"s");$("#xb").style.width=(P.xp%100)+"%"}
+$("#logo").onclick=()=>{go("home");if(++logoN>=5){logoN=0;go(admin?"admin":"login")}};
+function go(v,x={}){S={v,...x};render();scrollTo(0,0)}
+function render(){hdr();({home,subj,topic,exam,cards,login,adm})[S.v]()}
+function home(){
+  const H=LS.g("hist",[]),med=[[H.length>=1,"🎮 Primer examen"],[H.some(h=>h.s>=9),"🎯 Nota ≥ 9"],[P.streak>=3,"🔥 Racha de 3 días"],[P.xp>=300,"💎 300 XP"],[H.length>=10,"👑 10 exámenes"]];
+  app.innerHTML=`<h2>¿Qué toca hoy? 👀</h2><div class="box tip">${P.q==day(Date.now())?"✅ <b>Misión de hoy completada.</b> Sigue sumando XP.":"🎯 <b>Misión de hoy:</b> supera 1 examen y gana +25 XP extra."}<div class="mu">Estudia el resumen, machaca las flashcards y sube de rango. Cada día seguido suma racha 🔥</div></div><div class="grid">`+SUBJ.map(s=>`<div class="subj" style="--g:${s[3]};background:linear-gradient(145deg,${s[3]},color-mix(in srgb,${s[3]} 40%,#111))" onclick="go('subj',{s:'${s[0]}'})"><span>${s[2]}</span>${s[1]}<div style="font-size:13px;font-weight:600">${topics().filter(t=>t.subject==s[0]).length} temas</div></div>`).join("")+`</div><div class="box"><b>🏅 Logros</b><br>`+med.map(m=>`<span class="pill" style="opacity:${m[0]?1:.3};margin:4px">${m[1]}</span>`).join("")+`</div>`;
+}
+function subj(){const[k,n,e,c]=sj(S.s),ts=topics().filter(t=>t.subject==S.s),H=LS.g("hist",[]);
+  app.innerHTML=`<h2>${e} ${n}</h2>`+(ts.map(t=>{const b=Math.max(0,...H.filter(h=>h.t==t.id).map(h=>h.s));return`<div class="box" style="border-left:14px solid ${c};cursor:pointer" onclick="go('topic',{id:'${t.id}',tab:'e'})"><b>${esc(t.title)}</b><div class="mu">${b?"Mejor nota: "+b+"/10":"¡Sin examen todavía!"}</div></div>`}).join("")||'<div class="box">Todavía no hay temas aquí 🌱</div>')}
+function topic(){const t=T(S.id);if(!t)return go("home");const c=sj(t.subject)[3];
+  const tabs=`<div class="tabs"><button class="w" onclick="go('subj',{s:'${t.subject}'})">←</button><button class="on">📋 Resumen</button><button onclick="go('cards',{id:'${t.id}',q:shuf(T('${t.id}').cards||[])})">🃏 Flashcards</button><button onclick="startExam('${t.id}')">⚔️ Examen</button></div>`;
+  app.innerHTML=`<h2>${esc(t.title)}</h2>${tabs}<div class="box tip">💡 ${esc(t.summary)}</div>`+(t.sections||[]).map((s,i)=>`<div class="box" style="border-left:14px solid ${c}"><h3 style="margin-top:0">${["①","②","③","④","⑤","⑥","⑦","⑧","⑨"][i]||"•"} ${esc(s.h)}</h3><ul>${(s.points||[]).map(p=>`<li>${esc(p)}</li>`).join("")}</ul></div>`).join("")+((t.terms||[]).length?`<div class="box"><b>🔑 Claves, fórmulas y vocabulario</b>${t.terms.map(x=>`<div class="term"><b>${esc(x.t)}</b><span>${esc(x.d)}</span></div>`).join("")}</div>`:"")}
+function cards(){const t=T(S.id),q=S.q;
+  if(!q.length){award(20);app.innerHTML=`<div class="box"><div class="big">✔</div><p style="text-align:center"><b>Flashcards dominadas · +20 XP</b></p><button onclick="go('topic',{id:'${t.id}'})">Volver al tema</button></div>`;return}
+  app.innerHTML=`<h2>🃏 ${esc(t.title)}</h2><div class="mu">Quedan ${q.length} · toca la tarjeta para girarla</div><div class="fc" id="fc" onclick="this.classList.toggle('f')"><div><p class="a">${esc(q[0].f)}</p><p class="b">${esc(q[0].b)}</p></div></div><button class="w" onclick="S.q.push(S.q.shift());render()">🔁 Repasar luego</button> <button onclick="S.q.shift();render()">✅ Me la sé</button> <button class="w" onclick="go('topic',{id:'${t.id}'})">Salir</button>`}
+function startExam(id){const t=T(id),n=a=>shuf(a||[]);
+  const Q=[...n(t.test).slice(0,6).map(x=>({k:"t",...x})),...n(t.tf).slice(0,2).map(x=>({k:"v",...x})),...n(t.fill).slice(0,2).map(x=>({k:"f",...x}))];
+  if(!Q.length)return alert("Este tema aún no tiene preguntas.");
+  go("exam",{id,Q:shuf(Q),i:0,ok:0,r:null})}
+const nz=s=>String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g,"").trim();
+const OKM=["GG 🔥","Clean ⚡","Bien jugado 😎","Brutal 🚀"],KOM=["Casi 😅 Fíjate en esto","Fail, pero así se aprende 👇","Siguiente ronda 💪"];
+function exam(){const e=S,t=T(e.id);
+  if(e.i>=e.Q.length){const sc=Math.round(e.ok/e.Q.length*100)/10,H=LS.g("hist",[]);H.push({d:Date.now(),t:t.id,n:t.title,sub:t.subject,s:sc});LS.s("hist",H);award(e.ok*10+(sc>=9?30:0));const bq=quest();if(sc>=9)setTimeout(boom,250);
+    app.innerHTML=`<div class="box"><div class="big">${sc>=9?"🏆":sc>=7?"🎉":sc>=5?"👍":"📘"} ${sc}/10</div><p style="text-align:center">${sc>=9?"Nivel élite. +30 XP bonus":sc>=7?"Buen nivel 👌":sc>=5?"Pasas, pero repasa los fallos":"Repasa el resumen y las flashcards y vuelve a la carga"}<br>+${e.ok*10} XP${bq?" · 🎯 Misión diaria +25":""}</p><button onclick="startExam('${t.id}')">Otro examen</button> <button class="w" onclick="go('topic',{id:'${t.id}'})">Esquema</button></div>`;return}
+  const q=e.Q[e.i],d=e.r!==null;let h=`<div class="mu">Pregunta ${e.i+1} de ${e.Q.length}</div><div class="hbar"><b style="width:${e.i/e.Q.length*100}%;background:var(--ac)"></b></div><div class="box"><b>${esc(q.q)}</b>`;
+  if(q.k=="t")h+=q.o.map((o,j)=>`<button class="opt ${d?(j==q.a?"ok":j==e.r?"ko":""):""}" ${d?"disabled":""} onclick="ans(${j})">${esc(o)}</button>`).join("");
+  else if(q.k=="v")h+=[true,false].map(v=>`<button class="opt ${d?(v==q.a?"ok":v==e.r?"ko":""):""}" ${d?"disabled":""} onclick="ans(${v})">${v?"✔ Verdadero":"✘ Falso"}</button>`).join("");
+  else h+=`<input id="fi" placeholder="Escribe la respuesta" ${d?"disabled":""} onkeydown="if(event.key=='Enter')ans(this.value)"><button ${d?"disabled":""} onclick="ans($('#fi').value)">Comprobar</button>`;
+  if(d){const good=e.good;h+=`<div class="fb" style="color:var(${good?"--ok":"--ko"})">${good?OKM[e.i%4]:KOM[e.i%3]}${q.k=="f"&&!good?" Respuesta: "+esc(q.a):""}</div><div class="mu">💡 ${esc(q.why||"")}</div><button onclick="S.i++;S.r=null;render()">Siguiente →</button>`}
+  app.innerHTML=h+"</div>"}
+function ans(v){const e=S,q=e.Q[e.i];if(e.r!==null)return;e.good=q.k=="f"?String(q.a).split("/").some(a=>nz(a)==nz(v)&&nz(v)):v===q.a;if(e.good)e.ok++;e.r=v;render()}
+function login(){const has=getHash();app.innerHTML=`<div class="box"><h2>🔒 Zona admin</h2><p class="mu">${has?"Introduce la contraseña.":"Primera vez: crea una contraseña de administrador."}</p><input type="password" id="pw" placeholder="Contraseña" onkeydown="if(event.key=='Enter')doLogin()"><button onclick="doLogin()">Entrar</button></div>`}
+async function doLogin(){const p=$("#pw").value;if(!p)return;const h=await sha(p),has=getHash();if(!has){LS.s("hash",h);admin=true;go("adm")}else if(has==h){admin=true;go("adm")}else{alert("Contraseña incorrecta");}}
+const toB64=f=>new Promise(async r=>{const b=await createImageBitmap(f),k=Math.min(1,1600/Math.max(b.width,b.height)),c=document.createElement("canvas");c.width=b.width*k;c.height=b.height*k;c.getContext("2d").drawImage(b,0,0,c.width,c.height);r(c.toDataURL("image/jpeg",.8).split(",")[1])});
+function adm(){const H=LS.g("hist",[]);
+  const by=SUBJ.map(s=>{const a=H.filter(h=>h.sub==s[0]);return[s,a.length,a.length?a.reduce((x,h)=>x+h.s,0)/a.length:0]});
+  app.innerHTML=`<h2>⚙️ Panel de padres</h2>
+  <div class="box"><b>📈 Historial de notas</b>${by.map(([s,n,m])=>`<div style="margin:8px 0">${s[2]} ${s[1]} · ${n} exámenes · media <b>${m.toFixed(1)}</b><div class="hbar"><b style="width:${m*10}%;background:${s[3]}"></b></div></div>`).join("")}
+  <table><tr><th>Fecha</th><th>Tema</th><th>Nota</th></tr>${[...H].reverse().slice(0,30).map(h=>`<tr><td>${new Date(h.d).toLocaleDateString("es-ES")}</td><td>${esc(h.n)}</td><td><b>${h.s}</b></td></tr>`).join("")}</table>
+  <button class="w" onclick="exportCSV()">Descargar CSV</button> <button class="w" onclick="if(confirm('¿Borrar historial?')){LS.s('hist',[]);render()}">Borrar</button></div>
+  <div class="box"><b>➕ Nuevo tema (con Gemini)</b>
+  <input type="password" id="gk" placeholder="Clave API de Gemini (AI Studio)" value="${esc(LS.g("key",""))}">
+  <input id="gm" placeholder="Modelo" value="${esc(LS.g("model","gemini-2.5-flash"))}">
+  <select id="as">${SUBJ.map(s=>`<option value="${s[0]}">${s[1]}</option>`).join("")}</select>
+  <input id="at" placeholder="Título (opcional)"><input type="file" id="af" accept="image/*" multiple>
+  <button id="ab" onclick="addTopic()">Estudiar y crear material</button> <span id="am" class="mu"></span></div>
+  <div class="box"><b>📚 Temas</b>${topics().map(t=>`<div style="margin:6px 0">${sj(t.subject)[2]} ${esc(t.title)} <button class="w" onclick="delT('${t.id}')">Borrar</button></div>`).join("")||" (ninguno)"}
+  <p class="mu">Para que el niño vea los temas en su dispositivo: pulsa "Exportar" y sube el archivo <b>temas.json</b> junto a index.html en tu hosting (incluye tu contraseña ya cifrada).</p>
+  <button onclick="exportT()">Exportar temas.json</button> <button class="w" onclick="go('home')">Salir</button></div>`}
+async function addTopic(){const m=$("#am"),fs=[...$("#af").files].slice(0,8),key=$("#gk").value.trim(),model=$("#gm").value.trim()||"gemini-2.5-flash";
+  if(!key||!fs.length){m.textContent="Falta la clave o las imágenes.";return}
+  LS.s("key",key);LS.s("model",model);$("#ab").disabled=true;m.textContent="Gemini está estudiando… (1-2 min)";
+  try{const imgs=await Promise.all(fs.map(toB64)),sub=sj($("#as").value)[1];
+    const prompt=`Eres el mejor estudiante de 2º de ESO de España. Las imágenes son páginas del temario de ${sub}. Léelas con atención y crea material fiel al contenido, sin inventar datos. Tono cercano para un niño de 13 años. En Inglés, preguntas en inglés y explicaciones breves en español. Devuelve SOLO JSON con esta forma: {"title":"","summary":"2-4 frases","sections":[{"h":"","points":[""]}],"terms":[{"t":"","d":""}],"cards":[{"f":"pregunta o concepto","b":"respuesta breve"}] (15-20),"test":[{"q":"","o":["","","",""],"a":0,"why":""}] (15),"tf":[{"q":"","a":true,"why":""}] (8),"fill":[{"q":"frase con ___ para completar","a":"respuesta (alternativas separadas por /)","why":""}] (6)}. Varía la posición de la correcta.`;
+    const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({contents:[{parts:[{text:prompt},...imgs.map(d=>({inlineData:{mimeType:"image/jpeg",data:d}}))]}],generationConfig:{responseMimeType:"application/json",temperature:.4}})});
+    const j=await r.json();if(!r.ok)throw new Error(j.error?.message||r.status);
+    const o=JSON.parse(j.candidates[0].content.parts[0].text),L=LS.g("topics",[]);
+    L.push({...o,id:"t"+Date.now(),subject:$("#as").value,title:$("#at").value.trim()||o.title});LS.s("topics",L);m.textContent="✅ ¡Tema creado!";setTimeout(render,900)}
+  catch(e){m.textContent="Error: "+e.message;$("#ab").disabled=false}}
+function delT(id){if(!confirm("¿Borrar tema?"))return;LS.s("topics",LS.g("topics",[]).filter(t=>t.id!=id));remote.topics=remote.topics.filter(t=>t.id!=id);render()}
+function dl(n,txt,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([txt],{type}));a.download=n;a.click()}
+function exportT(){dl("temas.json",JSON.stringify({adminHash:getHash(),topics:topics()}),"application/json")}
+function exportCSV(){dl("notas.csv","fecha,asignatura,tema,nota\n"+LS.g("hist",[]).map(h=>[new Date(h.d).toISOString().slice(0,10),sj(h.sub)[1],'"'+h.n.replace(/"/g,"'")+'"',h.s].join(",")).join("\n"),"text/csv")}
+fetch("temas.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null).then(j=>{if(j)remote=j;if(location.hash=="#admin")go("login");else render()});
+</script></body></html>

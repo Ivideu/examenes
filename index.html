@@ -42,6 +42,8 @@ table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:7px;borde
 <script>
 const $=s=>document.querySelector(s),app=$("#app");
 const LS={g:(k,d)=>{try{return JSON.parse(localStorage.getItem("e2_"+k))??d}catch{return d}},s:(k,v)=>localStorage.setItem("e2_"+k,JSON.stringify(v))};
+const MODEL_DEFAULT="gemini-3.8-flash";
+if(LS.g("model","")=="gemini-2.5-flash")LS.s("model",MODEL_DEFAULT);
 const SUBJ=[["mat","Matemáticas","🧮","#ff6b6b"],["geo","Geografía e Historia","🌍","#12b5a6"],["fyq","Física y Química","⚗️","#7c5cff"],["len","Lengua","📖","#ff9f1c"],["ing","Inglés","🇬🇧","#3a86ff"]];
 const sj=k=>SUBJ.find(s=>s[0]==k)||SUBJ[0];
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -99,14 +101,14 @@ function adm(){const H=LS.g("hist",[]);
   <button class="w" onclick="exportCSV()">Descargar CSV</button> <button class="w" onclick="if(confirm('¿Borrar historial?')){LS.s('hist',[]);render()}">Borrar</button></div>
   <div class="box"><b>➕ Nuevo tema (con Gemini)</b>
   <input type="password" id="gk" placeholder="Clave API de Gemini (AI Studio)" value="${esc(LS.g("key",""))}">
-  <input id="gm" placeholder="Modelo" value="${esc(LS.g("model","gemini-2.5-flash"))}">
+  <input id="gm" placeholder="Modelo" value="${esc(LS.g("model",MODEL_DEFAULT))}">
   <select id="as">${SUBJ.map(s=>`<option value="${s[0]}">${s[1]}</option>`).join("")}</select>
   <input id="at" placeholder="Título (opcional)"><input type="file" id="af" accept="image/*" multiple>
   <button id="ab" onclick="addTopic()">Estudiar y crear material</button> <span id="am" class="mu"></span></div>
   <div class="box"><b>📚 Temas</b>${topics().map(t=>`<div style="margin:6px 0">${sj(t.subject)[2]} ${esc(t.title)} <button class="w" onclick="delT('${t.id}')">Borrar</button></div>`).join("")||" (ninguno)"}
   <p class="mu">Para que el niño vea los temas en su dispositivo: pulsa "Exportar" y sube el archivo <b>temas.json</b> junto a index.html en tu hosting (incluye tu contraseña ya cifrada).</p>
   <button onclick="exportT()">Exportar temas.json</button> <button class="w" onclick="go('home')">Salir</button></div>`}
-async function addTopic(){const m=$("#am"),fs=[...$("#af").files].slice(0,8),key=$("#gk").value.trim(),model=$("#gm").value.trim()||"gemini-2.5-flash";
+async function addTopic(){const m=$("#am"),fs=[...$("#af").files].slice(0,8),key=$("#gk").value.trim(),model=$("#gm").value.trim()||MODEL_DEFAULT;
   if(!key||!fs.length){m.textContent="Falta la clave o las imágenes.";return}
   LS.s("key",key);LS.s("model",model);$("#ab").disabled=true;m.textContent="Gemini está estudiando… (1-2 min)";
   try{const imgs=await Promise.all(fs.map(toB64)),sub=sj($("#as").value)[1];

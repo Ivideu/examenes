@@ -42,6 +42,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:7px;borde
 <script>
 const $=s=>document.querySelector(s),app=$("#app");
 const LS={g:(k,d)=>{try{return JSON.parse(localStorage.getItem("e2_"+k))??d}catch{return d}},s:(k,v)=>localStorage.setItem("e2_"+k,JSON.stringify(v))};
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch{}
 const MODEL_DEFAULT="gemini-3.8-flash";
 if(LS.g("model","")=="gemini-2.5-flash")LS.s("model",MODEL_DEFAULT);
 const SUBJ=[["mat","Matemáticas","🧮","#ff6b6b"],["geo","Geografía e Historia","🌍","#12b5a6"],["fyq","Física y Química","⚗️","#7c5cff"],["len","Lengua","📖","#ff9f1c"],["ing","Inglés","🇬🇧","#3a86ff"]];
@@ -100,8 +101,8 @@ function adm(){const H=LS.g("hist",[]);
   <table><tr><th>Fecha</th><th>Tema</th><th>Nota</th></tr>${[...H].reverse().slice(0,30).map(h=>`<tr><td>${new Date(h.d).toLocaleDateString("es-ES")}</td><td>${esc(h.n)}</td><td><b>${h.s}</b></td></tr>`).join("")}</table>
   <button class="w" onclick="exportCSV()">Descargar CSV</button> <button class="w" onclick="if(confirm('¿Borrar historial?')){LS.s('hist',[]);render()}">Borrar</button></div>
   <div class="box"><b>➕ Nuevo tema (con Gemini)</b>
-  <input type="password" id="gk" placeholder="Clave API de Gemini (AI Studio)" value="${esc(LS.g("key",""))}">
-  <input id="gm" placeholder="Modelo" value="${esc(LS.g("model",MODEL_DEFAULT))}">
+  <input type="password" id="gk" placeholder="Clave API de Gemini (AI Studio)" value="${esc(LS.g("key",""))}" oninput="LS.s('key',this.value.trim())">
+  <input id="gm" placeholder="Modelo" value="${esc(LS.g("model",MODEL_DEFAULT))}" oninput="LS.s('model',this.value.trim())">
   <select id="as">${SUBJ.map(s=>`<option value="${s[0]}">${s[1]}</option>`).join("")}</select>
   <input id="at" placeholder="Título (opcional)"><input type="file" id="af" accept="image/*" multiple>
   <button id="ab" onclick="addTopic()">Estudiar y crear material</button> <span id="am" class="mu"></span></div>
@@ -113,8 +114,15 @@ async function addTopic(){const m=$("#am"),fs=[...$("#af").files].slice(0,8),key
   LS.s("key",key);LS.s("model",model);$("#ab").disabled=true;m.textContent="Gemini está estudiando… (1-2 min)";
   try{const imgs=await Promise.all(fs.map(toB64)),sub=sj($("#as").value)[1];
     const prompt=`Eres el mejor estudiante de 2º de ESO de España. Las imágenes son páginas del temario de ${sub}. Léelas con atención y crea material fiel al contenido, sin inventar datos. Tono cercano para un niño de 13 años. En Inglés, preguntas en inglés y explicaciones breves en español. Devuelve SOLO JSON con esta forma: {"title":"","summary":"2-4 frases","sections":[{"h":"","points":[""]}],"terms":[{"t":"","d":""}],"cards":[{"f":"pregunta o concepto","b":"respuesta breve"}] (15-20),"test":[{"q":"","o":["","","",""],"a":0,"why":""}] (15),"tf":[{"q":"","a":true,"why":""}] (8),"fill":[{"q":"frase con ___ para completar","a":"respuesta (alternativas separadas por /)","why":""}] (6)}. Varía la posición de la correcta.`;
-    const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({contents:[{parts:[{text:prompt},...imgs.map(d=>({inlineData:{mimeType:"image/jpeg",data:d}}))]}],generationConfig:{responseMimeType:"application/json",temperature:.4}})});
-    const j=await r.json();if(!r.ok)throw new Error(j.error?.message||r.status);
+    const call=()=>fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({contents:[{parts:[{text:prompt},...imgs.map(d=>({inlineData:{mimeType:"image/jpeg",data:d}}))]}],generationConfig:{responseMimeType:"application/json",temperature:.4}})});
+    let r,j;
+    for(let a=0;a<6;a++){
+      r=await call();j=await r.json().catch(()=>({}));
+      if(r.ok||![429,500,503,504].includes(r.status)||a==5)break;
+      for(let s=5*(a+1);s>0;s--){m.textContent="Gemini saturado, reintentando en "+s+"s… (intento "+(a+2)+"/6)";await new Promise(z=>setTimeout(z,1000))}
+    }
+    if(!r.ok)throw new Error(j.error?.message||r.status);
+    m.textContent="Procesando respuesta…";
     const o=JSON.parse(j.candidates[0].content.parts[0].text),L=LS.g("topics",[]);
     L.push({...o,id:"t"+Date.now(),subject:$("#as").value,title:$("#at").value.trim()||o.title});LS.s("topics",L);m.textContent="✅ ¡Tema creado!";setTimeout(render,900)}
   catch(e){m.textContent="Error: "+e.message;$("#ab").disabled=false}}
